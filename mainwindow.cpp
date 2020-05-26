@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
     ui->setupUi(this);
     //    ui->toolBar->setVisible(false);
     sett = new QSettings("TSU", "TestConvert");
-    last_dir = sett->value("dirs/last", "C:/work").toString();
+    last_dir = sett->value("dirs/last", QDir::currentPath()).toString();
     search = "";
     infolabel = new QLabel();
     ui->statusBar->addPermanentWidget(infolabel);
@@ -195,7 +195,6 @@ void MainWindow::on_actionTest_triggered() {
 
 void MainWindow::on_actionOpen_triggered() {
     QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, "html (*.htm;*.html);ANY FILE (*)");
-
 
     if (!fname.isEmpty())
     {
@@ -638,7 +637,8 @@ void MainWindow::on_action_repl_triggered() {
     {
         // папка для картинок
         QString path = QString::number(QDateTime::currentSecsSinceEpoch(), 16);
-        QDir work = QDir::current();
+        QDir work(last_dir);    //= QDir::current();
+        //        last_dir = work;
         work.mkpath(path);
         path = work.relativeFilePath(path);
         // списки замен
@@ -676,14 +676,15 @@ void MainWindow::on_action_repl_triggered() {
                 replace << match.captured(0);
                 files << f;
             }
-            for (int i = 0; i < files.size(); i++)
-            {
-                QString filename = files[i];
-                if (filename.indexOf("file:///") == -1) continue;
-                QFileInfo f(filename.mid(8));
-                QString newname = path + "/" + f.fileName().toStdString().c_str();
-                if (QFile::copy(f.filePath().toStdString().c_str(), newname)) { files[i] = newname; }
-            }
+            // TODO: копирование картинок по пути
+            //            for (int i = 0; i < files.size(); i++)
+            //            {
+            //                QString filename = files[i];
+            //                if (filename.indexOf("file:///") == -1) continue;
+            //                QFileInfo f(filename.mid(8));
+            //                QString newname = path + "/" + f.fileName().toStdString().c_str();
+            //                if (QFile::copy(f.filePath().toStdString().c_str(), newname)) { files[i] = newname; }
+            //            }
             for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
             // TODO: <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
 
