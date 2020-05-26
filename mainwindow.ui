@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>928</width>
+                <height>563</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Конвертер</string>
+        </property>
+        <widget class="QWidget" name="centralWidget">
+            <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                    <widget class="QSplitter" name="splitter">
+                        <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QTextEdit" name="plain"/>
+                        <widget class="QTreeWidget" name="tree">
+                            <property name="editTriggers">
+                                <set>QAbstractItemView::EditKeyPressed</set>
+                            </property>
+                            <property name="itemsExpandable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="expandsOnDoubleClick">
+                                <bool>false</bool>
+                            </property>
+                            <attribute name="headerMinimumSectionSize">
+                                <number>50</number>
+                            </attribute>
+                            <attribute name="headerDefaultSectionSize">
+                                <number>100</number>
+                            </attribute>
+                            <column>
+                                <property name="text">
+                                    <string>тип</string>
+                                </property>
+                            </column>
+                            <column>
+                                <property name="text">
+                                    <string>тескт</string>
+                                </property>
+                            </column>
+                            <column>
+                                <property name="text">
+                                    <string>дополнительно</string>
+                                </property>
+                            </column>
+                        </widget>
+                    </widget>
+                </item>
+            </layout>
+        </widget>
+        <widget class="QMenuBar" name="menuBar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>928</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <widget class="QMenu" name="menu">
+                <property name="title">
+                    <string>Файл</string>
+                </property>
+                <addaction name="actionOpen"/>
+                <addaction name="actionTest"/>
+                <addaction name="actionExport"/>
+            </widget>
+            <widget class="QMenu" name="menu_2">
+                <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="tearOffEnabled">
+                    <bool>false</bool>
+                </property>
+                <property name="title">
+                    <string>Настройка</string>
+                </property>
+                <property name="separatorsCollapsible">
+                    <bool>false</bool>
+                </property>
+                <addaction name="ch_to_mch"/>
+                <addaction name="num_to_text"/>
+                <addaction name="action_enableAll"/>
+                <addaction name="action_export_as_text"/>
+                <addaction name="actionFixTolerance"/>
+            </widget>
+            <widget class="QMenu" name="menu_3">
+                <property name="title">
+                    <string>Вид</string>
+                </property>
+                <widget class="QMenu" name="menu_4">
+                    <property name="title">
+                        <string>Панели инструментов</string>
+                    </property>
+                    <addaction name="show_maintoolbar"/>
+                    <addaction name="show_toolbar"/>
+                </widget>
+                <addaction name="menu_4"/>
+                <addaction name="collapse_quiz"/>
+                <addaction name="expand_all"/>
+            </widget>
+            <widget class="QMenu" name="menu_5">
+                <property name="title">
+                    <string>Поиск</string>
+                </property>
+                <addaction name="action_find"/>
+                <addaction name="action_next"/>
+                <addaction name="action_repl"/>
+                <addaction name="action_textToNum"/>
+                <addaction name="action_fromBilet"/>
+            </widget>
+            <addaction name="menu"/>
+            <addaction name="menu_5"/>
+            <addaction name="menu_2"/>
+            <addaction name="menu_3"/>
+        </widget>
+        <widget class="QToolBar" name="mainToolBar">
+            <property name="windowTitle">
+                <string>Главная</string>
+            </property>
+            <attribute name="toolBarArea">
+                <enum>TopToolBarArea</enum>
+            </attribute>
+            <attribute name="toolBarBreak">
+                <bool>false</bool>
+            </attribute>
+            <addaction name="actionOpen"/>
+            <addaction name="actionTest"/>
+            <addaction name="actionExport"/>
+            <addaction name="action_repl"/>
+        </widget>
+        <widget class="QStatusBar" name="statusBar"/>
+        <widget class="QToolBar" name="toolBar">
+            <property name="enabled">
+                <bool>true</bool>
+            </property>
+            <property name="windowTitle">
+                <string>Настройки</string>
+            </property>
+            <attribute name="toolBarArea">
+                <enum>TopToolBarArea</enum>
+            </attribute>
+            <attribute name="toolBarBreak">
+                <bool>false</bool>
+            </attribute>
+            <addaction name="ch_to_mch"/>
+            <addaction name="actionFixTolerance"/>
+        </widget>
+        <action name="actionTest">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Анализ...</string>
+            </property>
+            <property name="toolTip">
+                <string>Анализ</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+P</string>
+            </property>
+        </action>
+        <action name="actionOpen">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/standardbutton-open-128.png</normaloff>:/ico/standardbutton-open-128.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Открыть...</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+O</string>
+            </property>
+        </action>
+        <action name="actionExport">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/standardbutton-save-128.png</normaloff>:/ico/standardbutton-save-128.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Сохранить...</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+E</string>
+            </property>
+        </action>
+        <action name="action_repl">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Замена...</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+R</string>
+            </property>
+        </action>
+        <action name="ch_to_mch">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Выбор как множественный</string>
+            </property>
+        </action>
+        <action name="num_to_text">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Числа как текст</string>
+            </property>
+        </action>
+        <action name="show_maintoolbar">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Главная</string>
+            </property>
+        </action>
+        <action name="show_toolbar">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Настройки</string>
+            </property>
+        </action>
+        <action name="collapse_quiz">
+            <property name="text">
+                <string>Свернуть вопросы</string>
+            </property>
+        </action>
+        <action name="expand_all">
+            <property name="text">
+                <string>Развернуть все</string>
+            </property>
+        </action>
+        <action name="action_find">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Поиск</string>
+            </property>
+            <property name="shortcut">
+                <string>Ctrl+F</string>
+            </property>
+        </action>
+        <action name="action_next">
+            <property name="icon">
+                <iconset resource="images/icon.qrc">
+                    <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
+                </iconset>
+            </property>
+            <property name="text">
+                <string>Далее</string>
+            </property>
+            <property name="shortcut">
+                <string>F3</string>
+            </property>
+        </action>
+        <action name="action_textToNum">
+            <property name="text">
+                <string>Заменить текст на число</string>
+            </property>
+        </action>
+        <action name="action_fromBilet">
+            <property name="text">
+                <string>Перебить билеты на темы</string>
+            </property>
+        </action>
+        <action name="action_enableAll">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Разрешить все верные</string>
+            </property>
+        </action>
+        <action name="action_export_as_text">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Экспорт как текст</string>
+            </property>
+        </action>
+        <action name="actionFixTolerance">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Фиксированная точность</string>
+            </property>
+        </action>
+    </widget>
+    <layoutdefault spacing="6" margin="11"/>
+    <resources>
+        <include location="images/icon.qrc"/>
+    </resources>
+    <connections>
+        <connection>
+            <sender>show_maintoolbar</sender>
+            <signal>triggered(bool)</signal>
+            <receiver>mainToolBar</receiver>
+            <slot>setVisible(bool)</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>142</x>
+                    <y>32</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>mainToolBar</sender>
+            <signal>visibilityChanged(bool)</signal>
+            <receiver>show_maintoolbar</receiver>
+            <slot>setChecked(bool)</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>142</x>
+                    <y>32</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>toolBar</sender>
+            <signal>visibilityChanged(bool)</signal>
+            <receiver>show_toolbar</receiver>
+            <slot>setChecked(bool)</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>545</x>
+                    <y>32</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>show_toolbar</sender>
+            <signal>triggered(bool)</signal>
+            <receiver>toolBar</receiver>
+            <slot>setVisible(bool)</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>545</x>
+                    <y>32</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>expand_all</sender>
+            <signal>triggered()</signal>
+            <receiver>tree</receiver>
+            <slot>expandAll()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>-1</x>
+                    <y>-1</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>601</x>
+                    <y>293</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+</ui>

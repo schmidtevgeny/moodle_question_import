@@ -1,0 +1,261 @@
+if (!ui->action_export_as_text->isChecked())
+        {
+            open_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<quiz>\n";
+            close_xml = "</quiz>";
+            text =
+                "\
+            <question type=\"shortanswer\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <usecase>0</usecase>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            number =
+                "\
+            <question type=\"numerical\">\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback>\n<text></text>\n</generalfeedback>\n\
+                <defaultgrade>1</defaultgrade>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>0</shuffleanswers>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            multichoice =
+                "\
+            <question type=\"multichoice\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <shuffleanswers>1</shuffleanswers> \n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <single>false</single>\n\
+        %3\
+                </question>\n";    // 1-вопрос 2-ответы
+            choice =
+                "\
+            <question type=\"multichoice\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <shuffleanswers>1</shuffleanswers>\n\
+                <single>true</single>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+        %3\
+                </question>\n";    // 1-вопрос 2-ответы
+            // %1 раздел %2 тема
+            theme =
+                "\
+            <question type=\"category\">\n\
+                <category><text>$course$/%1/%2</text></category>\n\
+            </question>\n";
+            section =
+                "\
+            <question type=\"category\">\n\
+                <category><text>$course$/%1</text></category>\n\
+            </question>\n";
+            map =
+                "\
+            <question type=\"matching\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback><text></text></generalfeedback>\n\
+                <defaultgrade>1</defaultgrade>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>1</shuffleanswers>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            info =
+                "\
+            <question type=\"description\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback>\n<text></text></generalfeedback>\n\
+                <defaultgrade>0</defaultgrade>\n\
+                <penalty>0</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>0</shuffleanswers>\n\
+            </question>\n";    // 1-текстghfgh;l
+            answer =
+                "\
+                <answer fraction=\"%1\">\n\
+                    <text><![CDATA[%2]]></text>\n\
+                    <feedback><text></text></feedback>\n\
+                </answer>\n";    // 1-оценка 2-текст
+            numanswer =
+                "\
+                <answer fraction=\"100\">\n\
+                    <text>%1</text>\n\
+                    <tolerance>%2</tolerance>\n\
+                    <feedback><text></text></feedback>\n\
+                </answer>\n";    // 1-текст 2-погрешность
+            mapanswer =
+                "\
+                <subquestion>\n\
+                    <text><![CDATA[%1]]></text>\n\
+                    <answer>\n\
+                        <text><![CDATA[%2]]></text>\n\
+                    </answer>\n\
+                </subquestion>\n";    // %1->%2
+        } else
+        {
+            open_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<quiz>\n";
+            close_xml = "</quiz>";
+            text =
+                "\
+            <question type=\"shortanswer\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <usecase>0</usecase>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            number =
+                "\
+            <question type=\"numerical\">\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback>\n<text></text>\n</generalfeedback>\n\
+                <defaultgrade>1</defaultgrade>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>0</shuffleanswers>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            multichoice =
+                "\
+            <question type=\"multichoice\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <shuffleanswers>1</shuffleanswers> \n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <single>false</single>\n\
+        %3\
+                </question>\n";    // 1-вопрос 2-ответы
+            choice =
+                "\
+            <question type=\"multichoice\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <shuffleanswers>1</shuffleanswers>\n\
+                <single>true</single>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+        %3\
+                </question>\n";    // 1-вопрос 2-ответы
+            // %1 раздел %2 тема
+            theme =
+                "\
+            <question type=\"category\">\n\
+                <category><text>$course$/%1/%2</text></category>\n\
+            </question>\n";
+            section =
+                "\
+            <question type=\"category\">\n\
+                <category><text>$course$/%1</text></category>\n\
+            </question>\n";
+            map =
+                "\
+            <question type=\"matching\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback><text></text></generalfeedback>\n\
+                <defaultgrade>1</defaultgrade>\n\
+                <penalty>0.1</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>1</shuffleanswers>\n\
+        %3\
+            </question>\n";    // 1-вопрос 2-ответы
+            info =
+                "\
+            <question type=\"description\">\n\
+                <name>\n\
+                    <text>%1</text>\n\
+                </name>\n\
+                <questiontext format=\"moodle_auto_format\">\n\
+                    <text>%2</text>\n\
+                </questiontext>\n\
+                <image></image>\n\
+                <generalfeedback>\n<text></text></generalfeedback>\n\
+                <defaultgrade>0</defaultgrade>\n\
+                <penalty>0</penalty>\n\
+                <hidden>0</hidden>\n\
+                <shuffleanswers>0</shuffleanswers>\n\
+            </question>\n";    // 1-текст
+            answer =
+                "\
+                <answer fraction=\"%1\">\n\
+                    <text>%2</text>\n\
+                    <feedback><text></text></feedback>\n\
+                </answer>\n";    // 1-оценка 2-текст
+            numanswer =
+                "\
+                <answer fraction=\"100\">\n\
+                    <text>%1</text>\n\
+                    <tolerance>%2</tolerance>\n\
+                    <feedback><text></text></feedback>\n\
+                </answer>\n";    // 1-текст 2-погрешность
+            mapanswer =
+                "\
+                <subquestion>\n\
+                    <text>%1</text>\n\
+                    <answer>\n\
+                        <text>%2</text>\n\
+                    </answer>\n\
+                </subquestion>\n";    // %1->%2
+        }

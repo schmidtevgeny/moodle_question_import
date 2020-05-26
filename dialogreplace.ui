@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>DialogReplace</class>
+    <widget class="QDialog" name="DialogReplace">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>933</width>
+                <height>316</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Замены</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+            <item row="7" column="1">
+                <widget class="QCheckBox" name="del_space">
+                    <property name="text">
+                        <string>Удалить пробелы</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="2" column="2" colspan="2">
+                <widget class="QCheckBox" name="del_alpha">
+                    <property name="text">
+                        <string>Удалить а)</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="0" column="2">
+                <widget class="QCheckBox" name="repl_numsk">
+                    <property name="text">
+                        <string>Заменить 1) на ?</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="2" column="1">
+                <widget class="QCheckBox" name="del_numsk">
+                    <property name="text">
+                        <string>Удалить 1)</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="0" column="1">
+                <widget class="QCheckBox" name="repl_num">
+                    <property name="text">
+                        <string>Заменить 1 на ?</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="2" column="0">
+                <widget class="QCheckBox" name="del_num">
+                    <property name="text">
+                        <string>Удалить 1.</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="11" column="0">
+                <widget class="QCheckBox" name="repl_to_quiz">
+                    <property name="text">
+                        <string>признак вопроса</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="11" column="1">
+                <widget class="QLineEdit" name="label_quiz"/>
+            </item>
+            <item row="13" column="0">
+                <widget class="QCheckBox" name="repl_answer">
+                    <property name="text">
+                        <string>удалить в начале ответа</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="16" column="0">
+                <widget class="QDialogButtonBox" name="buttonBox">
+                    <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                    </property>
+                </widget>
+            </item>
+            <item row="0" column="0">
+                <widget class="QCheckBox" name="repl_numdot">
+                    <property name="toolTip">
+                        <string/>
+                    </property>
+                    <property name="toolTipDuration">
+                        <number>-1</number>
+                    </property>
+                    <property name="statusTip">
+                        <string/>
+                    </property>
+                    <property name="whatsThis">
+                        <string/>
+                    </property>
+                    <property name="text">
+                        <string>Заменить 1. на ?</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="14" column="0">
+                <widget class="QCheckBox" name="replfromto">
+                    <property name="text">
+                        <string>Заменить</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="13" column="1">
+                <widget class="QLineEdit" name="label_answer"/>
+            </item>
+            <item row="7" column="0">
+                <widget class="QCheckBox" name="repl_questnum">
+                    <property name="toolTip">
+                        <string/>
+                    </property>
+                    <property name="statusTip">
+                        <string/>
+                    </property>
+                    <property name="whatsThis">
+                        <string/>
+                    </property>
+                    <property name="text">
+                        <string>Удалить номер вопроса</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="11" column="2" colspan="2">
+                <widget class="QCheckBox" name="repl_to_correct">
+                    <property name="text">
+                        <string>признак ответа в конце</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="2" column="4">
+                <widget class="QCheckBox" name="del_alphadot">
+                    <property name="text">
+                        <string>Удалить А.</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="14" column="1">
+                <widget class="QLineEdit" name="repl_from"/>
+            </item>
+            <item row="11" column="4">
+                <widget class="QLineEdit" name="label_correct"/>
+            </item>
+            <item row="14" column="2">
+                <widget class="QLabel" name="label">
+                    <property name="text">
+                        <string>на</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="14" column="3" colspan="2">
+                <widget class="QLineEdit" name="repl_to"/>
+            </item>
+            <item row="10" column="0">
+                <widget class="QCheckBox" name="repl_html">
+                    <property name="text">
+                        <string>Коды вместо &lt;&gt;&amp;&amp;</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="10" column="1" colspan="2">
+                <widget class="QCheckBox" name="make_tags">
+                    <property name="text">
+                        <string>Заменить коды для &lt;&gt;&amp;&amp; на символы</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="15" column="0">
+                <widget class="QCheckBox" name="repl_split_numsk">
+                    <property name="text">
+                        <string>разбивать строку по 1)</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="15" column="1">
+                <widget class="QCheckBox" name="repl_split_alpha">
+                    <property name="text">
+                        <string>разбивать строку по а)</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="7" column="2">
+                <widget class="QCheckBox" name="del_endsemicolon">
+                    <property name="text">
+                        <string>удалить ; в конце строки</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="7" column="4">
+                <widget class="QCheckBox" name="del_enddot">
+                    <property name="text">
+                        <string>Удалить . в конце строки</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="10" column="4">
+                <widget class="QCheckBox" name="del_endcomma">
+                    <property name="text">
+                        <string>Удалить , в конце строки</string>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <tabstops>
+        <tabstop>repl_numdot</tabstop>
+        <tabstop>repl_num</tabstop>
+        <tabstop>repl_numsk</tabstop>
+        <tabstop>del_num</tabstop>
+        <tabstop>del_numsk</tabstop>
+        <tabstop>del_alpha</tabstop>
+        <tabstop>del_alphadot</tabstop>
+        <tabstop>repl_questnum</tabstop>
+        <tabstop>del_space</tabstop>
+        <tabstop>del_endsemicolon</tabstop>
+        <tabstop>del_enddot</tabstop>
+        <tabstop>repl_html</tabstop>
+        <tabstop>make_tags</tabstop>
+        <tabstop>repl_to_quiz</tabstop>
+        <tabstop>label_quiz</tabstop>
+        <tabstop>repl_to_correct</tabstop>
+        <tabstop>label_correct</tabstop>
+        <tabstop>repl_answer</tabstop>
+        <tabstop>label_answer</tabstop>
+        <tabstop>replfromto</tabstop>
+        <tabstop>repl_from</tabstop>
+        <tabstop>repl_to</tabstop>
+        <tabstop>repl_split_numsk</tabstop>
+        <tabstop>repl_split_alpha</tabstop>
+    </tabstops>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>accepted()</signal>
+            <receiver>DialogReplace</receiver>
+            <slot>accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>248</x>
+                    <y>254</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>157</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>rejected()</signal>
+            <receiver>DialogReplace</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>316</x>
+                    <y>260</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>286</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+</ui>
