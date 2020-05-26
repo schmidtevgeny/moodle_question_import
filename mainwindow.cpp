@@ -9,6 +9,7 @@
 #include <QTreeWidgetItem>
 #include <dialogreplace.h>
 #include <ui_dialogreplace.h>
+#include <QDateTime>
 #include "myhighlighter.h"
 //#include <QtXml>
 
@@ -174,6 +175,15 @@ void MainWindow::on_actionTest_triggered() {
             top = child;
             i++;
             continue;
+        } else if (s.at(0) == '$')
+        {
+            if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
+
+            child = new QTreeWidgetItem(QStringList() << tr("ticket") << s.mid(1));
+            top->addChild(child);
+            top = child;
+            i++;
+            continue;
         }
 
         i++;
@@ -186,7 +196,8 @@ void MainWindow::on_actionTest_triggered() {
 void MainWindow::on_actionOpen_triggered() {
     QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, "html (*.htm;*.html);ANY FILE (*)");
 
-    /*if (!fname.isEmpty())
+
+    if (!fname.isEmpty())
     {
         images.clear();
 
@@ -213,7 +224,9 @@ void MainWindow::on_actionOpen_triggered() {
             s = in.readAll();
         }
 
-
+        ui->plain->setHtml(s);
+    }
+    /*
         QRegExp head("\\</head\\>");
 
         head.setCaseSensitivity(Qt::CaseInsensitive);
@@ -355,24 +368,6 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         stream.writeEndElement();
     }
 }
-QString test_img(QString txt, QString imgpath) {
-    txt = txt.replace("&", "&amp;");
-
-    while (txt.indexOf("!(") > -1)
-    {
-        QString s1 = txt.mid(0, txt.indexOf("!("));
-        QString s2 = txt.mid(txt.indexOf("!(") + 2);
-        QString s3 = s2.mid(s2.indexOf(")") + 1);
-
-        s2 = s2.mid(0, s2.indexOf(")"));
-        txt = s1 + "&lt;img src=\"" + imgpath + s2 + "\"&gt;" + s3;
-    }
-
-    // замена недопустимых спецсимволов
-    // txt = txt.replace("&cedil;", "...").replace("&times;", "&#215;");
-
-    return txt;
-}    // test_img
 
 QString to_title(QString s) {
     QRegExp notags("\\<.*\\>");
@@ -474,6 +469,9 @@ void MainWindow::on_actionExport_triggered() {
                 stream.writeTextElement("text", themes.at(i)->parent()->text(1) + "/" + themes.at(i)->text(1));
                 stream.writeEndElement();
                 stream.writeEndElement();
+            } else if (themes.at(i)->text(0) == tr("ticket"))
+            {
+                // TODO: реализовать вопросы clozed
             } else
             {
                 stream.writeStartElement("question");
@@ -744,6 +742,11 @@ void MainWindow::on_action_repl_triggered() {
 
     if (dlg.exec())
     {
+        // папка для картинок
+        QString path = QString::number(QDateTime::currentSecsSinceEpoch(), 16);
+        QDir work = QDir::current();
+        work.mkpath(path);
+        path = work.relativeFilePath(path);
         // списки замен
         QString s = ui->plain->document()->toHtml();
         QStringList lines;
@@ -779,17 +782,24 @@ void MainWindow::on_action_repl_triggered() {
                 replace << match.captured(0);
                 files << f;
             }
+            for (int i = 0; i < files.size(); i++)
+            {
+                QString filename = files[i];
+                if (filename.indexOf("file:///") == -1) continue;
+                QFileInfo f(filename.mid(8));
+                QString newname = path + "/" + f.fileName().toStdString().c_str();
+                if (QFile::copy(f.filePath().toStdString().c_str(), newname)) { files[i] = newname; }
+            }
             for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
+            // TODO: <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
 
             p = p.remove(QRegExp("<[^>]*>"));
             lines << p;
         }
-        /*
+        s = "\n" + lines.join("\n");
         // Удалить номер вопроса
         if (dlg.ui->repl_questnum->isChecked())
         {
-            qWarning("repl_questnum");
-
             QRegExp r("\\n\\s*[?]\\d+\\s*\\.\\s*");
 
             r.setMinimal(true);
@@ -941,35 +951,55 @@ void MainWindow::on_action_repl_triggered() {
         // удалить ; в конце строки
         if (dlg.ui->del_endsemicolon->isChecked()) { s = s.replace(";\n", "\n"); }
 
-        QStringList lst = s.split("\n");
+        lines = s.split("\n");
 
-        for (int i = 0; i < lst.size(); i++)
+        for (int i = 0; i < lines.size(); i++)
         {
             // признак вопроса
             if (dlg.ui->repl_to_quiz->isChecked())
             {
-                if (lst.at(i).mid(0, dlg.ui->label_quiz->text().length()) == dlg.ui->label_quiz->text())
+                if (lines.at(i).mid(0, dlg.ui->label_quiz->text().length()) == dlg.ui->label_quiz->text())
                 {
-                    lst[i] = "";
-                    lst[i + 1] = "?" + lst[i + 1];
+                    lines[i] = "";
+                    lines[i + 1] = "?" + lines[i + 1];
                 }
             }
             // удалить в начале ответа
             if (dlg.ui->repl_answer->isChecked())
             {
-                if (lst.at(i).mid(0, dlg.ui->label_answer->text().length()) == dlg.ui->label_answer->text())
-                { lst[i] = lst[i].mid(dlg.ui->label_answer->text().length()); }
+                if (lines.at(i).mid(0, dlg.ui->label_answer->text().length()) == dlg.ui->label_answer->text())
+                { lines[i] = lines[i].mid(dlg.ui->label_answer->text().length()); }
             }
             //признак ответа в конце
             if (dlg.ui->repl_to_correct->isChecked())
             {
-                if (lst.at(i).rightRef(dlg.ui->label_correct->text().length()) == dlg.ui->label_correct->text())
-                { lst[i] = "*" + lst[i].left(lst[i].length() - dlg.ui->label_correct->text().length()); }
-            }         
+                if (lines.at(i).rightRef(dlg.ui->label_correct->text().length()) == dlg.ui->label_correct->text())
+                { lines[i] = "*" + lines[i].left(lines[i].length() - dlg.ui->label_correct->text().length()); }
+            }
         }
 
-        ui->plain->clear();*/
-        ui->plain->setPlainText(lines.join("\n"));
+        // не копирует
+        /*for (int i=0;i<lines.size();i++)
+        {
+            if (lines[i].indexOf("!(")!=-1)
+            {
+                // TODO: add <img
+                QString txt=lines[i];
+                QString txt2;
+                while (txt.indexOf("!(") > -1)
+                {
+                    QString s1 = txt.mid(0, txt.indexOf("!("));
+                    QString s2 = txt.mid(txt.indexOf("!(") + 2);
+                    txt = s2.mid(s2.indexOf(")") + 1);
+
+                    s2 = s2.mid(0, s2.indexOf(")"));
+                    txt2 =txt2+ s1 + "<img src=\"" + s2 + "\" alt=\"!("+s2+")\">";
+                }
+                lines[i]=txt2;
+            }
+        }*/
+        s = "<html><body><p>" + lines.join("</p><p>") + "</p></body></html>";
+        ui->plain->setHtml(s);
     }
 }    // MainWindow::on_action_repl_triggered
 
@@ -1183,42 +1213,3 @@ void MainWindow::on_actionFixTolerance_triggered(bool checked) {
     else
         tolerance->setText(tr("%1").arg(200));
 }
-/*
-void MainWindow::on_action_triggered() {
-    //    QClipboard * clipboard = QGuiApplication::clipboard();
-    //    const QMimeData * mimeData = clipboard->mimeData();
-    //    qWarning(mimeData->formats().join("\n").toStdString().c_str());
-    //    //    QString originalText = clipboard->text();
-    //    QString originalText = mimeData->html();
-    //    qWarning(originalText.toStdString().c_str());
-    QString s = ui->textEdit->toHtml();
-    QRegularExpression expression2("src\\s*=\\s*\"(.+?)\"");
-    QRegularExpressionMatchIterator i = expression2.globalMatch(s);
-    QStringList files;
-    while (i.hasNext())
-    {
-        QRegularExpressionMatch match = i.next();
-        QString s = match.captured(1);
-        if (s.indexOf("file:///") == 0) files << s;
-    }
-    QString path = QString::number(QDateTime::currentSecsSinceEpoch(), 16);
-    QDir work = QDir::current();
-    work.mkpath(path);
-    path = work.relativeFilePath(path);
-    int cnt = 0;
-    for (auto filename : files)
-    {
-        QFileInfo f(filename.mid(8));
-        QString newname = path + "/" + f.fileName().toStdString().c_str();
-        if (QFile::copy(f.filePath().toStdString().c_str(), newname))
-        {
-            cnt++;
-            s = s.replace(filename, newname);
-        }
-    }
-    ui->textEdit->setHtml(s);
-    QMessageBox::information(this, tr("Done"), tr("Copied %1 files").arg(cnt));
-    if (s.indexOf("font-family:'Symbol'") != -1)
-    { QMessageBox::warning(this, tr("Warning"), tr("The Symbol font suspicion")); }
-}
-*/
