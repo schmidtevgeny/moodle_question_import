@@ -6,18 +6,18 @@
 
 QT += core gui widgets
 
-    TARGET = TestConvert
+TARGET = TestConvert
 
-        TEMPLATE = app
+TEMPLATE = app
 
-            TRANSLATIONS = TestConvert.ts
+TRANSLATIONS = TestConvert.ts
 
-                               SOURCES += main.cpp mainwindow.cpp dialogreplace.cpp myhighlighter.cpp
+SOURCES += main.cpp mainwindow.cpp dialogreplace.cpp myhighlighter.cpp
 
-                                              HEADERS += mainwindow.h dialogreplace.h myhighlighter.h
+HEADERS += mainwindow.h dialogreplace.h myhighlighter.h
 
-                                                             FORMS += mainwindow.ui dialogreplace.ui
+FORMS += mainwindow.ui dialogreplace.ui
 
-#QMAKE_POST_LINK = E :\TestConvert\postlink.bat
+#QMAKE_POST_LINK = E:\TestConvert\postlink.bat
 
-                                                                          RESOURCES += images / icon.qrc
+RESOURCES += images/icon.qrc
