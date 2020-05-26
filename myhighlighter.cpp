@@ -4,6 +4,7 @@
 MyHighlighter::MyHighlighter(QTextDocument * parent) : QSyntaxHighlighter(parent) {
     keywordFormat.setFontWeight(QFont::Bold);
     sectionFormat.setFontWeight(QFont::Bold);
+    ticketFormat.setFontWeight(QFont::Bold);
     subsectionFormat.setFontWeight(QFont::Bold);
     questionFormat.setFontWeight(QFont::Bold);
     answerFormat.setFontWeight(QFont::Normal);
@@ -11,6 +12,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent) : QSyntaxHighlighter(parent
 
     keywordFormat.setForeground(Qt::blue);
     sectionFormat.setForeground(Qt::black);
+    ticketFormat.setForeground(Qt::black);
     subsectionFormat.setForeground(Qt::black);
     questionFormat.setForeground(Qt::black);
     answerFormat.setForeground(Qt::darkMagenta);
@@ -18,6 +20,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent) : QSyntaxHighlighter(parent
 
     keywordFormat.setFontItalic(false);
     sectionFormat.setFontItalic(true);
+    ticketFormat.setFontItalic(true);
     subsectionFormat.setFontItalic(true);
     questionFormat.setFontItalic(true);
     answerFormat.setFontItalic(false);
@@ -25,6 +28,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent) : QSyntaxHighlighter(parent
 
     keywordFormat.setFontUnderline(false);
     sectionFormat.setFontUnderline(true);
+    ticketFormat.setFontUnderline(true);
     subsectionFormat.setFontUnderline(true);
     questionFormat.setFontUnderline(false);
     answerFormat.setFontUnderline(false);
@@ -52,6 +56,14 @@ void MyHighlighter::highlightBlock(const QString & text) {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), subsectionFormat);
     }
+    //    QTextCharFormat ticketFormat;
+    QRegularExpression expression21("^\\s*$[^\\n]*");
+    i = expression21.globalMatch(text);
+    while (i.hasNext())
+    {
+        QRegularExpressionMatch match = i.next();
+        setFormat(match.capturedStart(), match.capturedLength(), ticketFormat);
+    }
     //    QTextCharFormat questionFormat;
     QRegularExpression expression3("^\\s*\\?[^\\n]*");
     i = expression3.globalMatch(text);
@@ -67,18 +79,18 @@ void MyHighlighter::highlightBlock(const QString & text) {
     while (i.hasNext())
     {
         QRegularExpressionMatch match = i.next();
-        setFormat(match.capturedStart(), match.capturedLength(), answerFormat);
+        setFormat(match.capturedStart(), match.capturedLength(), answer2Format);
     }
 
-    QRegularExpression expression5("^\\s*[^#@\\?\\*][^\\n]*");
+    QRegularExpression expression5("^\\s*[^#@\\?\\*$][^\\n]*");
     i = expression5.globalMatch(text);
     while (i.hasNext())
     {
         QRegularExpressionMatch match = i.next();
-        setFormat(match.capturedStart(), match.capturedLength(), answer2Format);
+        setFormat(match.capturedStart(), match.capturedLength(), answerFormat);
     }
 
-    QRegularExpression expression6("^\\s*[#@\\?\\*]");
+    QRegularExpression expression6("^\\s*[#@$\\?\\*]");
     i = expression6.globalMatch(text);
     while (i.hasNext())
     {

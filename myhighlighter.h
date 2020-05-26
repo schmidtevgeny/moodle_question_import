@@ -14,6 +14,7 @@ class MyHighlighter : public QSyntaxHighlighter {
   private:
     QTextCharFormat keywordFormat;
     QTextCharFormat sectionFormat;
+    QTextCharFormat ticketFormat;
     QTextCharFormat subsectionFormat;
     QTextCharFormat questionFormat;
     QTextCharFormat answerFormat;

@@ -97,7 +97,7 @@ void MainWindow::on_actionTest_triggered() {
 
                 if (s.at(0) == '*') { correctcount++; }
 
-                if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?')) { break; }
+                if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$')) { break; }
 
                 ans.append(s);
                 j++;
@@ -226,119 +226,6 @@ void MainWindow::on_actionOpen_triggered() {
 
         ui->plain->setHtml(s);
     }
-    /*
-        QRegExp head("\\</head\\>");
-
-        head.setCaseSensitivity(Qt::CaseInsensitive);
-
-        int pos = head.indexIn(s);
-
-        s = s.mid(pos);
-
-        QRegExp math("\\<m:oMathPara\\>.*\\</m:oMathPara\\>");
-
-        math.setMinimal(true);
-        math.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(math, "");
-
-        QRegExp re;
-
-        re.setMinimal(true);
-        re.setCaseSensitivity(Qt::CaseInsensitive);
-
-        QRegExp re_ms;
-
-        re_ms.setMinimal(true);
-        re_ms.setCaseSensitivity(Qt::CaseInsensitive);
-
-        QRegExp re2;
-
-        re2.setMinimal(true);
-        re2.setCaseSensitivity(Qt::CaseInsensitive);
-
-        // обработка рисунков
-        re.setPattern("\\<img.*\\>");
-        re_ms.setPattern("\\<v:imagedata.*\\>");
-        re2.setPattern("src\\s*=\\s*['\"](.*)['\"]");
-
-        while (re.indexIn(s) > -1)
-        {
-            QString is = re.cap(0);
-
-            re2.indexIn(is);
-
-            QString url = re2.cap(1);
-
-            imgsrcpath = last_dir + "/" + url.mid(0, url.indexOf("/"));
-
-            while (url.indexOf("/") > -1) { url = url.mid(url.indexOf("/") + 1); }
-
-            while (url.indexOf("\\") > -1) { url = url.mid(url.indexOf("\\") + 1); }
-
-            images << url;
-            s = s.replace(is, "!(" + url + ")");
-        }
-
-        // абзацы
-        s = s.replace(QRegExp("[\r\n]"), " ");
-
-        QRegExp p("\\<p\\s*.*\\>");
-
-        p.setMinimal(true);
-        p.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(p, "\n");
-
-        QRegExp br("\\<br\\s*.*\\>");
-
-        br.setMinimal(true);
-        br.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(br, "&lt;br&gt;");
-
-        // индексы
-        QRegExp sub("\\<sub\\s*.*\\>");
-
-        sub.setMinimal(true);
-        sub.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(sub, "[sub]");
-
-        QRegExp sup("\\<sup\\s*.*\\>");
-
-        sup.setMinimal(true);
-        sup.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(sup, "[sup]");
-
-        QRegExp sub1("\\</sub\\s*.*\\>");
-
-        sub1.setMinimal(true);
-        sub1.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(sub1, "[/sub]");
-
-        QRegExp sup1("\\</sup\\s*.*\\>");
-
-        sup1.setMinimal(true);
-        sup1.setCaseSensitivity(Qt::CaseInsensitive);
-        s = s.replace(sup1, "[/sup]");
-
-        // не воспринимаемые коды
-
-        // все туги
-        QRegExp notags("\\<.*\\>");
-
-        notags.setMinimal(true);
-        s = s.replace(notags, "");
-        s = s.replace("-&gt;", "->");
-
-        while (s.indexOf("  ") > -1) { s = s.replace("  ", " "); }
-
-        s = s.replace("[sub]", "&lt;sub&gt;")
-                .replace("[/sub]", "&lt;/sub&gt;")
-                .replace("[sup]", "&lt;sup&gt;")
-                .replace("[/sup]", "&lt;/sup&gt;");
-
-        ui->plain->clear();
-        ui->plain->appendPlainText(s);
-    }*/
-    // TODO: edit
 }    // MainWindow::on_actionOpen_triggered
 
 void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basepath) {
@@ -353,6 +240,12 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         if (!images.contains(s2)) images.append(s2);
         txt = s1 + "<img src=\"@@PLUGINFILE@@/" + s2 + "\">" + s3;
     }
+
+    txt = txt.replace("[[br]]", "<br />")
+              .replace("[[sub]]", "<sub>")
+              .replace("[[/sub]]", "</sub>")
+              .replace("[[sup]]", "<sup>")
+              .replace("[[/sup]]", "</sup>");
 
     stream.writeTextElement("text", txt);
     for (auto fn : images)
@@ -445,6 +338,9 @@ void MainWindow::on_actionExport_triggered() {
             for (int j = 0; j < top->childCount(); j++)
             {
                 if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+                if (top->child(j)->text(0) == tr("ticket"))
+                {    // TODO: реализовать вопросы clozed
+                }
             }
         }
 
@@ -469,9 +365,6 @@ void MainWindow::on_actionExport_triggered() {
                 stream.writeTextElement("text", themes.at(i)->parent()->text(1) + "/" + themes.at(i)->text(1));
                 stream.writeEndElement();
                 stream.writeEndElement();
-            } else if (themes.at(i)->text(0) == tr("ticket"))
-            {
-                // TODO: реализовать вопросы clozed
             } else
             {
                 stream.writeStartElement("question");
@@ -481,6 +374,7 @@ void MainWindow::on_actionExport_triggered() {
                 stream.writeEndElement();
                 stream.writeEndElement();
             }
+
             for (int j = 0; j < themes.at(i)->childCount(); j++)
             {
                 top = themes.at(i)->child(j);
