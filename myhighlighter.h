@@ -1,7 +1,7 @@
 #ifndef MYHIGHLIGHTER_H
 #define MYHIGHLIGHTER_H
 #include <QSyntaxHighlighter>
-
+#include <QRegularExpression>
 class MyHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
 
@@ -17,8 +17,16 @@ class MyHighlighter : public QSyntaxHighlighter {
     QTextCharFormat ticketFormat;
     QTextCharFormat subsectionFormat;
     QTextCharFormat questionFormat;
-    QTextCharFormat answerFormat;
-    QTextCharFormat answer2Format;
+    QTextCharFormat correctAnswerFormat;
+    QTextCharFormat incorrectAnswerFormat;
+    QRegularExpression sectionExpression;
+    QRegularExpression ticketExpression;
+    QRegularExpression incorrectAnswerExpression;
+    QRegularExpression keywordExpression;
+    QRegularExpression correctAnswerExpression;
+    QRegularExpression questionExpression;
+    QRegularExpression subsectionExpression;
+    QRegularExpression matchExpression;
 };
 
 #endif    // MYHIGHLIGHTER_H
