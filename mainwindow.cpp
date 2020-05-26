@@ -229,6 +229,8 @@ void MainWindow::on_actionOpen_triggered() {
 
 void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basepath) {
     QStringList images;
+    // список файлов
+    int num;
     while (txt.indexOf("!(") > -1)
     {
         QString s1 = txt.mid(0, txt.indexOf("!("));
@@ -236,8 +238,15 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         QString s3 = s2.mid(s2.indexOf(")") + 1);
 
         s2 = s2.mid(0, s2.indexOf(")"));
-        if (!images.contains(s2)) images.append(s2);
-        txt = s1 + "<img src=\"@@PLUGINFILE@@/" + s2 + "\">" + s3;
+
+        if (!images.contains(s2))
+        {
+            num = images.size();
+            images.append(s2);
+        } else
+        { num = images.indexOf(s2); }
+        s2 = s2.mid(s2.lastIndexOf('.'));
+        txt = s1 + "<img src=\"@@PLUGINFILE@@/" + QString("%1%2").arg(num).arg(s2) + "\">" + s3;
     }
 
     txt = txt.replace("[[br]]", "<br />")
@@ -247,17 +256,30 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
               .replace("[[/sup]]", "</sup>");
 
     stream.writeTextElement("text", txt);
+    num = 0;
     for (auto fn : images)
     {
-        QFile file(basepath + "/" + fn);
-        file.open(QIODevice::ReadOnly);
+        QFile file(fn);
+        if (file.exists())
+        {
+            file.open(QIODevice::ReadOnly);
+        } else
+        {
+            file.setFileName(basepath + "/" + fn);
+            if (file.exists())
+            {
+                file.open(QIODevice::ReadOnly);
+            } else
+            { QMessageBox::warning(this, tr("Error"), tr("File %1 not found").arg(fn)); }
+        }
 
         stream.writeStartElement("file");
-        stream.writeAttribute("name", fn);
+        stream.writeAttribute("name", QString("%1%2").arg(num).arg(fn.mid(fn.lastIndexOf('.'))));
         stream.writeAttribute("path", "/");
         stream.writeAttribute("encoding", "base64");
         stream.writeCharacters(file.readAll().toBase64());
         stream.writeEndElement();
+        num++;
     }
 }
 
@@ -636,11 +658,11 @@ void MainWindow::on_action_repl_triggered() {
     if (dlg.exec())
     {
         // папка для картинок
-        QString path = QString::number(QDateTime::currentSecsSinceEpoch(), 16);
-        QDir work(last_dir);    //= QDir::current();
-        //        last_dir = work;
-        work.mkpath(path);
-        path = work.relativeFilePath(path);
+        //        QString path = QString::number(QDateTime::currentSecsSinceEpoch(), 16);
+        //        QDir work(last_dir);    //= QDir::current();
+        //        //        last_dir = work;
+        //        work.mkpath(path);
+        //        path = work.relativeFilePath(path);
         // списки замен
         QString s = ui->plain->document()->toHtml();
         QStringList lines;
@@ -674,9 +696,10 @@ void MainWindow::on_action_repl_triggered() {
                 QRegularExpressionMatch match = i.next();
                 QString f = match.captured(1);
                 replace << match.captured(0);
-                files << f;
+                files << f.replace("file:///", "");
             }
             // TODO: копирование картинок по пути
+
             //            for (int i = 0; i < files.size(); i++)
             //            {
             //                QString filename = files[i];
@@ -687,7 +710,32 @@ void MainWindow::on_action_repl_triggered() {
             //            }
             for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
             // TODO: <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
+            QString s1 = "", s2 = "", s3 = "";
+            QString sub = "vertical-align:sub;";
+            QString sup = "vertical-align:super;";
+            QString span = "</span>";
+            while (p.indexOf(sub) != -1)
+            {
+                s1 = p.left(p.indexOf(sub));
+                s1 = s1.left(s1.lastIndexOf("<"));
+                s2 = p.mid(p.indexOf(sub));
+                s2 = s2.mid(s2.indexOf(">") + 1);
+                s3 = s2.mid(s2.indexOf(span) + span.length());
+                s2 = s2.left(s2.indexOf(span));
 
+                p = s1 + "[[sub]]" + s2 + "[[/sub]]" + s3;
+            }
+            while (p.indexOf(sup) != -1)
+            {
+                s1 = p.left(p.indexOf(sup));
+                s1 = s1.left(s1.lastIndexOf("<"));
+                s2 = p.mid(p.indexOf(sup));
+                s2 = s2.mid(s2.indexOf(">"));
+                s3 = s2.mid(s2.indexOf(span) + span.length());
+                s2 = s2.left(s2.indexOf(span));
+                p = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;
+            }
+            qWarning(p.toStdString().c_str());
             p = p.remove(QRegExp("<[^>]*>"));
             lines << p;
         }
