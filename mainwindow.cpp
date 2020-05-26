@@ -765,9 +765,24 @@ void MainWindow::on_action_repl_triggered() {
                     .replace("<sub>", "[[sub]]")
                     .replace("</sub>", "[[/sub]]")
                     .replace("<sup>", "[[sup]]")
-                    .replace("</sup>", "[[/sup]]");
-            qWarning(p.toStdString().c_str());
-            qWarning("----");
+                    .replace("</sup>", "[[/sup]]")
+                    .replace("\n", " ");
+
+            QRegularExpression expression2("<img\\s*[^<]*src\\s*=\\s*\"(.+?)\"[^>]*>");
+            QRegularExpressionMatchIterator i = expression2.globalMatch(p);
+            QStringList files;
+            QStringList replace;
+            while (i.hasNext())
+            {
+                QRegularExpressionMatch match = i.next();
+                QString f = match.captured(1);
+                replace << match.captured(0);
+                files << f;
+            }
+            for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
+
+            p = p.remove(QRegExp("<[^>]*>"));
+            lines << p;
         }
         /*
         // Удалить номер вопроса
@@ -953,8 +968,8 @@ void MainWindow::on_action_repl_triggered() {
             }         
         }
 
-        ui->plain->clear();
-        ui->plain->setPlainText(lst.join("\n"));*/
+        ui->plain->clear();*/
+        ui->plain->setPlainText(lines.join("\n"));
     }
 }    // MainWindow::on_action_repl_triggered
 
@@ -1040,7 +1055,7 @@ void MainWindow::on_tree_itemSelectionChanged() {
     QList<QTreeWidgetItem *> themes;
 
     QTreeWidgetItem * top;
-    QTreeWidgetItem * selected;
+    QTreeWidgetItem * selected = nullptr;
 
     if (ui->tree->selectedItems().size() > 0)
     {
