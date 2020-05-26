@@ -743,9 +743,33 @@ void MainWindow::on_action_repl_triggered() {
     //    TODO: edit
 
     if (dlg.exec())
-    { /*
+    {
         // списки замен
-        QString s = "\n" + ui->plain->document()->toPlainText();
+        QString s = ui->plain->document()->toHtml();
+        QStringList lines;
+        int pos = s.indexOf("<body", 0, Qt::CaseInsensitive);
+        s = s.mid(pos);
+        s = s.mid(s.indexOf(">") + 1);
+        s = s.left(s.indexOf("</body", 0, Qt::CaseInsensitive));
+        // TODO: H tag
+        while (true)
+        {
+            if (s.isEmpty()) break;
+            pos = s.indexOf("</p>", 0, Qt::CaseInsensitive);
+
+            QString p = s.left(pos);
+            s = s.mid(pos + 4);
+
+            p = p.mid(p.indexOf(">") + 1);
+            p = p.replace("<br />", "[[br]]")
+                    .replace("<sub>", "[[sub]]")
+                    .replace("</sub>", "[[/sub]]")
+                    .replace("<sup>", "[[sup]]")
+                    .replace("</sup>", "[[/sup]]");
+            qWarning(p.toStdString().c_str());
+            qWarning("----");
+        }
+        /*
         // Удалить номер вопроса
         if (dlg.ui->repl_questnum->isChecked())
         {
@@ -930,7 +954,7 @@ void MainWindow::on_action_repl_triggered() {
         }
 
         ui->plain->clear();
-        ui->plain->appendPlainText(lst.join("\n"));*/
+        ui->plain->setPlainText(lst.join("\n"));*/
     }
 }    // MainWindow::on_action_repl_triggered
 
