@@ -3,6 +3,8 @@
 
 DialogReplace::DialogReplace(QWidget * parent) : QDialog(parent), ui(new Ui::DialogReplace) {
     ui->setupUi(this);
+    // глобальные замены
+    // global substitutions
     ui->repl_questnum->setToolTip(
         "<html><head/><body><p>Заменяет в начале строки</p><p>"
         "<i>пробелы</i>|<i>знак вопроса</i>|<i>числа</i>|<i>пробелы</i>|<i>точка</i>|<i>пробелы</i></p>"
@@ -66,6 +68,7 @@ DialogReplace::DialogReplace(QWidget * parent) : QDialog(parent), ui(new Ui::Dia
         "<i>пробелы</i>|<i>числа</i>|<i>пробелы</i>|<i>круглая скобка</i></p>"
         "<p>на <i>перевод строки</i></p></body></html>");
     // построчные замены
+    // line replacements
     ui->repl_to_quiz->setToolTip(
         "<html><head/><body><p>Заменяет <i>указанную фразу</i> в начале строки</p>"
         "<p>на <i>знак вопроса</i></p></body></html>");
@@ -74,23 +77,6 @@ DialogReplace::DialogReplace(QWidget * parent) : QDialog(parent), ui(new Ui::Dia
     ui->repl_to_correct->setToolTip(
         "<html><head/><body><p>Заменяет <i>указанную фразу</i> в конце строки</p>"
         "<p>на <i>звездочку</i></p></body></html>");
-    /*
-    ui->repl_from->setToolTip(
-        "<html><head/><body><p>Заменяет в начале строки</p><p>"
-        "<i>пробелы</i>|<i>числа</i>|<i>пробелы</i>|<i>точка</i>|<i>пробелы</i></p>"
-        "<p>на <i>знак вопроса</i></p></body></html>");
-    ui->repl_from->setToolTip(
-        "<html><head/><body><p>Заменяет в начале строки</p><p>"
-        "<i>пробелы</i>|<i>числа</i>|<i>пробелы</i>|<i>точка</i>|<i>пробелы</i></p>"
-        "<p>на <i>знак вопроса</i></p></body></html>");
-    ui->repl_from->setToolTip(
-        "<html><head/><body><p>Заменяет в начале строки</p><p>"
-        "<i>пробелы</i>|<i>числа</i>|<i>пробелы</i>|<i>точка</i>|<i>пробелы</i></p>"
-        "<p>на <i>знак вопроса</i></p></body></html>");
-    ui->repl_from->setToolTip(
-        "<html><head/><body><p>Заменяет в начале строки</p><p>"
-        "<i>пробелы</i>|<i>числа</i>|<i>пробелы</i>|<i>точка</i>|<i>пробелы</i></p>"
-        "<p>на <i>знак вопроса</i></p></body></html>");*/
 }
 
 DialogReplace::~DialogReplace() { delete ui; }

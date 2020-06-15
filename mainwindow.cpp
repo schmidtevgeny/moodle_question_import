@@ -730,7 +730,7 @@ void MainWindow::on_action_repl_triggered() {
                 s1 = p.left(p.indexOf(sup));
                 s1 = s1.left(s1.lastIndexOf("<"));
                 s2 = p.mid(p.indexOf(sup));
-                s2 = s2.mid(s2.indexOf(">"));
+                s2 = s2.mid(s2.indexOf(">") + 1);
                 s3 = s2.mid(s2.indexOf(span) + span.length());
                 s2 = s2.left(s2.indexOf(span));
                 p = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;

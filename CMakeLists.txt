@@ -18,7 +18,6 @@ find_package(Qt5 REQUIRED
         Sql
         PrintSupport
         LinguistTools
-
         )
 # moc от qt
 # список форм
