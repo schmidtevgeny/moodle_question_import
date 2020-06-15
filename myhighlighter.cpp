@@ -1,6 +1,6 @@
 #include "myhighlighter.h"
 #include <QRegularExpression>
-// TODO: потом вывести переменные нормально
+// TODO: make normal variables
 MyHighlighter::MyHighlighter(QTextDocument * parent)
     : QSyntaxHighlighter(parent),
       sectionExpression("^\\s*#[^\\n]*"),
@@ -49,7 +49,6 @@ void MyHighlighter::highlightBlock(const QString & text) {
     myClassFormat.setForeground(Qt::darkMagenta);
 
     QRegularExpressionMatchIterator i;
-    //    QTextCharFormat sectionFormat;
 
     i = sectionExpression.globalMatch(text);
     while (i.hasNext())

@@ -10,7 +10,7 @@ TARGET = TestConvert
 
 TEMPLATE = app
 
-TRANSLATIONS = TestConvert.ts
+TRANSLATIONS = TestConvert_ru.ts
 
 SOURCES += main.cpp mainwindow.cpp dialogreplace.cpp myhighlighter.cpp
 
@@ -18,6 +18,6 @@ HEADERS += mainwindow.h dialogreplace.h myhighlighter.h
 
 FORMS += mainwindow.ui dialogreplace.ui
 
-#QMAKE_POST_LINK = E:\TestConvert\postlink.bat
+#QMAKE_POST_LINK = E:\TestConvert\postlink.batL
 
 RESOURCES += images/icon.qrc
