@@ -188,33 +188,46 @@
         <source>Codes instead of &lt;&gt;&amp;&amp;</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>MainWindow</name>
-    <message>
-        <location filename="mainwindow.ui" line="14"/>
-        <source>Test Converter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="42"/>
-        <location filename="mainwindow.cpp" line="1020"/>
-        <source>Question type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="47"/>
-        <location filename="mainwindow.cpp" line="984"/>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="52"/>
-        <source>Optionally</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="71"/>
+< /context>
+< context >
+<name>MainWindow < /name>
+< message >
+<location filename = "mainwindow.ui"
+line = "14" / >
+    <source>Test
+Converter < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.ui"
+line = "42" / >
+<location filename = "mainwindow.cpp"
+line = "1019" / >
+    <source>Question
+type < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.ui"
+line = "47" / >
+<location filename = "mainwindow.cpp"
+line = "983" / >
+    <source>Text < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.ui"
+line = "52" / >
+    <source>Optionally < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.ui"
+line = "71" / >
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -399,212 +412,340 @@
         <location filename="mainwindow.ui" line="337"/>
         <source>Export as plaintext</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="345"/>
-        <location filename="mainwindow.ui" line="348"/>
-        <source>Fixed accuracy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="55"/>
-        <location filename="mainwindow.cpp" line="165"/>
-        <location filename="mainwindow.cpp" line="1004"/>
-        <location filename="mainwindow.cpp" line="1119"/>
-        <source>section</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="55"/>
-        <source>Course</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="77"/>
-        <source>unc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="110"/>
-        <location filename="mainwindow.cpp" line="407"/>
-        <source>info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="113"/>
-        <location filename="mainwindow.cpp" line="428"/>
-        <source>map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="122"/>
-        <location filename="mainwindow.cpp" line="450"/>
-        <source>option</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="130"/>
-        <location filename="mainwindow.cpp" line="461"/>
-        <location filename="mainwindow.cpp" line="1011"/>
-        <location filename="mainwindow.cpp" line="1017"/>
-        <location filename="mainwindow.cpp" line="1098"/>
-        <source>text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="139"/>
-        <location filename="mainwindow.cpp" line="461"/>
-        <location filename="mainwindow.cpp" line="496"/>
-        <location filename="mainwindow.cpp" line="1011"/>
-        <location filename="mainwindow.cpp" line="1017"/>
-        <location filename="mainwindow.cpp" line="1098"/>
-        <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="142"/>
-        <location filename="mainwindow.cpp" line="535"/>
-        <location filename="mainwindow.cpp" line="1012"/>
-        <location filename="mainwindow.cpp" line="1017"/>
-        <source>multichoice</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="144"/>
-        <location filename="mainwindow.cpp" line="535"/>
-        <location filename="mainwindow.cpp" line="593"/>
-        <location filename="mainwindow.cpp" line="1012"/>
-        <location filename="mainwindow.cpp" line="1017"/>
-        <source>choice</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="154"/>
-        <location filename="mainwindow.cpp" line="156"/>
-        <location filename="mainwindow.cpp" line="483"/>
-        <location filename="mainwindow.cpp" line="518"/>
-        <location filename="mainwindow.cpp" line="560"/>
-        <location filename="mainwindow.cpp" line="579"/>
-        <location filename="mainwindow.cpp" line="619"/>
-        <source>correct</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="158"/>
-        <source>incorrect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="173"/>
-        <location filename="mainwindow.cpp" line="361"/>
-        <location filename="mainwindow.cpp" line="381"/>
-        <location filename="mainwindow.cpp" line="403"/>
-        <location filename="mainwindow.cpp" line="961"/>
-        <location filename="mainwindow.cpp" line="971"/>
-        <location filename="mainwindow.cpp" line="1004"/>
-        <location filename="mainwindow.cpp" line="1047"/>
-        <location filename="mainwindow.cpp" line="1060"/>
-        <location filename="mainwindow.cpp" line="1088"/>
-        <location filename="mainwindow.cpp" line="1115"/>
-        <location filename="mainwindow.cpp" line="1129"/>
-        <location filename="mainwindow.cpp" line="1141"/>
-        <source>theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="182"/>
-        <location filename="mainwindow.cpp" line="362"/>
-        <source>ticket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="197"/>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="273"/>
-        <location filename="mainwindow.cpp" line="313"/>
-        <location filename="mainwindow.cpp" line="572"/>
-        <location filename="mainwindow.cpp" line="640"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="273"/>
-        <source>File %1 not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="313"/>
-        <source>Incorrect tolerance value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="316"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="316"/>
-        <source>xml-file (*.xml)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="572"/>
-        <source>Answer (correct==0)||(incorrect==0)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="640"/>
-        <source>No correct answer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="984"/>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1008"/>
-        <source>Edit theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1008"/>
-        <source>Theme name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1020"/>
-        <source>Change type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1071"/>
-        <source>Tree. %1 themes. %2 questions. Id %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1073"/>
-        <source>Tree. %1 themes. %2 questions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1119"/>
-        <source>Themes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1141"/>
-        <source>Theme %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1155"/>
-        <location filename="mainwindow.cpp" line="1157"/>
-        <source>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-</TS>
+< /message>
+< message >
+<location filename = "mainwindow.ui"
+line = "345" / >
+<location filename = "mainwindow.ui"
+line = "348" / >
+    <source>Fixed
+accuracy < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "55" / >
+<location filename = "mainwindow.cpp"
+line = "165" / >
+<location filename = "mainwindow.cpp"
+line = "1003" / >
+<location filename = "mainwindow.cpp"
+line = "1118" / >
+    <source>section < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "55" / >
+    <source>Course < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "77" / >
+    <source>unc < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "110" / >
+<location filename = "mainwindow.cpp"
+line = "406" / >
+    <source>info < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "113" / >
+<location filename = "mainwindow.cpp"
+line = "427" / >
+    <source>map < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "122" / >
+<location filename = "mainwindow.cpp"
+line = "449" / >
+    <source>option < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "130" / >
+<location filename = "mainwindow.cpp"
+line = "460" / >
+<location filename = "mainwindow.cpp"
+line = "1010" / >
+<location filename = "mainwindow.cpp"
+line = "1016" / >
+<location filename = "mainwindow.cpp"
+line = "1097" / >
+    <source>text < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "139" / >
+<location filename = "mainwindow.cpp"
+line = "460" / >
+<location filename = "mainwindow.cpp"
+line = "495" / >
+<location filename = "mainwindow.cpp"
+line = "1010" / >
+<location filename = "mainwindow.cpp"
+line = "1016" / >
+<location filename = "mainwindow.cpp"
+line = "1097" / >
+    <source>number < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "142" / >
+<location filename = "mainwindow.cpp"
+line = "534" / >
+<location filename = "mainwindow.cpp"
+line = "1011" / >
+<location filename = "mainwindow.cpp"
+line = "1016" / >
+    <source>multichoice < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "144" / >
+<location filename = "mainwindow.cpp"
+line = "534" / >
+<location filename = "mainwindow.cpp"
+line = "592" / >
+<location filename = "mainwindow.cpp"
+line = "1011" / >
+<location filename = "mainwindow.cpp"
+line = "1016" / >
+    <source>choice < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "154" / >
+<location filename = "mainwindow.cpp"
+line = "156" / >
+<location filename = "mainwindow.cpp"
+line = "482" / >
+<location filename = "mainwindow.cpp"
+line = "517" / >
+<location filename = "mainwindow.cpp"
+line = "559" / >
+<location filename = "mainwindow.cpp"
+line = "578" / >
+<location filename = "mainwindow.cpp"
+line = "618" / >
+    <source>correct < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "158" / >
+    <source>incorrect < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "173" / >
+<location filename = "mainwindow.cpp"
+line = "360" / >
+<location filename = "mainwindow.cpp"
+line = "380" / >
+<location filename = "mainwindow.cpp"
+line = "402" / >
+<location filename = "mainwindow.cpp"
+line = "960" / >
+<location filename = "mainwindow.cpp"
+line = "970" / >
+<location filename = "mainwindow.cpp"
+line = "1003" / >
+<location filename = "mainwindow.cpp"
+line = "1046" / >
+<location filename = "mainwindow.cpp"
+line = "1059" / >
+<location filename = "mainwindow.cpp"
+line = "1087" / >
+<location filename = "mainwindow.cpp"
+line = "1114" / >
+<location filename = "mainwindow.cpp"
+line = "1128" / >
+<location filename = "mainwindow.cpp"
+line = "1140" / >
+    <source>theme < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "182" / >
+<location filename = "mainwindow.cpp"
+line = "361" / >
+    <source>ticket < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "197" / >
+    <source>Open < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "272" / >
+<location filename = "mainwindow.cpp"
+line = "312" / >
+<location filename = "mainwindow.cpp"
+line = "571" / >
+<location filename = "mainwindow.cpp"
+line = "639" / >
+    <source>Error < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "272" / >
+    <source>File % 1
+not
+found < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "312" / >
+    <source>Incorrect
+tolerance
+value < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "315" / >
+    <source>Save < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "315" / >
+    <source>xml - file( *
+.
+xml
+)
+</source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "571" / >
+    <source>Answer(correct == 0) || (incorrect == 0) < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "639" / >
+    <source>No
+correct
+answer < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "983" / >
+    <source>Find < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1007" / >
+    <source>Edit
+theme < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1007" / >
+    <source>Theme
+name < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1019" / >
+    <source>Change
+type < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1070" / >
+    <source>Tree. % 1
+themes. % 2
+questions.Id % 3 < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1072" / >
+    <source>Tree. % 1
+themes. % 2
+questions < /source>
+< translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1118" / >
+    <source>Themes < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1140" / >
+    <source>Theme % 1 < /source>
+    < translation
+type = "unfinished" > </translation>
+< /message>
+< message >
+<location filename = "mainwindow.cpp"
+line = "1154" / >
+<location filename = "mainwindow.cpp"
+line = "1156" / >
+    <source> % 1 < /source>
+    < translation
+type = "unfinished" > </translation>
+    < /message>
+    < /context>
+    < /TS>

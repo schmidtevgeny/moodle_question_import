@@ -71,7 +71,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionTest"/>
+    <addaction name="actionAnalyse"/>
     <addaction name="actionExport"/>
    </widget>
    <widget class="QMenu" name="settingsMenu">
@@ -87,11 +87,11 @@
     <property name="separatorsCollapsible">
      <bool>false</bool>
     </property>
-    <addaction name="ch_to_mch"/>
-    <addaction name="num_to_text"/>
+    <addaction name="actionСhoiceAsMultichoice"/>
+    <addaction name="actionNumericalAsShortanswer"/>
     <addaction name="action_enableAll"/>
     <addaction name="action_export_as_text"/>
-    <addaction name="actionFixTolerance"/>
+    <addaction name="actionFixedAccuracy"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -105,18 +105,18 @@
      <addaction name="show_toolbar"/>
     </widget>
     <addaction name="toolbarsMenu"/>
-    <addaction name="collapse_quiz"/>
+    <addaction name="actionCollapse"/>
     <addaction name="expand_all"/>
    </widget>
    <widget class="QMenu" name="searchMenu">
     <property name="title">
      <string>Search</string>
     </property>
-    <addaction name="action_find"/>
-    <addaction name="action_next"/>
-    <addaction name="action_repl"/>
-    <addaction name="action_textToNum"/>
-    <addaction name="action_fromBilet"/>
+    <addaction name="actionFind"/>
+    <addaction name="actionFindNext"/>
+    <addaction name="actionReplace"/>
+    <addaction name="actionToNumerical"/>
+    <addaction name="actionFromTickets"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="searchMenu"/>
@@ -134,9 +134,9 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionOpen"/>
-   <addaction name="actionTest"/>
+   <addaction name="actionAnalyse"/>
    <addaction name="actionExport"/>
-   <addaction name="action_repl"/>
+   <addaction name="actionReplace"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -152,13 +152,14 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="ch_to_mch"/>
-   <addaction name="actionFixTolerance"/>
+   <addaction name="actionСhoiceAsMultichoice"/>
+   <addaction name="actionFixedAccuracy"/>
   </widget>
-  <action name="actionTest">
+  <action name="actionAnalyse">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png</iconset>
+     <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+    </iconset>
    </property>
    <property name="text">
     <string>Analysis...</string>
@@ -197,10 +198,11 @@
     <string>Ctrl+E</string>
    </property>
   </action>
-  <action name="action_repl">
+  <action name="actionReplace">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png</iconset>
+     <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
+    </iconset>
    </property>
    <property name="text">
     <string>Replace...</string>
@@ -209,7 +211,7 @@
     <string>Ctrl+R</string>
    </property>
   </action>
-  <action name="ch_to_mch">
+  <action name="actionСhoiceAsMultichoice">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -220,7 +222,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep single choice questions as multiple choice&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
-  <action name="num_to_text">
+  <action name="actionNumericalAsShortanswer">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -253,7 +255,7 @@
     <string>Settings toolbar</string>
    </property>
   </action>
-  <action name="collapse_quiz">
+  <action name="actionCollapse">
    <property name="text">
     <string>Collapse</string>
    </property>
@@ -269,10 +271,11 @@
     <string>Expand</string>
    </property>
   </action>
-  <action name="action_find">
+  <action name="actionFind">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png</iconset>
+     <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
+    </iconset>
    </property>
    <property name="text">
     <string>Find...</string>
@@ -284,10 +287,11 @@
     <string>Ctrl+F</string>
    </property>
   </action>
-  <action name="action_next">
+  <action name="actionFindNext">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png</iconset>
+     <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
+    </iconset>
    </property>
    <property name="text">
     <string>Find next</string>
@@ -299,7 +303,7 @@
     <string>F3</string>
    </property>
   </action>
-  <action name="action_textToNum">
+  <action name="actionToNumerical">
    <property name="text">
     <string>Change to numerical</string>
    </property>
@@ -307,12 +311,26 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change question type from shortanswer to numerical&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
-  <action name="action_fromBilet">
+  <action name="actionFromTickets">
    <property name="text">
     <string>Hit the tickets to the themes</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Ticket 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Ticket 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Theme 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Theme 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Theme 3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+     style=&quot; text-decoration: underline;&quot;&gt;@Ticket 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
+     text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
+     underline;&quot;&gt;?q1-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+     style=&quot; text-decoration: underline;&quot;&gt;@Ticket 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
+     text-decoration: underline;&quot;&gt;?q2-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
+     underline;&quot;&gt;?q2-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+     style=&quot; text-decoration: underline;&quot;&gt;@Theme 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
+     text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
+     underline;&quot;&gt;?q2-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;@Theme
+     2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q1-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+     style=&quot; text-decoration: underline;&quot;&gt;?q2-2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
+     text-decoration: underline;&quot;&gt;@Theme 3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
+     underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?q2-3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+    </string>
    </property>
   </action>
   <action name="action_enableAll">
@@ -337,7 +355,7 @@
     <string>Export as plaintext</string>
    </property>
   </action>
-  <action name="actionFixTolerance">
+  <action name="actionFixedAccuracy">
    <property name="checkable">
     <bool>true</bool>
    </property>

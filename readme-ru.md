@@ -23,4 +23,4 @@
 - postlink.bat - сборка установщика
 - TestConvert.pro - файл проекта qmake
 - CMakeLists.txt - файл проектс cmake
-- TestConvert.ts - файл перевода
+- TestConvert_ru.ts - файл русской локализации

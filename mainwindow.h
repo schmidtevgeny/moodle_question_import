@@ -25,28 +25,26 @@ class MainWindow : public QMainWindow {
 
   private slots:
 
-    void on_actionTest_triggered();
+    void on_actionAnalyse_triggered();
     void on_actionOpen_triggered();
     void on_actionExport_triggered();
-    void on_action_repl_triggered();
-    void on_collapse_quiz_triggered();
-    void on_action_find_triggered();
-    void on_action_next_triggered();
+    void on_actionReplace_triggered();
+    void on_actionCollapse_triggered();
+    void on_actionFind_triggered();
+    void on_actionFindNext_triggered();
     void on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column);
     void on_tree_itemSelectionChanged();
-    void on_action_textToNum_triggered();
-    void on_action_fromBilet_triggered();
-    void on_actionFixTolerance_triggered(bool checked);
+    void on_actionToNumerical_triggered();
+    void on_actionFromTickets_triggered();
+    void on_actionFixedAccuracy_triggered(bool checked);
 
   private:
     Ui::MainWindow * ui;
-
     QString last_dir;
-    QSettings * sett;
+    QSettings * iniFile;
     QString search;
-    QLabel * infolabel;
+    QLabel * treePositionLabel;
     QStringList images;
-    QString imgsrcpath;
     QLineEdit * tolerance;
     MyHighlighter * highlighter;
     void writeText(QXmlStreamWriter & stream, QString txt, QString basepath);

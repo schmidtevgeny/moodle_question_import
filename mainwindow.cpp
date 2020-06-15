@@ -18,36 +18,45 @@
 MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     //    ui->toolBar->setVisible(false);
-    sett = new QSettings("TSU", "TestConvert");
-    last_dir = sett->value("dirs/last", QDir::currentPath()).toString();
+    iniFile = new QSettings("TSU", "TestConvert");
+    last_dir = iniFile->value("dirs/last", QDir::currentPath()).toString();
     search = "";
-    infolabel = new QLabel();
-    ui->statusBar->addPermanentWidget(infolabel);
+    treePositionLabel = new QLabel();
+    ui->statusBar->addPermanentWidget(treePositionLabel);
     tolerance = new QLineEdit("200");
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document());
 }
 MainWindow::~MainWindow() {
-    sett->setValue("dirs/last", last_dir);
-    delete infolabel;
-    delete sett;
+    iniFile->setValue("dirs/last", last_dir);
+    delete treePositionLabel;
+    delete iniFile;
     delete ui;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *) {
     int w = ui->tree->width();
-
     ui->tree->setColumnWidth(0, w / 4);
     ui->tree->setColumnWidth(1, w / 2);
 }
+///
+/// Checking to see if the string is a number
+/// \param s string
+/// \return true if number
+///
 bool is_number(QString s) {
     s = s.replace(",", ".");
     bool ok;
     double v = s.toDouble(&ok);
     return ok;
 }
+/// Replaces the comma with a dot
+/// \param s original string
+/// \return modified string
 QString to_number(QString s) { return s.replace(",", "."); }
-void MainWindow::on_actionTest_triggered() {
+
+/// Analyse text from ui->plain and make ui->tree
+void MainWindow::on_actionAnalyse_triggered() {
     ui->tree->clear();
 
     QTreeWidgetItem *top, *child, *quest;
@@ -191,10 +200,11 @@ void MainWindow::on_actionTest_triggered() {
 
     ui->tree->expandAll();
     on_tree_itemSelectionChanged();
-}    // MainWindow::on_actionTest_triggered
-
+}
+/// Open File
+/// \note is supposed to use html, but should also work with plain text
 void MainWindow::on_actionOpen_triggered() {
-    QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, "html (*.htm;*.html);ANY FILE (*)");
+    QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, tr("html (*.htm;*.html);ANY FILE (*)"));
 
     if (!fname.isEmpty())
     {
@@ -204,7 +214,6 @@ void MainWindow::on_actionOpen_triggered() {
         QFileInfo fi(fname);
 
         last_dir = fi.dir().path();
-        imgsrcpath = last_dir;
         f.open(QIODevice::ReadOnly);
 
         QTextStream in(&f);
@@ -225,8 +234,11 @@ void MainWindow::on_actionOpen_triggered() {
 
         ui->plain->setHtml(s);
     }
-}    // MainWindow::on_actionOpen_triggered
-
+}
+/// Save lino to xml-file
+/// \param stream xml-file object
+/// \param txt string
+/// \param basepath path to image files
 void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basepath) {
     QStringList images;
     // список файлов
@@ -282,7 +294,9 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         num++;
     }
 }
-
+/// Remove tags and images from document line
+/// \param s original string
+/// \return modified string
 QString to_title(QString s) {
     QRegExp notags("\\<.*\\>");
 
@@ -300,12 +314,12 @@ QString to_title(QString s) {
     s = s.replace(nospec, "");
 
     return s;
-}    // to_title
-
+}
+/// Export questions
 void MainWindow::on_actionExport_triggered() {
     double qtolerance, ktolerance;
     bool btolerance;
-    btolerance = ui->actionFixTolerance->isChecked();
+    btolerance = ui->actionFixedAccuracy->isChecked();
     bool ok;
     ktolerance = tolerance->text().toDouble(&ok);
     if (!ok)
@@ -344,8 +358,8 @@ void MainWindow::on_actionExport_triggered() {
         int fnum = 0;
         int qcount = 0;
         bool opened = false;
-        bool as_multi = ui->ch_to_mch->isChecked();    // false; //экспорт choice как multichoice
-        bool as_text = ui->num_to_text->isChecked();    // false; //экспорт number как text
+        bool as_multi = ui->actionСhoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
+        bool as_text = ui->actionNumericalAsShortanswer->isChecked();    // false; //экспорт number как text
 
         QList<QTreeWidgetItem *> themes;
 
@@ -650,8 +664,8 @@ void MainWindow::on_actionExport_triggered() {
         f.close();
     }
 }    // MainWindow::on_actionExport_triggered
-
-void MainWindow::on_action_repl_triggered() {
+/// Replace in ui->plain
+void MainWindow::on_actionReplace_triggered() {
     DialogReplace dlg;
     //    TODO: edit
 
@@ -700,14 +714,6 @@ void MainWindow::on_action_repl_triggered() {
             }
             // TODO: копирование картинок по пути
 
-            //            for (int i = 0; i < files.size(); i++)
-            //            {
-            //                QString filename = files[i];
-            //                if (filename.indexOf("file:///") == -1) continue;
-            //                QFileInfo f(filename.mid(8));
-            //                QString newname = path + "/" + f.fileName().toStdString().c_str();
-            //                if (QFile::copy(f.filePath().toStdString().c_str(), newname)) { files[i] = newname; }
-            //            }
             for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
             // TODO: <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
             QString s1 = "", s2 = "", s3 = "";
@@ -920,33 +926,12 @@ void MainWindow::on_action_repl_triggered() {
                 { lines[i] = "*" + lines[i].left(lines[i].length() - dlg.ui->label_correct->text().length()); }
             }
         }
-
-        // не копирует
-        /*for (int i=0;i<lines.size();i++)
-        {
-            if (lines[i].indexOf("!(")!=-1)
-            {
-                // TODO: add <img
-                QString txt=lines[i];
-                QString txt2;
-                while (txt.indexOf("!(") > -1)
-                {
-                    QString s1 = txt.mid(0, txt.indexOf("!("));
-                    QString s2 = txt.mid(txt.indexOf("!(") + 2);
-                    txt = s2.mid(s2.indexOf(")") + 1);
-
-                    s2 = s2.mid(0, s2.indexOf(")"));
-                    txt2 =txt2+ s1 + "<img src=\"" + s2 + "\" alt=\"!("+s2+")\">";
-                }
-                lines[i]=txt2;
-            }
-        }*/
         s = "<html><body><p>" + lines.join("</p><p>") + "</p></body></html>";
         ui->plain->setHtml(s);
     }
-}    // MainWindow::on_action_repl_triggered
-
-void MainWindow::on_collapse_quiz_triggered() {
+}    // MainWindow::on_actionReplace_triggered
+/// Collapse tree
+void MainWindow::on_actionCollapse_triggered() {
     QList<QTreeWidgetItem *> themes;
 
     QTreeWidgetItem * top;
@@ -971,9 +956,9 @@ void MainWindow::on_collapse_quiz_triggered() {
             if (top->text(0) != tr("theme")) { ui->tree->collapseItem(top); }
         }
     }
-}    // MainWindow::on_collapse_quiz_triggered
-
-void MainWindow::on_action_find_triggered() {
+}    // MainWindow::on_actionCollapse_triggered
+/// Find in ui->plain
+void MainWindow::on_actionFind_triggered() {
     bool ok;
 
     if (ui->tree->isActiveWindow())
@@ -988,16 +973,16 @@ void MainWindow::on_action_find_triggered() {
         search = s;
         ui->plain->setTextCursor(ui->plain->document()->find(search));
     }
-}    // MainWindow::on_action_find_triggered
-
-void MainWindow::on_action_next_triggered() {
+}    // MainWindow::on_actionFind_triggered
+/// Find next in ui->plain
+void MainWindow::on_actionFindNext_triggered() {
     if (search.isEmpty())
     {
-        on_action_find_triggered();
+        on_actionFind_triggered();
     } else
     { ui->plain->setTextCursor(ui->plain->document()->find(search, ui->plain->textCursor())); }
 }
-
+/// Edit theme or change question type
 void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column) {
     if (item->childCount() != 0)
     {
@@ -1023,7 +1008,7 @@ void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column) {
         }
     }
 }    // MainWindow::on_tree_itemDoubleClicked
-
+/// Print of a position in a tree
 void MainWindow::on_tree_itemSelectionChanged() {
     QList<QTreeWidgetItem *> themes;
 
@@ -1068,12 +1053,12 @@ void MainWindow::on_tree_itemSelectionChanged() {
 
     if (qid > 0)
     {
-        infolabel->setText(tr("Tree. %1 themes. %2 questions. Id %3").arg(themes.size()).arg(qcount).arg(qid));
+        treePositionLabel->setText(tr("Tree. %1 themes. %2 questions. Id %3").arg(themes.size()).arg(qcount).arg(qid));
     } else
-    { infolabel->setText(tr("Tree. %1 themes. %2 questions").arg(themes.size()).arg(qcount)); }
+    { treePositionLabel->setText(tr("Tree. %1 themes. %2 questions").arg(themes.size()).arg(qcount)); }
 }    // MainWindow::on_tree_itemSelectionChanged
-
-void MainWindow::on_action_textToNum_triggered() {
+/// Change the type of all questions from shortanswer to numerical
+void MainWindow::on_actionToNumerical_triggered() {
     QList<QTreeWidgetItem *> themes;
 
     QTreeWidgetItem * top;
@@ -1098,9 +1083,9 @@ void MainWindow::on_action_textToNum_triggered() {
             if (top->text(0) == tr("text")) { top->setText(0, tr("number")); }
         }
     }
-}    // MainWindow::on_action_textToNum_triggered
+}    // MainWindow::on_actionToNumerical_triggered
 
-void MainWindow::on_action_fromBilet_triggered() {
+void MainWindow::on_actionFromTickets_triggered() {
     QList<QTreeWidgetItem *> themes;
 
     QTreeWidgetItem * top;
@@ -1147,12 +1132,17 @@ void MainWindow::on_action_fromBilet_triggered() {
             top->addChild(new_themes.at(i)[j]);
         }
     }
-}    // MainWindow::on_action_fromBilet_triggered
-
-void MainWindow::on_actionFixTolerance_triggered(bool checked) {
-    //
+}    // MainWindow::on_actionFromTickets_triggered
+/// Change the type of error calculation for numerical
+void MainWindow::on_actionFixedAccuracy_triggered(bool checked) {
+    // set default value of error calculation
     if (checked)
+    {
+        // fixed error
         tolerance->setText(tr("%1").arg(0.01));
-    else
+    } else
+    {
+        // denominator. error = value / demoninator
         tolerance->setText(tr("%1").arg(200));
+    }
 }
