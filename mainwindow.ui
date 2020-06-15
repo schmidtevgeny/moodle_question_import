@@ -216,7 +216,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Choice as plural.</string>
+    <string>Choice as plural</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep single choice questions as multiple choice&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
