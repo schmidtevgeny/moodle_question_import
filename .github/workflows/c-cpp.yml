@@ -13,5 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: make
-      run: make all
+    - name: maketr
+      run: make translations
+    - name: makeapp
+      run: make TestConvert
