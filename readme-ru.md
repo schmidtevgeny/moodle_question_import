@@ -11,6 +11,44 @@
 Правила оформления вопросов
 ----------------------------
 
+\# Section
+
+\@ Subsection
+
+? Question choice or multichoice
+
+\* correct
+
+incorrect
+
+? Question numerical or shortanswer
+
+\* answer
+
+? Question matching
+
+\* option1->value1
+\* option2->value2
+
+TODO: clozed question
+
+$ Clozed question intro
+
+? Subquestion choice or multichoice
+
+\* correct
+
+incorrect
+
+? Subquestion numerical or shortanswer
+
+\* answer
+
+? Subquestion matching
+
+\* option1->value1
+\* option2->value2
+ 
 
 Состав проекта
 ---------------
