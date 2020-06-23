@@ -48,6 +48,36 @@ class MainWindow : public QMainWindow {
     QLineEdit * tolerance;
     MyHighlighter * highlighter;
     void writeText(QXmlStreamWriter & stream, QString txt, QString basepath);
+
+    bool process_tree(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance,
+        bool btolerance);
+
+    void write_section(QXmlStreamWriter & stream, QTreeWidgetItem * item) const;
+    void write_theme(QXmlStreamWriter & stream, QTreeWidgetItem * item) const;
+
+    bool process_question(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
+        double ktolerance, bool btolerance);
+    bool write_info(QXmlStreamWriter & stream, QTreeWidgetItem * item);
+    bool write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * item);
+    bool write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * item);
+    bool write_numerical(QXmlStreamWriter & stream, QTreeWidgetItem * item, double ktolerance, bool btolerance);
+    bool write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * item);
+    bool write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item);
+
+    bool write_close(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance,
+        bool btolerance);
+
+    QString process_subquestion(
+        QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance, bool btolerance, bool & ok);
+    QString format_info(QTreeWidgetItem * item, bool & ok);
+    QString format_matching(QTreeWidgetItem * item, bool & ok);
+    QString format_shortanswer(QTreeWidgetItem * item, bool & ok);
+    QString format_numerical(QTreeWidgetItem * item, double ktolerance, bool btolerance, bool & ok);
+    QString format_multichoice(QTreeWidgetItem * item, bool & ok);
+    QString format_choice(QTreeWidgetItem * item, bool & ok);
+
+    void show_error(QTreeWidgetItem * item, QString message);
+    void export_error();
 };    // class MainWindow
 
 

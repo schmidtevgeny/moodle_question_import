@@ -4,17 +4,12 @@
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
-#include <QRegExp>
 #include <QTextStream>
-#include <QTreeWidgetItem>
 #include <dialogreplace.h>
 #include <ui_dialogreplace.h>
 #include <QDateTime>
 #include "myhighlighter.h"
-//#include <QtXml>
 
-#define FORMAT_PLAIN 0
-#define QUIZ_PER_FILE 10000
 MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     //    ui->toolBar->setVisible(false);
@@ -340,7 +335,7 @@ QString to_title(QString s) {
 }
 /// Export questions
 void MainWindow::on_actionExport_triggered() {
-    double qtolerance, ktolerance;
+    double ktolerance;
     bool btolerance;
     btolerance = ui->actionFixedAccuracy->isChecked();
     bool ok;
@@ -351,7 +346,6 @@ void MainWindow::on_actionExport_triggered() {
         return;
     }
     QString fname = QFileDialog::getSaveFileName(this, tr("Save"), last_dir + "/quiz.xml", tr("xml-file (*.xml)"));
-    int qmax = QUIZ_PER_FILE;
 
     if (!fname.isEmpty())
     {
@@ -372,35 +366,17 @@ void MainWindow::on_actionExport_triggered() {
         QString numanswer;
         QString mapanswer;
 
-
         // -------------------------------
         QFileInfo fi(fname);
 
         last_dir = fi.dir().path();
 
-        int fnum = 0;
-        int qcount = 0;
-        bool opened = false;
         bool as_multi = ui->actionСhoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
         bool as_text = ui->actionNumericalAsShortanswer->isChecked();    // false; //экспорт number как text
 
         QList<QTreeWidgetItem *> themes;
 
         QTreeWidgetItem * top;
-
-        for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
-        {
-            top = ui->tree->topLevelItem(i);
-            themes << top;
-
-            for (int j = 0; j < top->childCount(); j++)
-            {
-                if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
-                if (top->child(j)->text(0) == tr("ticket"))
-                {    // TODO: реализовать вопросы clozed
-                }
-            }
-        }
 
         QFile f;
         f.setFileName(fname);
@@ -410,276 +386,14 @@ void MainWindow::on_actionExport_triggered() {
         stream.writeStartDocument();
 
         stream.writeStartElement("quiz");
-        //        stream.writeAttribute("href", "http://qt-project.org/");
-        //        stream.writeTextElement("title", "Qt Project");
-        //        stream.writeEndElement();    // bookmark
-        for (int i = 0; i < themes.size(); i++)
+        for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
         {
-            if (themes.at(i)->text(0) == tr("theme"))
+            top = ui->tree->topLevelItem(i);
+            themes << top;
+            if (!process_tree(stream, top, as_multi, as_text, ktolerance, btolerance))
             {
-                stream.writeStartElement("question");
-                stream.writeAttribute("type", "category");
-                stream.writeStartElement("category");
-                stream.writeTextElement("text", themes.at(i)->parent()->text(1) + "/" + themes.at(i)->text(1));
-                stream.writeEndElement();
-                stream.writeEndElement();
-            } else
-            {
-                stream.writeStartElement("question");
-                stream.writeAttribute("type", "category");
-                stream.writeStartElement("category");
-                stream.writeTextElement("text", themes.at(i)->text(1));
-                stream.writeEndElement();
-                stream.writeEndElement();
-            }
-
-            for (int j = 0; j < themes.at(i)->childCount(); j++)
-            {
-                top = themes.at(i)->child(j);
-
-                if (top->text(0) == tr("theme")) { continue; }
-
-                QString ans = "";
-
-                if (top->text(0) == tr("info"))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "description");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    //                    stream.writeTextElement("text", top->text(1));
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("defaultgrade", "0");
-                    stream.writeTextElement("penalty", "0");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "0");
-                    stream.writeEndElement();
-                } else if (top->text(0) == tr("map"))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "matching");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("defaultgrade", "10");
-                    stream.writeTextElement("penalty", "1");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "1");
-                    // answ
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        if (top->child(k)->text(0) == tr("option"))
-                        {
-                            stream.writeStartElement("subquestion");
-                            writeText(stream, top->child(k)->text(1), last_dir);
-                            stream.writeStartElement("answer");
-                            stream.writeTextElement("text", top->child(k)->text(2));
-                            stream.writeEndElement();
-                            stream.writeEndElement();
-                        }
-                    }
-                    stream.writeEndElement();
-                } else if ((top->text(0) == tr("text")) || ((top->text(0) == tr("number")) && as_text))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "shortanswer");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("defaultgrade", "10");
-                    stream.writeTextElement("penalty", "1");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "1");
-                    // answ
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        if (top->child(k)->text(0) == tr("correct"))
-                        {
-                            stream.writeStartElement("answer");
-                            stream.writeAttribute("fraction", "100");
-                            stream.writeTextElement("text", top->child(k)->text(1));
-                            stream.writeStartElement("feedback");
-                            stream.writeTextElement("text", "");
-                            stream.writeEndElement();
-                            stream.writeEndElement();
-                        }
-                    }
-
-                    stream.writeEndElement();
-                } else if (top->text(0) == tr("number"))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "numerical");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("defaultgrade", "10");
-                    stream.writeTextElement("penalty", "1");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "1");
-                    // answ
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        if (top->child(k)->text(0) == tr("correct"))
-                        {
-                            stream.writeStartElement("answer");
-                            stream.writeAttribute("fraction", "100");
-                            if (btolerance)
-                                qtolerance = ktolerance;
-                            else
-                                qtolerance = abs(top->child(k)->text(1).toDouble() / ktolerance);
-                            stream.writeAttribute("tolerance", QString("%1").arg(qtolerance));
-                            stream.writeTextElement("text", top->child(k)->text(1));
-                            stream.writeStartElement("feedback");
-                            stream.writeTextElement("text", "");
-                            stream.writeEndElement();
-                            stream.writeEndElement();
-                        }
-                    }
-                    stream.writeEndElement();
-                } else if ((top->text(0) == tr("multichoice")) || ((top->text(0) == tr("choice")) && as_multi))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "multichoice");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("single", "false");
-                    stream.writeTextElement("defaultgrade", "10");
-                    stream.writeTextElement("penalty", "1");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "1");
-                    // answ
-                    int correct = 0, incorrect = 0;
-
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        if (top->child(k)->text(0) == tr("correct"))
-                        {
-                            correct++;
-                        } else
-                        { incorrect++; }
-                    }
-                    if ((correct == 0) || ((incorrect == 0) && !ui->action_enableAll->isChecked()))
-                    {
-                        ui->tree->collapseAll();
-                        ui->tree->expandItem(top->parent()->parent());
-                        ui->tree->expandItem(top->parent());
-                        ui->tree->expandItem(top);
-                        QMessageBox::warning(this, tr("Error"), tr("Answer (correct==0)||(incorrect==0)"));
-
-                        return;
-                    }
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        stream.writeStartElement("answer");
-                        if (top->child(k)->text(0) == tr("correct"))
-                        {
-                            stream.writeAttribute("fraction", QString("%1").arg(100.0 / correct));
-
-                        } else
-                        { stream.writeAttribute("fraction", QString("%1").arg(-100.0 / incorrect)); }
-                        writeText(stream, top->child(k)->text(1), last_dir);
-                        stream.writeStartElement("feedback");
-                        stream.writeTextElement("text", "");
-                        stream.writeEndElement();
-                        stream.writeEndElement();
-                    }
-
-                    stream.writeEndElement();
-                } else if (top->text(0) == tr("choice"))
-                {
-                    stream.writeStartElement("question");
-                    stream.writeAttribute("type", "multichoice");
-                    stream.writeStartElement("name");
-                    stream.writeTextElement("text", to_title(top->text(1)));
-                    stream.writeEndElement();
-                    stream.writeStartElement("questiontext");
-                    stream.writeAttribute("format", "moodle_auto_format");
-                    writeText(stream, top->text(1), last_dir);
-                    // add image
-                    stream.writeEndElement();
-                    stream.writeStartElement("generalfeedback");
-                    stream.writeTextElement("text", "");
-                    stream.writeEndElement();
-                    stream.writeTextElement("single", "true");
-                    stream.writeTextElement("defaultgrade", "10");
-                    stream.writeTextElement("penalty", "1");
-                    stream.writeTextElement("hidden", "0");
-                    stream.writeTextElement("shuffleanswers", "1");
-                    // answ
-
-                    int correct = 0;
-                    for (int k = 0; k < top->childCount(); k++)
-                    {
-                        stream.writeStartElement("answer");
-                        if (top->child(k)->text(0) == tr("correct"))
-                        {
-                            stream.writeAttribute("fraction", "100");
-                            correct++;
-
-                        } else
-                        { stream.writeAttribute("fraction", "0"); }
-
-                        writeText(stream, top->child(k)->text(1), last_dir);
-                        stream.writeStartElement("feedback");
-                        stream.writeTextElement("text", "");
-                        stream.writeEndElement();
-                        stream.writeEndElement();
-                    }
-                    if (correct == 0)
-                    {
-                        ui->tree->collapseAll();
-                        ui->tree->expandItem(top->parent()->parent());
-                        ui->tree->expandItem(top->parent());
-                        ui->tree->expandItem(top);
-
-                        QMessageBox::warning(this, tr("Error"), tr("No correct answer"));
-
-                        return;
-                    }
-                    stream.writeEndElement();
-                }
+                export_error();
+                break;
             }
         }
         stream.writeEndElement();    // bookmark
@@ -687,6 +401,519 @@ void MainWindow::on_actionExport_triggered() {
         f.close();
     }
 }    // MainWindow::on_actionExport_triggered
+void MainWindow::export_error() {}
+bool MainWindow::process_question(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
+    double ktolerance, bool btolerance) {
+    if (item->text(0) == tr("info"))
+    {
+        return write_info(stream, item);
+    } else if (item->text(0) == tr("map"))
+    { return write_matching(stream, item); }
+    if ((item->text(0) == tr("text")) || ((item->text(0) == tr("number")) && as_text))
+    {
+        return write_shortanswer(stream, item);
+    } else if (item->text(0) == tr("number"))
+    {
+        return write_numerical(stream, item, ktolerance, btolerance);
+    } else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
+    {
+        return write_multichoice(stream, item);
+    } else if (item->text(0) == tr("choice"))
+    {
+        return write_choice(stream, item);
+    } else if (item->text(0) == tr("ticket"))
+    {
+        return write_close(stream, item, as_multi, as_text, ktolerance, btolerance);
+    } else
+    {
+        show_error(item, tr("unknown type"));
+        return false;
+    }
+}
+bool MainWindow::write_close(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
+    double ktolerance, bool btolerance) {
+    QStringList questions;
+    questions << item->text(1);
+    bool ok;
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "cloze");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(questions[0]));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    //                    stream.writeTextElement("text", item->text(1));
+    for (int i = 0; i < item->childCount(); i++)
+    {
+        questions << process_subquestion(item->child(i), as_multi, as_text, ktolerance, btolerance, ok);
+        if (!ok) { return false; }
+    }
+    writeText(stream, questions.join("<br />"), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", "0");
+    stream.writeTextElement("penalty", "0");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    stream.writeEndElement();
+    return true;
+}
+
+bool MainWindow::write_info(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "description");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    //                    stream.writeTextElement("text", item->text(1));
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", "0");
+    stream.writeTextElement("penalty", "0");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "0");
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_info(QTreeWidgetItem * item, bool & ok) {
+    ok = true;
+    return item->text(1);
+}
+
+
+bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "multichoice");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("single", "true");
+    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    // answ
+
+    int correct = 0;
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        stream.writeStartElement("answer");
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            stream.writeAttribute("fraction", "100");
+            correct++;
+
+        } else
+        { stream.writeAttribute("fraction", "0"); }
+
+        writeText(stream, item->child(k)->text(1), last_dir);
+        stream.writeStartElement("feedback");
+        stream.writeTextElement("text", "");
+        stream.writeEndElement();
+        stream.writeEndElement();
+    }
+    if (correct == 0)
+    {
+        show_error(item, tr("No correct answer"));
+        return false;
+    }
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_choice(QTreeWidgetItem * item, bool & ok) {
+    QString ret = item->text(1);
+    QStringList answers;
+    ret += "<br/>{1:MULTICHOICE_V:";
+    int correct = 0;
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            answers << "%100%" + item->child(k)->text(1);
+            correct++;
+        } else
+        { answers << "%0%" + item->child(k)->text(1); }
+    }
+    ret += answers.join("~") + "}";
+    if (correct == 0)
+    {
+        show_error(item, tr("No right answers."));
+        ok = false;
+    } else
+    { ok = true; }
+
+    return ret;
+}
+
+bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "multichoice");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("single", "false");
+    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    // answ
+    int correct = 0, incorrect = 0;
+
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            correct++;
+        } else
+        { incorrect++; }
+    }
+    if ((correct == 0))
+    {
+        show_error(item, tr("No right answers."));
+        return false;
+    }
+    if ((incorrect == 0) && !ui->action_enableAll->isChecked())
+    {
+        show_error(item, tr("No wrong answers."));
+        return false;
+    }
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        stream.writeStartElement("answer");
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            stream.writeAttribute("fraction", QString("%1").arg(100.0 / correct));
+        } else
+        { stream.writeAttribute("fraction", QString("%1").arg(-100.0 / incorrect)); }
+        writeText(stream, item->child(k)->text(1), last_dir);
+        stream.writeStartElement("feedback");
+        stream.writeTextElement("text", "");
+        stream.writeEndElement();
+        stream.writeEndElement();
+    }
+
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_multichoice(QTreeWidgetItem * item, bool & ok) {
+    QString ret = item->text(1);
+    QStringList answers;
+    ret += "<br/>{1:MULTIRESPONSE:";
+    ok = true;
+
+    int correct = 0, incorrect = 0;
+
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            correct++;
+        } else
+        { incorrect++; }
+    }
+    if ((correct == 0))
+    {
+        show_error(item, tr("No right answers."));
+        ok = false;
+        return "";
+    }
+    if ((incorrect == 0) && !ui->action_enableAll->isChecked())
+    {
+        show_error(item, tr("No wrong answers."));
+        ok = false;
+        return "";
+    }
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            answers << "%" + QString("%1").arg(100.0 / correct) + "%" + item->child(k)->text(1);
+        } else
+        { answers << "%" + QString("%1").arg(-100.0 / incorrect) + "%" + item->child(k)->text(1); }
+    }
+    ret += answers.join("~") + "}";
+    return ret;
+}
+
+
+bool MainWindow::write_numerical(
+    QXmlStreamWriter & stream, QTreeWidgetItem * item, double ktolerance, bool btolerance) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "numerical");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    // answ
+    double qtolerance;
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            stream.writeStartElement("answer");
+            stream.writeAttribute("fraction", "100");
+            if (btolerance)
+                qtolerance = ktolerance;
+            else
+                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
+            stream.writeAttribute("tolerance", QString("%1").arg(qtolerance));
+            stream.writeTextElement("text", item->child(k)->text(1));
+            stream.writeStartElement("feedback");
+            stream.writeTextElement("text", "");
+            stream.writeEndElement();
+            stream.writeEndElement();
+        }
+    }
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_numerical(QTreeWidgetItem * item, double ktolerance, bool btolerance, bool & ok) {
+    QString ret = item->text(1);
+    QStringList answers;
+    ret += "<br/>{1:NUMERICAL:";
+    ok = true;
+    //
+    double qtolerance;
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            if (btolerance)
+                qtolerance = ktolerance;
+            else
+                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
+            answers << "%100%" + item->child(k)->text(1) + ":" + QString("%1").arg(qtolerance);
+        }
+    }
+    //
+    ret += answers.join("~") + "}";
+    return ret;
+}
+
+bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "shortanswer");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    // answ
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            stream.writeStartElement("answer");
+            stream.writeAttribute("fraction", "100");
+            stream.writeTextElement("text", item->child(k)->text(1));
+            stream.writeStartElement("feedback");
+            stream.writeTextElement("text", "");
+            stream.writeEndElement();
+            stream.writeEndElement();
+        }
+    }
+
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
+    QString ret = item->text(1);
+    QStringList answers;
+    ret += "<br/>{1:SHORTANSWER:";
+    //    ret += "<br/>{1:SHORTANSWER_C:"; case-sens
+    ok = true;
+    // answ
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("correct")) { answers << "%100%" + item->child(k)->text(1); }
+    }
+    //
+    ret += answers.join("~") + "}";
+    return ret;
+}
+
+bool MainWindow::write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "matching");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1)));
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("shuffleanswers", "1");
+    // answ
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("option"))
+        {
+            stream.writeStartElement("subquestion");
+            writeText(stream, item->child(k)->text(1), last_dir);
+            stream.writeStartElement("answer");
+            stream.writeTextElement("text", item->child(k)->text(2));
+            stream.writeEndElement();
+            stream.writeEndElement();
+        }
+    }
+    stream.writeEndElement();
+    return true;
+}
+QString MainWindow::format_matching(QTreeWidgetItem * item, bool & ok) {
+    QString ret = item->text(1);
+    QStringList answers;
+    ret += "<br/>";
+    ok = true;
+    // answ
+    QStringList left;
+    QStringList right;
+    for (int k = 0; k < item->childCount(); k++)
+    {
+        if (item->child(k)->text(0) == tr("option"))
+        {
+            left << item->child(k)->text(1);
+            right << item->child(k)->text(2);
+        }
+    }
+    for (int i = 0; i < left.count(); i++)
+    {
+        ret += left[i];
+        answers.clear();
+        for (int j = 0; j < right.count(); j++)
+        {
+            if (i == j)
+            {
+                answers << "%100%" + right[j];
+            } else
+            { answers << "%0%" + right[j]; }
+        }
+        ret += "{1:MULTICHOICE:" + answers.join("~") + "}";
+    }
+    //
+    return ret;
+}
+
+QString MainWindow::process_subquestion(
+    QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance, bool btolerance, bool & ok) {
+    if (item->text(0) == tr("info"))
+    {
+        return format_info(item, ok);
+    } else if (item->text(0) == tr("map"))
+    { return format_matching(item, ok); }
+    if ((item->text(0) == tr("text")) || ((item->text(0) == tr("number")) && as_text))
+    {
+        return format_shortanswer(item, ok);
+    } else if (item->text(0) == tr("number"))
+    {
+        return format_numerical(item, ktolerance, btolerance, ok);
+    } else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
+    {
+        return format_multichoice(item, ok);
+    } else if (item->text(0) == tr("choice"))
+    {
+        return format_choice(item, ok);
+    } else
+    {
+        show_error(item, tr("unknown type"));
+        ok = false;
+        return "";
+    }
+}
+bool MainWindow::process_tree(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
+    double ktolerance, bool btolerance) {
+    //        stream.writeAttribute("href", "http://qt-project.org/");
+    //        stream.writeTextElement("title", "Qt Project");
+    //        stream.writeEndElement();    // bookmark
+    if (item->text(0) == tr("section"))
+    {
+        write_section(stream, item);
+        for (int i = 0; i < item->childCount(); i++)
+        {
+            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance)) return false;
+        }
+    } else if (item->text(0) == tr("theme"))
+    {
+        write_theme(stream, item);
+        for (int i = 0; i < item->childCount(); i++)
+        {
+            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance)) return false;
+        }
+    } else
+    {
+        if (!process_question(stream, item, as_multi, as_text, ktolerance, btolerance)) return false;
+    }
+
+    return true;
+}
+void MainWindow::write_theme(QXmlStreamWriter & stream, QTreeWidgetItem * item) const {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "category");
+    stream.writeStartElement("category");
+    stream.writeTextElement("text", item->parent()->text(1) + "/" + item->text(1));
+    stream.writeEndElement();
+    stream.writeEndElement();
+}
+void MainWindow::write_section(QXmlStreamWriter & stream, QTreeWidgetItem * item) const {
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "category");
+    stream.writeStartElement("category");
+    stream.writeTextElement("text", item->text(1));
+    stream.writeEndElement();
+    stream.writeEndElement();
+}
 /// Replace in ui->plain
 void MainWindow::on_actionReplace_triggered() {
     DialogReplace dlg;
@@ -1182,4 +1409,17 @@ void MainWindow::on_actionFixedAccuracy_triggered(bool checked) {
         // denominator. error = value / demoninator
         tolerance->setText(tr("%1").arg(200));
     }
+}
+void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
+    ui->tree->collapseAll();
+    ui->tree->clearSelection();
+    ui->tree->setItemSelected(item, true);
+    ui->tree->expandItem(item);
+    while (item->parent())
+    {
+        item = item->parent();
+        ui->tree->expandItem(item);
+    }
+
+    QMessageBox::warning(this, tr("Error"), message);
 }
