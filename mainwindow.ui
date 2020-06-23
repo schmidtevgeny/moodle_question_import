@@ -42,16 +42,21 @@
          <string>Question type</string>
         </property>
        </column>
-       <column>
-        <property name="text">
-         <string>Text</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Optionally</string>
-        </property>
-       </column>
+          <column>
+              <property name="text">
+                  <string>Text</string>
+              </property>
+          </column>
+          <column>
+              <property name="text">
+                  <string>Optionally</string>
+              </property>
+          </column>
+          <column>
+              <property name="text">
+                  <string>Price</string>
+              </property>
+          </column>
       </widget>
      </widget>
     </item>
@@ -157,9 +162,9 @@
   </widget>
   <action name="actionAnalyse">
    <property name="icon">
-    <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
-    </iconset>
+       <iconset resource="images/icon.qrc">
+           <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+       </iconset>
    </property>
    <property name="text">
     <string>Analysis...</string>
@@ -200,9 +205,9 @@
   </action>
   <action name="actionReplace">
    <property name="icon">
-    <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
-    </iconset>
+       <iconset resource="images/icon.qrc">
+           <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
+       </iconset>
    </property>
    <property name="text">
     <string>Replace...</string>
@@ -273,9 +278,9 @@
   </action>
   <action name="actionFind">
    <property name="icon">
-    <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
-    </iconset>
+       <iconset resource="images/icon.qrc">
+           <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
+       </iconset>
    </property>
    <property name="text">
     <string>Find...</string>
@@ -289,9 +294,9 @@
   </action>
   <action name="actionFindNext">
    <property name="icon">
-    <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
-    </iconset>
+       <iconset resource="images/icon.qrc">
+           <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
+       </iconset>
    </property>
    <property name="text">
     <string>Find next</string>
@@ -338,7 +343,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Allow all the faithful.</string>
+       <string>Allow all the faithful</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

@@ -21,16 +21,22 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
     tolerance = new QLineEdit("200");
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document());
+    // settings
+    usecase = false;
+    default_question_price = "10";
 
 #ifdef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
         "@ Subsection\n"
         "? Question choice or multichoice\n"
-        "* correct\n"
-        "incorrect\n"
-        "? Question numerical or shortanswer\n"
+        "*100%%correct\n"
+        "-100%%incorrect\n"
+        "?10%%Question numerical or shortanswer\n"
         "* answer\n"
+        "?10%%2+2=\n"
+        "*100%%4:0.1\n"
+        "*50%%4:0.5\n"
         "? Question matching\n"
         "* option1->value1\n"
         "* option2->value2\n"
@@ -57,22 +63,6 @@ void MainWindow::resizeEvent(QResizeEvent *) {
     ui->tree->setColumnWidth(0, w / 4);
     ui->tree->setColumnWidth(1, w / 2);
 }
-///
-/// Checking to see if the string is a number
-/// \param s string
-/// \return true if number
-///
-bool is_number(QString s) {
-    s = s.replace(",", ".");
-    bool ok;
-    double v = s.toDouble(&ok);
-    return ok;
-}
-/// Replaces the comma with a dot
-/// \param s original string
-/// \return modified string
-QString to_number(QString s) { return s.replace(",", "."); }
-
 /// Analyse text from ui->plain and make ui->tree
 void MainWindow::on_actionAnalyse_triggered() {
     ui->tree->clear();
@@ -88,105 +78,27 @@ void MainWindow::on_actionAnalyse_triggered() {
 
     while (i < data.size())
     {
+        // get string
         s = data.at(i);
-        s = s.replace("&nbsp;", " ").replace("\t", "    ");
-
-        while (s.length() > 0 && s[0] == ' ') { s = s.mid(1); }
-
-        if (s == "")
+        // Returns a string that has whitespace removed from the start and the end, and that has
+        // each sequence of internal whitespace replaced with a single space.
+        // And replace \t and &nbsp;
+        s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
+        // test 1
+        if ((s == "") || (s == "[[br]]"))
         {
+            // skip
             i++;
             continue;
         }
-
         if (s.at(0) == '?')
         {
-            quest = new QTreeWidgetItem(QStringList() << tr("unc") << s.mid(1));
-            top->addChild(quest);
-            i++;
-
-            int j = i;
-            QStringList ans;
-            int correctcount = 0;
-
-            while (j < data.size())
+            quest = make_question(data, i);
+            if (quest)
             {
-                s = data.at(j);
-                s = s.replace("&nbsp;", " ");
-
-                while (s.length() > 0 && s[0] == ' ') { s = s.mid(1); }
-
-                if (s == "")
-                {
-                    j++;
-                    continue;
-                }
-
-                if (s.at(0) == '*') { correctcount++; }
-
-                if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$')) { break; }
-
-                ans.append(s);
-                j++;
-            }
-
-            i = j;
-
-            if (ans.size() == 0)
-            {
-                quest->setText(0, tr("info"));
-            } else if (ans.at(0).indexOf("->") > -1)
-            {
-                quest->setText(0, tr("map"));
-
-                for (int k = 0; k < ans.size(); k++)
-                {
-                    s = ans.at(k);
-
-                    if (s.at(0) == '*') { s = s.mid(1); }
-
-                    quest->addChild(new QTreeWidgetItem(
-                        QStringList() << tr("option") << s.mid(0, s.indexOf("->")) << s.mid(s.indexOf("->") + 2)));
-                }
+                top->addChild(quest);
             } else
-            {
-                bool number = false;
-                // TODO: все правильные галочками
-                if ((correctcount == ans.size()) && (correctcount < 3))
-                {
-                    quest->setText(0, tr("text"));
-                    number = true;
-                    for (int k = 0; k < ans.size(); k++)
-                    {
-                        s = ans.at(k);
-                        if (s.mid(0, 1) == "*") s = s.mid(1);
-                        if (!is_number(s)) number = false;
-                    }
-
-                    if (number) { quest->setText(0, tr("number")); }
-                } else if (correctcount > 1)
-                {
-                    quest->setText(0, tr("multichoice"));
-                } else
-                { quest->setText(0, tr("choice")); }
-
-                for (int k = 0; k < ans.size(); k++)
-                {
-                    s = ans.at(k);
-
-                    if (s.at(0) == '*')
-                    {
-                        if (number)
-                        {
-                            quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << to_number(s.mid(1))));
-                        } else
-                        { quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s.mid(1))); }
-                    } else
-                    { quest->addChild(new QTreeWidgetItem(QStringList() << tr("incorrect") << s)); }
-                }
-            }
-
-            continue;
+            { return; }
         } else if (s.at(0) == '#')
         {
             top = new QTreeWidgetItem(QStringList() << tr("section") << s.mid(1));
@@ -212,12 +124,167 @@ void MainWindow::on_actionAnalyse_triggered() {
             i++;
             continue;
         }
-
-        i++;
     }
-
     ui->tree->expandAll();
     on_tree_itemSelectionChanged();
+}
+QTreeWidgetItem * MainWindow::make_question(QStringList & data, int & index) {
+    // get string
+    QString s = data.at(index).mid(1);    // remove ?
+    QString price;
+    if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5))
+    {
+        price = s.left(s.indexOf("%%"));
+        s = s.mid(s.indexOf("%%") + 2);
+    } else
+    { price = default_question_price; }
+    // Returns a string that has whitespace removed from the start and the end, and that has
+    // each sequence of internal whitespace replaced with a single space.
+    // And replace \t and &nbsp;
+    s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
+
+    QTreeWidgetItem * quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
+
+
+    index++;
+    //
+    QStringList answers;
+    int correctcount = 0;
+
+    while (index < data.size())
+    {
+        s = data.at(index);
+        s = s.replace("&nbsp;", " ").trimmed();
+
+        while (s.length() > 0 && s[0] == ' ') { s = s.mid(1); }
+
+        if ((s == "") || (s == "[[br]]"))
+        {
+            index++;
+            continue;
+        }
+
+        if (s.at(0) == '*') { correctcount++; }
+
+        if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$')) { break; }
+
+        answers.append(s);
+        index++;
+    }
+    // test answers
+    if (answers.size() == 0)
+    {
+        // no answers
+        quest->setText(0, tr("info"));
+    } else if (is_map(answers))
+    {
+        // suspicion of map
+        quest->setText(0, tr("map"));
+
+        for (int k = 0; k < answers.size(); k++)
+        {
+            s = answers.at(k);
+
+            if (s.at(0) == '*') { s = s.mid(1); }
+
+            quest->addChild(new QTreeWidgetItem(
+                QStringList() << tr("option") << s.mid(0, s.indexOf("->")) << s.mid(s.indexOf("->") + 2)));
+        }
+    } else
+    {
+        // test normal
+        bool number = false;
+        QString p, t;
+        QString s2;
+
+        if ((correctcount == answers.size()) && (correctcount < 3))
+        {
+            // all right
+            quest->setText(0, tr("text"));
+            number = true;
+            for (int k = 0; k < answers.size(); k++)
+            {
+                s = answers.at(k);
+                if (!parse_answer(s, p, s2, t)) number = false;
+            }
+
+            if (number) { quest->setText(0, tr("number")); }
+        } else if (correctcount > 1)
+        {
+            quest->setText(0, tr("multichoice"));
+        } else
+        { quest->setText(0, tr("choice")); }
+
+        for (int k = 0; k < answers.size(); k++)
+        {
+            s = answers.at(k);
+            parse_answer(s, p, s2, t);
+            if (s.at(0) == '*')
+            {
+                if (number)
+                {
+                    quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s2 << t << p));
+                } else
+                { quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s2 << "" << p)); }
+            } else
+            { quest->addChild(new QTreeWidgetItem(QStringList() << tr("incorrect") << s2 << "" << p)); }
+        }
+    }
+
+    return quest;
+}
+/// line-of-answer analysis
+/// \param s string
+/// \param price question price
+/// \param text answer text
+/// \param tolerance answer accuracy
+/// \return is number
+bool MainWindow::parse_answer(QString s, QString & price, QString & text, QString & tolerance) {
+    qWarning(s.toStdString().c_str());
+    bool ok, ok2;
+    if (s.leftRef(1) == "*") { s = s.mid(1); }
+    if ((s.indexOf("%%") != -1) && (s.indexOf("%%") < 5))
+    {
+        price = s.left(s.indexOf("%%"));
+        price.toDouble(&ok);
+        if (ok)
+        {
+            s = s.mid(s.indexOf("%%") + 2);
+        } else
+        { price = ""; }
+    }
+
+    if (s.count(":") == 1)
+    {
+        QString s1 = s.left(s.indexOf(":"));
+        QString s2 = s.mid(s.indexOf(":") + 1);
+        s1.toDouble(&ok);
+        s2.toDouble(&ok2);
+        if (ok && ok2)
+        {
+            text = s1;
+            tolerance = s2;
+            return true;
+        } else
+        {
+            text = s;
+            tolerance = "";
+            return false;
+        }
+    } else
+    {
+        s.toDouble(&ok);
+        tolerance = "";
+        text = s;
+        return ok;
+    }
+}
+bool MainWindow::is_map(const QStringList & answers) const {
+    for (auto s : answers)
+    {
+        if (s.indexOf('->') == -1) { return false; }
+    }
+    return true;
 }
 /// Open File
 /// \note is supposed to use html, but should also work with plain text
@@ -505,7 +572,7 @@ bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item)
     stream.writeTextElement("text", "");
     stream.writeEndElement();
     stream.writeTextElement("single", "true");
-    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
@@ -540,7 +607,7 @@ bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item)
 QString MainWindow::format_choice(QTreeWidgetItem * item, bool & ok) {
     QString ret = item->text(1);
     QStringList answers;
-    ret += "<br/>{1:MULTICHOICE_V:";
+    ret += "<br/>{" + item->text(3) + ":MULTICHOICE_V:";
     int correct = 0;
     for (int k = 0; k < item->childCount(); k++)
     {
@@ -577,7 +644,7 @@ bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * 
     stream.writeTextElement("text", "");
     stream.writeEndElement();
     stream.writeTextElement("single", "false");
-    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
@@ -623,7 +690,7 @@ bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * 
 QString MainWindow::format_multichoice(QTreeWidgetItem * item, bool & ok) {
     QString ret = item->text(1);
     QStringList answers;
-    ret += "<br/>{1:MULTIRESPONSE:";
+    ret += "<br/>{" + item->text(3) + ":MULTIRESPONSE:";
     ok = true;
 
     int correct = 0, incorrect = 0;
@@ -676,7 +743,7 @@ bool MainWindow::write_numerical(
     stream.writeStartElement("generalfeedback");
     stream.writeTextElement("text", "");
     stream.writeEndElement();
-    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
@@ -706,7 +773,7 @@ bool MainWindow::write_numerical(
 QString MainWindow::format_numerical(QTreeWidgetItem * item, double ktolerance, bool btolerance, bool & ok) {
     QString ret = item->text(1);
     QStringList answers;
-    ret += "<br/>{1:NUMERICAL:";
+    ret += "<br/>{" + item->text(3) + ":NUMERICAL:";
     ok = true;
     //
     double qtolerance;
@@ -740,9 +807,14 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
     stream.writeStartElement("generalfeedback");
     stream.writeTextElement("text", "");
     stream.writeEndElement();
-    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
+    if (usecase)
+    {
+        stream.writeTextElement("usecase", "1");
+    } else
+    { stream.writeTextElement("usecase", "0"); }
     stream.writeTextElement("shuffleanswers", "1");
     // answ
     for (int k = 0; k < item->childCount(); k++)
@@ -765,8 +837,11 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
 QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
     QString ret = item->text(1);
     QStringList answers;
-    ret += "<br/>{1:SHORTANSWER:";
-    //    ret += "<br/>{1:SHORTANSWER_C:"; case-sens
+    if (usecase)
+    {
+        ret += "<br/>{" + item->text(3) + ":SHORTANSWER_C:";
+    } else
+    { ret += "<br/>{" + item->text(3) + ":SHORTANSWER:"; }
     ok = true;
     // answ
     for (int k = 0; k < item->childCount(); k++)
@@ -792,7 +867,7 @@ bool MainWindow::write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * ite
     stream.writeStartElement("generalfeedback");
     stream.writeTextElement("text", "");
     stream.writeEndElement();
-    stream.writeTextElement("defaultgrade", "10");
+    stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
@@ -840,7 +915,7 @@ QString MainWindow::format_matching(QTreeWidgetItem * item, bool & ok) {
             } else
             { answers << "%0%" + right[j]; }
         }
-        ret += "{1:MULTICHOICE:" + answers.join("~") + "}";
+        ret += "{" + item->text(3) + ":MULTICHOICE:" + answers.join("~") + "}";
     }
     //
     return ret;

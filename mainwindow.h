@@ -47,6 +47,12 @@ class MainWindow : public QMainWindow {
     QStringList images;
     QLineEdit * tolerance;
     MyHighlighter * highlighter;
+    bool usecase;
+    QString default_question_price;
+
+    QTreeWidgetItem * make_question(QStringList & data, int & index);
+    bool parse_answer(QString s, QString & price, QString & text, QString & tolerance);
+
     void writeText(QXmlStreamWriter & stream, QString txt, QString basepath);
 
     bool process_tree(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance,
@@ -78,6 +84,7 @@ class MainWindow : public QMainWindow {
 
     void show_error(QTreeWidgetItem * item, QString message);
     void export_error();
+    bool is_map(const QStringList & answers) const;
 };    // class MainWindow
 
 
