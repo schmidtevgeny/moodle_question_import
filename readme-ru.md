@@ -62,3 +62,8 @@ incorrect
 - TestConvert.pro - файл проекта qmake
 - CMakeLists.txt - файл проектс cmake
 - TestConvert_ru.ts - файл русской локализации
+
+Баги
+-----
+
+Иногда перестает работать ввод в окне документа. Лечится поиском

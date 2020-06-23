@@ -26,6 +26,29 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
     tolerance = new QLineEdit("200");
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document());
+
+#ifdef _DEBUG
+    ui->plain->setPlainText(
+        "# Section\n"
+        "@ Subsection\n"
+        "? Question choice or multichoice\n"
+        "* correct\n"
+        "incorrect\n"
+        "? Question numerical or shortanswer\n"
+        "* answer\n"
+        "? Question matching\n"
+        "* option1->value1\n"
+        "* option2->value2\n"
+        "$ Clozed question intro\n"
+        "? Subquestion choice or multichoice\n"
+        "* correct\n"
+        "incorrect\n"
+        "? Subquestion numerical or shortanswer\n"
+        "* answer\n"
+        "? Subquestion matching\n"
+        "* option1->value1\n"
+        "* option2->value2\n");
+#endif
 }
 MainWindow::~MainWindow() {
     iniFile->setValue("dirs/last", last_dir);
@@ -694,6 +717,7 @@ void MainWindow::on_actionReplace_triggered() {
             s = s.mid(pos + 4);
 
             p = p.mid(p.indexOf(">") + 1);
+            // replace tags
             p = p.replace("<br />", "[[br]]")
                     .replace("<sub>", "[[sub]]")
                     .replace("</sub>", "[[/sub]]")
@@ -715,7 +739,9 @@ void MainWindow::on_actionReplace_triggered() {
             // TODO: копирование картинок по пути
 
             for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
-            // TODO: <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
+
+            // replace the indexes used in MS Word as
+            // <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
             QString s1 = "", s2 = "", s3 = "";
             QString sub = "vertical-align:sub;";
             QString sup = "vertical-align:super;";
@@ -920,10 +946,21 @@ void MainWindow::on_actionReplace_triggered() {
                 { lines[i] = lines[i].mid(dlg.ui->label_answer->text().length()); }
             }
             //признак ответа в конце
-            if (dlg.ui->repl_to_correct->isChecked())
+            if (dlg.ui->repl_to_correct_end->isChecked())
             {
-                if (lines.at(i).rightRef(dlg.ui->label_correct->text().length()) == dlg.ui->label_correct->text())
-                { lines[i] = "*" + lines[i].left(lines[i].length() - dlg.ui->label_correct->text().length()); }
+                if (lines.at(i).rightRef(dlg.ui->label_correct_end->text().length()) ==
+                    dlg.ui->label_correct_end->text())
+                { lines[i] = "*" + lines[i].leftRef(lines[i].length() - dlg.ui->label_correct_end->text().length()); }
+            }
+            //признак ответа в конце
+            if (dlg.ui->repl_to_correct_begin->isChecked())
+            {
+                if (lines.at(i).leftRef(dlg.ui->label_correct_begin->text().length()) ==
+                    dlg.ui->label_correct_begin->text())
+                {
+                    lines[i] =
+                        "*" + lines[i].rightRef(lines[i].length() - dlg.ui->label_correct_begin->text().length());
+                }
             }
         }
         s = "<html><body><p>" + lines.join("</p><p>") + "</p></body></html>";

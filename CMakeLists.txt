@@ -19,6 +19,8 @@ find_package(Qt5 REQUIRED
         PrintSupport
         LinguistTools
         )
+
+SET(QT_USE_QTMAIN TRUE)
 # moc от qt
 # список форм
 qt5_wrap_ui(UIC_SOURCES

@@ -14,16 +14,6 @@
    <string>Substitutions</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="7" column="1">
-    <widget class="QCheckBox" name="del_space">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Delete spaces at the beginning and end of a line&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Remowe spaces</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="2" colspan="2">
     <widget class="QCheckBox" name="del_alpha">
      <property name="toolTip">
@@ -33,6 +23,39 @@
       <string>Remove а)</string>
      </property>
     </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="repl_questnum">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? 1. Question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? Question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Remove question number</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="4">
+    <widget class="QCheckBox" name="del_enddot">
+     <property name="text">
+      <string>Remowe . at the end of the line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0">
+    <widget class="QCheckBox" name="repl_answer">
+     <property name="text">
+      <string>Remove at the beginning of the line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="QLineEdit" name="repl_from"/>
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="repl_numsk">
@@ -44,65 +67,28 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="del_numsk">
+   <item row="11" column="4">
+    <widget class="QLineEdit" name="label_correct_begin"/>
+   </item>
+   <item row="7" column="2">
+    <widget class="QCheckBox" name="del_endsemicolon">
+     <property name="text">
+      <string>Remowe ; at the end of the line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QCheckBox" name="del_alphadot">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1) Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*1) Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;A. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*A. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Remove 1)</string>
+      <string>Remove А.</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QCheckBox" name="repl_num">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1 Question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? Question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Replace 1 with ?</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QCheckBox" name="del_num">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*1. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Remove 1.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QCheckBox" name="repl_to_quiz">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;$ text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Question marker</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="1">
-    <widget class="QLineEdit" name="label_quiz"/>
-   </item>
-   <item row="13" column="0">
-    <widget class="QCheckBox" name="repl_answer">
-     <property name="text">
-      <string>Remove at the beginning of the line</string>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+   <item row="13" column="1">
+    <widget class="QLineEdit" name="label_answer"/>
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="repl_numdot">
@@ -123,6 +109,26 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="1">
+    <widget class="QCheckBox" name="repl_num">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1 Question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? Question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Replace 1 with ?</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="2" colspan="2">
+    <widget class="QCheckBox" name="repl_to_correct_begin">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;$answer&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*answer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>sign of response at the begin</string>
+     </property>
+    </widget>
+   </item>
    <item row="14" column="0">
     <widget class="QCheckBox" name="replfromto">
      <property name="text">
@@ -130,27 +136,31 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="1">
-    <widget class="QLineEdit" name="label_answer"/>
-   </item>
-   <item row="7" column="0">
-    <widget class="QCheckBox" name="repl_questnum">
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="del_numsk">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? 1. Question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;? Question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="statusTip">
-      <string/>
-     </property>
-     <property name="whatsThis">
-      <string/>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1) Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*1) Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Remove question number</string>
+      <string>Remove 1)</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="2" colspan="2">
-    <widget class="QCheckBox" name="repl_to_correct">
+   <item row="14" column="3" colspan="2">
+    <widget class="QLineEdit" name="repl_to"/>
+   </item>
+   <item row="16" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="2">
+    <widget class="QCheckBox" name="repl_to_correct_end">
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;answer $&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*answer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -159,39 +169,30 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="4">
-    <widget class="QCheckBox" name="del_alphadot">
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="del_num">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;A. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*A. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;1. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;and&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*1. Text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;to &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*Text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Remove А.</string>
+      <string>Remove 1.</string>
      </property>
     </widget>
    </item>
-   <item row="14" column="1">
-    <widget class="QLineEdit" name="repl_from"/>
-   </item>
-   <item row="11" column="4">
-    <widget class="QLineEdit" name="label_correct"/>
+   <item row="15" column="1">
+    <widget class="QCheckBox" name="repl_split_alpha">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;a) text1 *b) text2 c) text3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;text1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*text2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;text3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Split line by a)</string>
+     </property>
+    </widget>
    </item>
    <item row="14" column="2">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>with</string>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="3" colspan="2">
-    <widget class="QLineEdit" name="repl_to"/>
-   </item>
-   <item row="10" column="1" colspan="2">
-    <widget class="QCheckBox" name="make_tags">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&amp;amp;lt; to &amp;lt;&lt;/p&gt;&lt;p&gt;&amp;amp;gt; to &amp;gt;&lt;/p&gt;&lt;p&gt;&amp;amp;amp; to &amp;amp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Replace codes for &lt;&gt;&amp;&amp; with symbols</string>
      </property>
     </widget>
    </item>
@@ -205,34 +206,26 @@
      </property>
     </widget>
    </item>
-   <item row="15" column="1">
-    <widget class="QCheckBox" name="repl_split_alpha">
+   <item row="11" column="1">
+    <widget class="QLineEdit" name="label_quiz"/>
+   </item>
+   <item row="11" column="0">
+    <widget class="QCheckBox" name="repl_to_quiz">
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;a) text1 *b) text2 c) text3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;text1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*text2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;text3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;$ text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;question text&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;?question text&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Split lyne by a)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QCheckBox" name="del_endsemicolon">
-     <property name="text">
-      <string>Remowe ; at the end of the line</string>
+      <string>Question marker</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="4">
-    <widget class="QCheckBox" name="del_enddot">
-     <property name="text">
-      <string>Remowe . at the end of the line</string>
+   <item row="10" column="1" colspan="2">
+    <widget class="QCheckBox" name="make_tags">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace&lt;/p&gt;&lt;p&gt;&amp;amp;lt; to &amp;lt;&lt;/p&gt;&lt;p&gt;&amp;amp;gt; to &amp;gt;&lt;/p&gt;&lt;p&gt;&amp;amp;amp; to &amp;amp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-    </widget>
-   </item>
-   <item row="10" column="4">
-    <widget class="QCheckBox" name="del_endcomma">
      <property name="text">
-      <string>Remowe , at the end of the line</string>
+      <string>Replace codes for &lt;&gt;&amp;&amp; with symbols</string>
      </property>
     </widget>
    </item>
@@ -245,6 +238,26 @@
       <string>Codes instead of &lt;&gt;&amp;&amp;</string>
      </property>
     </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QCheckBox" name="del_space">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Delete spaces at the beginning and end of a line&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Remowe spaces</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="4">
+    <widget class="QCheckBox" name="del_endcomma">
+     <property name="text">
+      <string>Remowe , at the end of the line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="4">
+    <widget class="QLineEdit" name="label_correct_end"/>
    </item>
   </layout>
  </widget>
@@ -264,8 +277,8 @@
   <tabstop>make_tags</tabstop>
   <tabstop>repl_to_quiz</tabstop>
   <tabstop>label_quiz</tabstop>
-  <tabstop>repl_to_correct</tabstop>
-  <tabstop>label_correct</tabstop>
+  <tabstop>repl_to_correct_begin</tabstop>
+  <tabstop>label_correct_begin</tabstop>
   <tabstop>repl_answer</tabstop>
   <tabstop>label_answer</tabstop>
   <tabstop>replfromto</tabstop>
