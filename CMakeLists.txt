@@ -25,7 +25,8 @@ SET(QT_USE_QTMAIN TRUE)
 # список форм
 qt5_wrap_ui(UIC_SOURCES
         dialogreplace.ui
-        mainwindow.ui)
+        mainwindow.ui
+        highlighterdialog.ui)
 #ресурсы
 qt5_add_resources(RCC_SOURCES
         images/icon.qrc)
@@ -42,6 +43,8 @@ target_sources(${TARGET_NAME} PRIVATE
         mainwindow.h
         myhighlighter.cpp
         myhighlighter.h
+        highlighterdialog.cpp
+        highlighterdialog.h
         )
 # Включаем C++ 2014
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_14)

@@ -9,6 +9,7 @@
 #include <ui_dialogreplace.h>
 #include <QDateTime>
 #include "myhighlighter.h"
+#include "highlighterdialog.h"
 
 MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
     // settings
     usecase = false;
     default_question_price = "10";
-
+    // TODO: load colors
 #ifdef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
@@ -584,11 +585,20 @@ bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item)
         stream.writeStartElement("answer");
         if (item->child(k)->text(0) == tr("correct"))
         {
-            stream.writeAttribute("fraction", "100");
+            if (item->child(k)->text(3) != "")
+            {
+                stream.writeAttribute("fraction", item->child(k)->text(3));
+            } else
+            { stream.writeAttribute("fraction", "100"); }
             correct++;
-
         } else
-        { stream.writeAttribute("fraction", "0"); }
+        {
+            if (item->child(k)->text(3) != "")
+            {
+                stream.writeAttribute("fraction", item->child(k)->text(3));
+            } else
+            { stream.writeAttribute("fraction", "0"); }
+        }
 
         writeText(stream, item->child(k)->text(1), last_dir);
         stream.writeStartElement("feedback");
@@ -609,14 +619,27 @@ QString MainWindow::format_choice(QTreeWidgetItem * item, bool & ok) {
     QStringList answers;
     ret += "<br/>{" + item->text(3) + ":MULTICHOICE_V:";
     int correct = 0;
+    QString price;
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
         {
-            answers << "%100%" + item->child(k)->text(1);
+            if (item->child(k)->text(3) != "")
+            {
+                price = item->child(k)->text(3);
+            } else
+            { price = "100"; }
+            answers << "%" + price + "%" + item->child(k)->text(1);
             correct++;
         } else
-        { answers << "%0%" + item->child(k)->text(1); }
+        {
+            if (item->child(k)->text(3) != "")
+            {
+                price = item->child(k)->text(3);
+            } else
+            { price = "0"; }
+            answers << "%" + price + "%" + item->child(k)->text(1);
+        }
     }
     ret += answers.join("~") + "}";
     if (correct == 0)
@@ -669,6 +692,7 @@ bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * 
         show_error(item, tr("No wrong answers."));
         return false;
     }
+    // TODO: answer price
     for (int k = 0; k < item->childCount(); k++)
     {
         stream.writeStartElement("answer");
@@ -715,6 +739,7 @@ QString MainWindow::format_multichoice(QTreeWidgetItem * item, bool & ok) {
         ok = false;
         return "";
     }
+    // TODO: answer price
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
@@ -754,11 +779,19 @@ bool MainWindow::write_numerical(
         if (item->child(k)->text(0) == tr("correct"))
         {
             stream.writeStartElement("answer");
-            stream.writeAttribute("fraction", "100");
-            if (btolerance)
+            if (item->child(k)->text(3) != "")
+            {
+                stream.writeAttribute("fraction", item->child(k)->text(3));
+            } else
+            { stream.writeAttribute("fraction", "100"); }
+            if (item->child(k)->text(2) != "")
+            {
+                qtolerance = item->child(k)->text(2).toDouble();
+            } else if (btolerance)
+            {
                 qtolerance = ktolerance;
-            else
-                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
+            } else
+            { qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance); }
             stream.writeAttribute("tolerance", QString("%1").arg(qtolerance));
             stream.writeTextElement("text", item->child(k)->text(1));
             stream.writeStartElement("feedback");
@@ -777,15 +810,25 @@ QString MainWindow::format_numerical(QTreeWidgetItem * item, double ktolerance, 
     ok = true;
     //
     double qtolerance;
+    QString price;
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
         {
-            if (btolerance)
+            if (item->child(k)->text(2) != "")
+            {
+                qtolerance = item->child(k)->text(2).toDouble();
+            } else if (btolerance)
+            {
                 qtolerance = ktolerance;
-            else
-                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
-            answers << "%100%" + item->child(k)->text(1) + ":" + QString("%1").arg(qtolerance);
+            } else
+            { qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance); }
+            if (item->child(k)->text(3) != "")
+            {
+                price = item->child(k)->text(3);
+            } else
+            { price = "100"; }
+            answers << "%" + price + "%" + item->child(k)->text(1) + ":" + QString("%1").arg(qtolerance);
         }
     }
     //
@@ -822,7 +865,11 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
         if (item->child(k)->text(0) == tr("correct"))
         {
             stream.writeStartElement("answer");
-            stream.writeAttribute("fraction", "100");
+            if (item->child(k)->text(3) != "")
+            {
+                stream.writeAttribute("fraction", item->child(k)->text(3));
+            } else
+            { stream.writeAttribute("fraction", "100"); }
             stream.writeTextElement("text", item->child(k)->text(1));
             stream.writeStartElement("feedback");
             stream.writeTextElement("text", "");
@@ -837,6 +884,7 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
 QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
     QString ret = item->text(1);
     QStringList answers;
+    QString price;
     if (usecase)
     {
         ret += "<br/>{" + item->text(3) + ":SHORTANSWER_C:";
@@ -846,7 +894,15 @@ QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
     // answ
     for (int k = 0; k < item->childCount(); k++)
     {
-        if (item->child(k)->text(0) == tr("correct")) { answers << "%100%" + item->child(k)->text(1); }
+        if (item->child(k)->text(0) == tr("correct"))
+        {
+            if (item->child(k)->text(3) != "")
+            {
+                price = item->child(k)->text(3);
+            } else
+            { price = 100; }
+            answers << "%" + price + "%" + item->child(k)->text(1);
+        }
     }
     //
     ret += answers.join("~") + "}";
@@ -1497,4 +1553,14 @@ void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
     }
 
     QMessageBox::warning(this, tr("Error"), message);
+}
+void MainWindow::on_actionHighlighter_triggered() {
+    //
+    HighlighterDialog dlg;
+    if (dlg.exec())
+    {
+        dlg.highlighter->save_color();
+        highlighter->load_color();
+        highlighter->rehighlight();
+    }
 }

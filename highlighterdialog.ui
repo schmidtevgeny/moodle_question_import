@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>HighlighterDialog</class>
+    <widget class="QDialog" name="HighlighterDialog">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>705</width>
+                <height>501</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Dialog</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+            <item row="3" column="1">
+                <widget class="QCheckBox" name="isUnderline">
+                    <property name="text">
+                        <string>underline</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="4" column="1">
+                <widget class="QPushButton" name="selectColor">
+                    <property name="text">
+                        <string/>
+                    </property>
+                </widget>
+            </item>
+            <item row="1" column="1">
+                <widget class="QCheckBox" name="isBold">
+                    <property name="text">
+                        <string>bold</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="2" column="1">
+                <widget class="QCheckBox" name="isItalic">
+                    <property name="text">
+                        <string>italic</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox">
+                    <item>
+                        <property name="text">
+                            <string>keyword</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>section</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>subsection</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>ticket</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>question</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>correct answer</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>incorrect answer</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>price</string>
+                        </property>
+                    </item>
+                </widget>
+            </item>
+            <item row="5" column="1">
+                <spacer name="verticalSpacer">
+                    <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </item>
+            <item row="0" column="0" rowspan="6">
+                <widget class="QTextEdit" name="plain">
+                    <property name="html">
+                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                            &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style
+                            type=&quot;text/css&quot;&gt;
+                            p, li { white-space: pre-wrap; }
+                            &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2';
+                            font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;#
+                            Section&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;@
+                            Subsection&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?
+                            Question choice or multichoice&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*100%%correct&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;-100%%incorrect&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?10%%Question
+                            numerical or shortanswer&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            answer&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?10%%2+2=&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*100%%4:0.1&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*50%%4:0.5&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?
+                            Question matching&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            option1-&amp;gt;value1&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            option2-&amp;gt;value2&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;$
+                            Clozed question intro&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?
+                            Subquestion choice or multichoice&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            correct&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;incorrect&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?
+                            Subquestion numerical or shortanswer&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            answer&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;?
+                            Subquestion matching&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            option1-&amp;gt;value1&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+                            -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;*
+                            option2-&amp;gt;value2&lt;/span&gt;&lt;/p&gt;
+                            &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;
+                            margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br
+                            /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                        </string>
+                    </property>
+                </widget>
+            </item>
+            <item row="6" column="0" colspan="2">
+                <widget class="QDialogButtonBox" name="buttonBox">
+                    <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>accepted()</signal>
+            <receiver>HighlighterDialog</receiver>
+            <slot>accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>248</x>
+                    <y>254</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>157</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonBox</sender>
+            <signal>rejected()</signal>
+            <receiver>HighlighterDialog</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>316</x>
+                    <y>260</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>286</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>isBold</sender>
+            <signal>clicked()</signal>
+            <receiver>HighlighterDialog</receiver>
+            <slot>flags_modify()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>661</x>
+                    <y>43</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>352</x>
+                    <y>250</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>isItalic</sender>
+            <signal>clicked()</signal>
+            <receiver>HighlighterDialog</receiver>
+            <slot>flags_modify()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>661</x>
+                    <y>66</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>352</x>
+                    <y>250</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>isUnderline</sender>
+            <signal>clicked()</signal>
+            <receiver>HighlighterDialog</receiver>
+            <slot>flags_modify()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>661</x>
+                    <y>89</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>352</x>
+                    <y>250</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>flags_modify()</slot>
+    </slots>
+</ui>

@@ -32,16 +32,16 @@
         <bool>false</bool>
        </property>
        <attribute name="headerMinimumSectionSize">
-        <number>50</number>
+           <number>50</number>
        </attribute>
-       <attribute name="headerDefaultSectionSize">
-        <number>100</number>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Question type</string>
-        </property>
-       </column>
+          <attribute name="headerDefaultSectionSize">
+              <number>100</number>
+          </attribute>
+          <column>
+              <property name="text">
+                  <string>Question type</string>
+              </property>
+          </column>
           <column>
               <property name="text">
                   <string>Text</string>
@@ -112,6 +112,7 @@
     <addaction name="toolbarsMenu"/>
     <addaction name="actionCollapse"/>
     <addaction name="expand_all"/>
+       <addaction name="actionHighlighter"/>
    </widget>
    <widget class="QMenu" name="searchMenu">
     <property name="title">
@@ -161,11 +162,11 @@
    <addaction name="actionFixedAccuracy"/>
   </widget>
   <action name="actionAnalyse">
-   <property name="icon">
-       <iconset resource="images/icon.qrc">
-           <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
-       </iconset>
-   </property>
+      <property name="icon">
+          <iconset resource="images/icon.qrc">
+              <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+          </iconset>
+      </property>
    <property name="text">
     <string>Analysis...</string>
    </property>
@@ -204,11 +205,11 @@
    </property>
   </action>
   <action name="actionReplace">
-   <property name="icon">
-       <iconset resource="images/icon.qrc">
-           <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
-       </iconset>
-   </property>
+      <property name="icon">
+          <iconset resource="images/icon.qrc">
+              <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
+          </iconset>
+      </property>
    <property name="text">
     <string>Replace...</string>
    </property>
@@ -277,11 +278,11 @@
    </property>
   </action>
   <action name="actionFind">
-   <property name="icon">
-       <iconset resource="images/icon.qrc">
-           <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
-       </iconset>
-   </property>
+      <property name="icon">
+          <iconset resource="images/icon.qrc">
+              <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
+          </iconset>
+      </property>
    <property name="text">
     <string>Find...</string>
    </property>
@@ -293,11 +294,11 @@
    </property>
   </action>
   <action name="actionFindNext">
-   <property name="icon">
-       <iconset resource="images/icon.qrc">
-           <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
-       </iconset>
-   </property>
+      <property name="icon">
+          <iconset resource="images/icon.qrc">
+              <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
+          </iconset>
+      </property>
    <property name="text">
     <string>Find next</string>
    </property>
@@ -360,17 +361,22 @@
     <string>Export as plaintext</string>
    </property>
   </action>
-  <action name="actionFixedAccuracy">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Fixed accuracy</string>
-   </property>
-   <property name="toolTip">
-    <string>Fixed accuracy</string>
-   </property>
-  </action>
+     <action name="actionFixedAccuracy">
+         <property name="checkable">
+             <bool>true</bool>
+         </property>
+         <property name="text">
+             <string>Fixed accuracy</string>
+         </property>
+         <property name="toolTip">
+             <string>Fixed accuracy</string>
+         </property>
+     </action>
+     <action name="actionHighlighter">
+         <property name="text">
+             <string>Highlighter</string>
+         </property>
+     </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

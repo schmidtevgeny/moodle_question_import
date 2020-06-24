@@ -1,15 +1,19 @@
 #include "myhighlighter.h"
 #include <QRegularExpression>
+#include "QSettings"
 // TODO: make normal variables
 MyHighlighter::MyHighlighter(QTextDocument * parent)
     : QSyntaxHighlighter(parent),
-      sectionExpression("^\\s*#[^\\n]*"),
-      ticketExpression("^\\s*$[^\\n]*"),
-      correctAnswerExpression("^\\s*\\*[^\\n]*"),
-      keywordExpression("^\\s*[#@$\\?\\*]"),
-      incorrectAnswerExpression("^\\s*[^#@\\?\\*$][^\\n]*"),
-      questionExpression("^\\s*\\?[^\\n]*"),
-      subsectionExpression("^\\s*@[^\\n]*"),
+      sectionExpression("^\\s*(#)[^\\n]*"),
+      ticketExpression("^\\s*(\\$)[^\\n]*"),
+      //      correctAnswerExpression("^\\s*\\*[^\\n]*"),
+      correctAnswerExpression("^\\s*(\\*)(\\d*.?\\d*%%)?[^\\n]*"),
+      //      keywordExpression("^\\s*[#@$\\?\\*]"),
+      //      incorrectAnswerExpression("^\\s*[^#@\\?\\*$][^\\n]*"),
+      incorrectAnswerExpression("^\\s*(-\\d*.?\\d*%%)?[^#@\\?\\*$][^\\n]*"),
+      //      questionExpression("^\\s*\\?[^\\n]*"),
+      questionExpression("^\\s*(\\?)(\\d*.?\\d*%%)?[^\\n]*"),
+      subsectionExpression("^\\s*(@)[^\\n]*"),
       matchExpression("^\\s*\\*[^\\n]*(->)", QRegularExpression::InvertedGreedinessOption) {
     keywordFormat.setFontWeight(QFont::Bold);
     sectionFormat.setFontWeight(QFont::Bold);
@@ -18,6 +22,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent)
     questionFormat.setFontWeight(QFont::Bold);
     correctAnswerFormat.setFontWeight(QFont::Normal);
     incorrectAnswerFormat.setFontWeight(QFont::Normal);
+    priceFormat.setFontWeight(QFont::Normal);
 
     keywordFormat.setForeground(Qt::red);
     sectionFormat.setForeground(Qt::black);
@@ -26,6 +31,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent)
     questionFormat.setForeground(Qt::black);
     correctAnswerFormat.setForeground(Qt::darkGreen);
     incorrectAnswerFormat.setForeground(Qt::darkMagenta);
+    priceFormat.setForeground(Qt::green);
 
     keywordFormat.setFontItalic(false);
     sectionFormat.setFontItalic(true);
@@ -34,6 +40,7 @@ MyHighlighter::MyHighlighter(QTextDocument * parent)
     questionFormat.setFontItalic(true);
     correctAnswerFormat.setFontItalic(false);
     incorrectAnswerFormat.setFontItalic(false);
+    priceFormat.setFontItalic(false);
 
     keywordFormat.setFontUnderline(false);
     sectionFormat.setFontUnderline(true);
@@ -42,6 +49,9 @@ MyHighlighter::MyHighlighter(QTextDocument * parent)
     questionFormat.setFontUnderline(false);
     correctAnswerFormat.setFontUnderline(false);
     incorrectAnswerFormat.setFontUnderline(false);
+    priceFormat.setFontUnderline(false);
+
+    load_color();
 }
 void MyHighlighter::highlightBlock(const QString & text) {
     QTextCharFormat myClassFormat;
@@ -55,6 +65,7 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), sectionFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 
     i = subsectionExpression.globalMatch(text);
@@ -62,6 +73,7 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), subsectionFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 
     i = ticketExpression.globalMatch(text);
@@ -69,6 +81,7 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), ticketFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 
     i = questionExpression.globalMatch(text);
@@ -76,6 +89,8 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), questionFormat);
+        setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 
     i = incorrectAnswerExpression.globalMatch(text);
@@ -83,6 +98,7 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), incorrectAnswerFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), priceFormat);
     }
 
     i = correctAnswerExpression.globalMatch(text);
@@ -90,14 +106,16 @@ void MyHighlighter::highlightBlock(const QString & text) {
     {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(), match.capturedLength(), correctAnswerFormat);
+        setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
+        setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 
-    i = keywordExpression.globalMatch(text);
-    while (i.hasNext())
-    {
-        QRegularExpressionMatch match = i.next();
-        setFormat(match.capturedStart(), match.capturedLength(), keywordFormat);
-    }
+    //    i = keywordExpression.globalMatch(text);
+    //    while (i.hasNext())
+    //    {
+    //        QRegularExpressionMatch match = i.next();
+    //        setFormat(match.capturedStart(), match.capturedLength(), keywordFormat);
+    //    }
 
     i = matchExpression.globalMatch(text);
     while (i.hasNext())
@@ -105,4 +123,39 @@ void MyHighlighter::highlightBlock(const QString & text) {
         QRegularExpressionMatch match = i.next();
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
+}
+void load_format(QSettings & settings, QString section, QTextCharFormat & format) {
+    format.setFontItalic(settings.value(section + "/italic", format.fontItalic()).toBool());
+    format.setFontUnderline(settings.value(section + "/underline", format.fontUnderline()).toBool());
+    format.setFontWeight(settings.value(section + "/weight", format.fontWeight()).toInt());
+    format.setForeground(QColor(settings.value(section + "/color", format.foreground().color().name()).toString()));
+}
+void MyHighlighter::load_color() {
+    QSettings settings("TSU", "TestConvert");
+    load_format(settings, "keywordFormat", keywordFormat);
+    load_format(settings, "sectionFormat", sectionFormat);
+    load_format(settings, "subsectionFormat", subsectionFormat);
+    load_format(settings, "ticketFormat", ticketFormat);
+    load_format(settings, "questionFormat", questionFormat);
+    load_format(settings, "correctAnswerFormat", correctAnswerFormat);
+    load_format(settings, "incorrectAnswerFormat", incorrectAnswerFormat);
+    load_format(settings, "priceFormat", priceFormat);
+}
+void save_format(QSettings & settings, QString section, QTextCharFormat & format) {
+    settings.setValue(section + "/italic", format.fontItalic());
+    settings.setValue(section + "/underline", format.fontUnderline());
+    settings.setValue(section + "/weight", format.fontWeight());
+    settings.setValue(section + "/color", format.foreground().color().name());
+}
+
+void MyHighlighter::save_color() {
+    QSettings settings("TSU", "TestConvert");
+    save_format(settings, "keywordFormat", keywordFormat);
+    save_format(settings, "sectionFormat", sectionFormat);
+    save_format(settings, "subsectionFormat", subsectionFormat);
+    save_format(settings, "ticketFormat", ticketFormat);
+    save_format(settings, "questionFormat", questionFormat);
+    save_format(settings, "correctAnswerFormat", correctAnswerFormat);
+    save_format(settings, "incorrectAnswerFormat", incorrectAnswerFormat);
+    save_format(settings, "priceFormat", priceFormat);
 }

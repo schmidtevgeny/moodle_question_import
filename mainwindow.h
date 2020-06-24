@@ -38,6 +38,8 @@ class MainWindow : public QMainWindow {
     void on_actionFromTickets_triggered();
     void on_actionFixedAccuracy_triggered(bool checked);
 
+    void on_actionHighlighter_triggered();
+
   private:
     Ui::MainWindow * ui;
     QString last_dir;
