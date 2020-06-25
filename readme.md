@@ -21,9 +21,28 @@ incorrect
 
 \* answer
 
+?price%% Question choice or multichoice
+
+\*price%% correct
+
+price%%incorrect
+
+?price%% Question numerical or shortanswer
+
+\*price%% answer
+
+\*price%% answer
+
 ? Question matching
 
 \* option1->value1
+
+\* option2->value2
+
+?price%% Question matching
+
+\* option1->value1
+
 \* option2->value2
 
 TODO: clozed question
@@ -43,7 +62,20 @@ incorrect
 ? Subquestion matching
 
 \* option1->value1
+
 \* option2->value2
+
+?price%% Question choice or multichoice
+
+\*price%% correct
+
+price%%incorrect
+
+?price%% Question numerical or shortanswer
+
+\*price%% answer
+
+\*price%% answer
  
 Bugs
 -----
