@@ -35,3 +35,4 @@ cmake-build-*
 # vs
 out/
 CMakeSettings.json
+/.vs/
