@@ -11,11 +11,9 @@ project(${TARGET_NAME})
 #******************************************************************************
 # поиск пакетов Qt
 find_package(Qt5 REQUIRED
+        Gui
         Widgets
         Core
-        Gui
-        OpenGL
-        Sql
         PrintSupport
         LinguistTools
         )
@@ -33,7 +31,7 @@ qt5_add_resources(RCC_SOURCES
 # автовызов moc
 set(CMAKE_AUTOMOC ON)
 # собираемая программа - цель #2
-add_executable(${TARGET_NAME} ${UIC_SOURCES} ${RCC_SOURCES})
+add_executable(${TARGET_NAME} WIN32 ${UIC_SOURCES} ${RCC_SOURCES})
 #-----------------------------------------------
 target_sources(${TARGET_NAME} PRIVATE
         dialogreplace.cpp
@@ -74,8 +72,6 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::Core
         Qt5::Gui
-        Qt5::OpenGL
-        Qt5::Sql
         Qt5::PrintSupport
         )
 

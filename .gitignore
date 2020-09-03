@@ -32,3 +32,6 @@ _ReSharper*/
 .idea/
 *.unc-backup*
 cmake-build-*
+# vs
+out/
+CMakeSettings.json

@@ -283,7 +283,7 @@ bool MainWindow::parse_answer(QString s, QString & price, QString & text, QStrin
 bool MainWindow::is_map(const QStringList & answers) const {
     for (auto s : answers)
     {
-        if (s.indexOf('->') == -1) { return false; }
+        if (s.indexOf("->") == -1) { return false; }
     }
     return true;
 }
@@ -439,7 +439,7 @@ void MainWindow::on_actionExport_triggered() {
 
         last_dir = fi.dir().path();
 
-        bool as_multi = ui->actionСhoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
+        bool as_multi = ui->actionChoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
         bool as_text = ui->actionNumericalAsShortanswer->isChecked();    // false; //экспорт number как text
 
         QList<QTreeWidgetItem *> themes;
@@ -1139,92 +1139,113 @@ void MainWindow::on_actionReplace_triggered() {
             r.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r, "\n?");
         }
-        // Заменить 1. на ?
-        if (dlg.ui->repl_numdot->isChecked())
+        if (dlg.ui->repl_to_question->isChecked())
         {
-            QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
+            // Заменить 1 на ?
+            if (dlg.ui->question_marker->currentIndex() == 0)
+            {
+                QRegExp r("\\n\\s*\\d+\\s*");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n?");
+                r.setMinimal(false);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n?");
+            }
+            // Заменить 1. на ?
+            if (dlg.ui->question_marker->currentIndex() == 1)
+            {
+                QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n?");
+            }
+            // Заменить 1) на ?
+            if (dlg.ui->question_marker->currentIndex() == 2)
+            {
+                QRegExp r("\\n\\s*\\d+\\s*\\)\\s*");
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n?");
+            }
         }
-        // Заменить 1 на ?
-        if (dlg.ui->repl_num->isChecked())
+        if(dlg.ui->del_marker->isChecked())
         {
-            QRegExp r("\\n\\s*\\d+\\s*");
+            // Удалить [а]
+            if (dlg.ui->answer_marker->currentIndex()==4)
+            {
+                QRegExp r("\\n\\s*\\[\\w\\]\\s*");
 
-            r.setMinimal(false);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n?");
-        }
-        // Заменить 1) на ?
-        if (dlg.ui->repl_numsk->isChecked())
-        {
-            QRegExp r("\\n\\s*\\d+\\s*\\)\\s*");
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n?");
-        }
-        // Удалить а)
-        if (dlg.ui->del_alpha->isChecked())
-        {
-            QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
+                QRegExp r2("\\n\\s*\\*\\s*\\[\\w\\]\\s*");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n");
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+            // Удалить а)
+            if (dlg.ui->answer_marker->currentIndex()==3)
+            {
+                QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
 
-            QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\)\\s*");
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
 
-            r2.setMinimal(true);
-            r2.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r2, "\n*");
-        }
-        // Удалить А.
-        if (dlg.ui->del_alphadot->isChecked())
-        {
-            QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
+                QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\)\\s*");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n");
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+            // Удалить А.
+            if (dlg.ui->answer_marker->currentIndex()==2)
+            {
+                QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
 
-            QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\.\\s*");
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
 
-            r2.setMinimal(true);
-            r2.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r2, "\n*");
-        }
-        // Удалить 1.
-        if (dlg.ui->del_num->isChecked())
-        {
-            QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
+                QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\.\\s*");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n");
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+            // Удалить 1.
+            if (dlg.ui->answer_marker->currentIndex()==0)
+            {
+                QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
 
-            QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\.\\s*");
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
 
-            r2.setMinimal(true);
-            r2.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r2, "\n*");
-        }
-        // Удалить 1)
-        if (dlg.ui->del_numsk->isChecked())
-        {
-            QRegExp r("\\n\\d+\\s*\\)\\s*");
+                QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\.\\s*");
 
-            r.setMinimal(true);
-            r.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r, "\n");
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+            // Удалить 1)
+            if (dlg.ui->answer_marker->currentIndex()==1)
+            {
+                QRegExp r("\\n\\d+\\s*\\)\\s*");
 
-            QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\)\\s*");
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
 
-            r2.setMinimal(true);
-            r2.setCaseSensitivity(Qt::CaseInsensitive);
-            s = s.replace(r2, "\n*");
+                QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\)\\s*");
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
         }
         // Удалить пробелы
         if (dlg.ui->del_space->isChecked())
@@ -1544,7 +1565,10 @@ void MainWindow::on_actionFixedAccuracy_triggered(bool checked) {
 void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
     ui->tree->collapseAll();
     ui->tree->clearSelection();
-    ui->tree->setItemSelected(item, true);
+
+    // ui->tree->setItemSelected(item, true); // deprecated
+    item->setSelected(true);
+
     ui->tree->expandItem(item);
     while (item->parent())
     {

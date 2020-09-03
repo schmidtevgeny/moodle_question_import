@@ -92,7 +92,7 @@
     <property name="separatorsCollapsible">
      <bool>false</bool>
     </property>
-    <addaction name="actionСhoiceAsMultichoice"/>
+    <addaction name="actionChoiceAsMultichoice"/>
     <addaction name="actionNumericalAsShortanswer"/>
     <addaction name="action_enableAll"/>
     <addaction name="action_export_as_text"/>
@@ -158,7 +158,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionСhoiceAsMultichoice"/>
+   <addaction name="actionChoiceAsMultichoice"/>
    <addaction name="actionFixedAccuracy"/>
   </widget>
   <action name="actionAnalyse">
@@ -217,7 +217,7 @@
     <string>Ctrl+R</string>
    </property>
   </action>
-  <action name="actionСhoiceAsMultichoice">
+  <action name="actionChoiceAsMultichoice">
    <property name="checkable">
     <bool>true</bool>
    </property>

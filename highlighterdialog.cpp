@@ -12,13 +12,7 @@ HighlighterDialog::HighlighterDialog(QWidget * parent) : QDialog(parent), ui(new
 HighlighterDialog::~HighlighterDialog() { delete ui; }
 
 void HighlighterDialog::on_comboBox_currentIndexChanged(int index) {
-    // save/load color
-    qWarning(tr("%1 %2 %3")
-                 .arg(index)
-                 .arg(ui->comboBox->currentIndex())
-                 .arg(ui->comboBox->currentText())
-                 .toStdString()
-                 .c_str());
+    // save/load color    
     switch (ui->comboBox->currentIndex())
     {
         case 0: current = &highlighter->keywordFormat; break;
