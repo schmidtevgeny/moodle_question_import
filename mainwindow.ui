@@ -131,7 +131,7 @@
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
-    <string>Главная</string>
+    <string>Main</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -150,7 +150,7 @@
     <bool>true</bool>
    </property>
    <property name="windowTitle">
-    <string>Настройки</string>
+    <string>Settings</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>

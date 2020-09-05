@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
-    <height>316</height>
+    <width>860</width>
+    <height>308</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,20 +45,25 @@
     </widget>
    </item>
    <item row="14" column="1">
-    <widget class="QLineEdit" name="repl_from"/>
+    <widget class="QLineEdit" name="repl_from">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="11" column="4">
-    <widget class="QLineEdit" name="label_correct_begin"/>
-   </item>
-   <item row="7" column="2">
-    <widget class="QCheckBox" name="del_endsemicolon">
-     <property name="text">
-      <string>Remowe ; at the end of the line</string>
+    <widget class="QLineEdit" name="label_correct_begin">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item row="13" column="1">
-    <widget class="QLineEdit" name="label_answer"/>
+    <widget class="QLineEdit" name="label_answer">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="repl_to_question">
@@ -97,7 +102,11 @@
     </widget>
    </item>
    <item row="14" column="3" colspan="2">
-    <widget class="QLineEdit" name="repl_to"/>
+    <widget class="QLineEdit" name="repl_to">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="16" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -106,16 +115,6 @@
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="13" column="2">
-    <widget class="QCheckBox" name="repl_to_correct_end">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;answer $&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*answer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>sign of response at the end</string>
      </property>
     </widget>
    </item>
@@ -157,7 +156,11 @@
     </widget>
    </item>
    <item row="11" column="1">
-    <widget class="QLineEdit" name="label_quiz"/>
+    <widget class="QLineEdit" name="label_quiz">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="11" column="0">
     <widget class="QCheckBox" name="repl_to_quiz">
@@ -207,10 +210,17 @@
     </widget>
    </item>
    <item row="13" column="4">
-    <widget class="QLineEdit" name="label_correct_end"/>
+    <widget class="QLineEdit" name="label_correct_end">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="question_marker">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <item>
       <property name="text">
        <string>1</string>
@@ -230,6 +240,9 @@
    </item>
    <item row="2" column="1">
     <widget class="QComboBox" name="answer_marker">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <item>
       <property name="text">
        <string>1.</string>
@@ -257,7 +270,37 @@
      </item>
     </widget>
    </item>
-   <item row="2" column="2">
+   <item row="15" column="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="13" column="2" colspan="2">
+    <widget class="QCheckBox" name="repl_to_correct_end">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denote input as $. Then replace &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;answer $&lt;/span&gt;&lt;/p&gt;&lt;p&gt;with&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;*answer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>sign of response at the end</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2" colspan="2">
+    <widget class="QCheckBox" name="del_endsemicolon">
+     <property name="text">
+      <string>Remowe ; at the end of the line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="3">
     <widget class="QCheckBox" name="ramake_para">
      <property name="enabled">
       <bool>false</bool>
@@ -274,24 +317,30 @@
  </widget>
  <tabstops>
   <tabstop>repl_to_question</tabstop>
+  <tabstop>question_marker</tabstop>
   <tabstop>del_marker</tabstop>
+  <tabstop>answer_marker</tabstop>
   <tabstop>repl_questnum</tabstop>
   <tabstop>del_space</tabstop>
   <tabstop>del_endsemicolon</tabstop>
   <tabstop>del_enddot</tabstop>
+  <tabstop>del_endcomma</tabstop>
   <tabstop>repl_html</tabstop>
   <tabstop>make_tags</tabstop>
   <tabstop>repl_to_quiz</tabstop>
   <tabstop>label_quiz</tabstop>
-  <tabstop>repl_to_correct_begin</tabstop>
-  <tabstop>label_correct_begin</tabstop>
   <tabstop>repl_answer</tabstop>
   <tabstop>label_answer</tabstop>
+  <tabstop>repl_to_correct_begin</tabstop>
+  <tabstop>label_correct_begin</tabstop>
+  <tabstop>repl_to_correct_end</tabstop>
+  <tabstop>label_correct_end</tabstop>
   <tabstop>replfromto</tabstop>
   <tabstop>repl_from</tabstop>
   <tabstop>repl_to</tabstop>
   <tabstop>repl_split_numsk</tabstop>
   <tabstop>repl_split_alpha</tabstop>
+  <tabstop>ramake_para</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -302,8 +351,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>247</x>
+     <y>293</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -318,12 +367,140 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>247</x>
+     <y>293</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repl_to_quiz</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_quiz</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repl_answer</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_answer</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>replfromto</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>repl_from</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>replfromto</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>repl_to</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>801</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repl_to_correct_begin</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_correct_begin</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>588</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>804</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repl_to_correct_end</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_correct_end</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>585</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>804</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repl_to_question</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>question_marker</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>del_marker</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>answer_marker</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>58</y>
     </hint>
    </hints>
   </connection>
