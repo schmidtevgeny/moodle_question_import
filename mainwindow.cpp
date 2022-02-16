@@ -8,6 +8,7 @@
 #include <dialogreplace.h>
 #include <ui_dialogreplace.h>
 #include <QDateTime>
+#include <QDesktopServices>
 #include "myhighlighter.h"
 #include "highlighterdialog.h"
 
@@ -124,6 +125,9 @@ void MainWindow::on_actionAnalyse_triggered() {
             top = child;
             i++;
             continue;
+        }else{
+            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i+1));
+            return;
         }
     }
     ui->tree->expandAll();
@@ -241,7 +245,7 @@ QTreeWidgetItem * MainWindow::make_question(QStringList & data, int & index) {
 /// \param tolerance answer accuracy
 /// \return is number
 bool MainWindow::parse_answer(QString s, QString & price, QString & text, QString & tolerance) {
-    qWarning(s.toStdString().c_str());
+//    qWarning(s.toStdString().c_str());
     bool ok, ok2;
     if (s.leftRef(1) == "*") { s = s.mid(1); }
     if ((s.indexOf("%%") != -1) && (s.indexOf("%%") < 5))
@@ -1588,3 +1592,17 @@ void MainWindow::on_actionHighlighter_triggered() {
         highlighter->rehighlight();
     }
 }
+
+void MainWindow::on_actionHelp_triggered()
+{
+    //help
+    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.htm"));
+}
+
+
+void MainWindow::on_actionRequirements_triggered()
+{
+    //manual
+    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.pdf"));
+}
+

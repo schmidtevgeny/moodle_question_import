@@ -32,31 +32,31 @@
         <bool>false</bool>
        </property>
        <attribute name="headerMinimumSectionSize">
-           <number>50</number>
+        <number>50</number>
        </attribute>
-          <attribute name="headerDefaultSectionSize">
-              <number>100</number>
-          </attribute>
-          <column>
-              <property name="text">
-                  <string>Question type</string>
-              </property>
-          </column>
-          <column>
-              <property name="text">
-                  <string>Text</string>
-              </property>
-          </column>
-          <column>
-              <property name="text">
-                  <string>Optionally</string>
-              </property>
-          </column>
-          <column>
-              <property name="text">
-                  <string>Price</string>
-              </property>
-          </column>
+       <attribute name="headerDefaultSectionSize">
+        <number>100</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Question type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Text</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Optionally</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Price</string>
+        </property>
+       </column>
       </widget>
      </widget>
     </item>
@@ -68,7 +68,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -112,7 +112,7 @@
     <addaction name="toolbarsMenu"/>
     <addaction name="actionCollapse"/>
     <addaction name="expand_all"/>
-       <addaction name="actionHighlighter"/>
+    <addaction name="actionHighlighter"/>
    </widget>
    <widget class="QMenu" name="searchMenu">
     <property name="title">
@@ -124,10 +124,18 @@
     <addaction name="actionToNumerical"/>
     <addaction name="actionFromTickets"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionRequirements"/>
+   </widget>
    <addaction name="fileMenu"/>
    <addaction name="searchMenu"/>
    <addaction name="settingsMenu"/>
    <addaction name="viewMenu"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
@@ -162,11 +170,10 @@
    <addaction name="actionFixedAccuracy"/>
   </widget>
   <action name="actionAnalyse">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
-          </iconset>
-      </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png</iconset>
+   </property>
    <property name="text">
     <string>Analysis...</string>
    </property>
@@ -205,11 +212,10 @@
    </property>
   </action>
   <action name="actionReplace">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
-          </iconset>
-      </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png</iconset>
+   </property>
    <property name="text">
     <string>Replace...</string>
    </property>
@@ -278,11 +284,10 @@
    </property>
   </action>
   <action name="actionFind">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
-          </iconset>
-      </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png</iconset>
+   </property>
    <property name="text">
     <string>Find...</string>
    </property>
@@ -294,11 +299,10 @@
    </property>
   </action>
   <action name="actionFindNext">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
-          </iconset>
-      </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png</iconset>
+   </property>
    <property name="text">
     <string>Find next</string>
    </property>
@@ -344,7 +348,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-       <string>Allow all the faithful</string>
+    <string>Allow all the faithful</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -361,22 +365,32 @@
     <string>Export as plaintext</string>
    </property>
   </action>
-     <action name="actionFixedAccuracy">
-         <property name="checkable">
-             <bool>true</bool>
-         </property>
-         <property name="text">
-             <string>Fixed accuracy</string>
-         </property>
-         <property name="toolTip">
-             <string>Fixed accuracy</string>
-         </property>
-     </action>
-     <action name="actionHighlighter">
-         <property name="text">
-             <string>Highlighter</string>
-         </property>
-     </action>
+  <action name="actionFixedAccuracy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fixed accuracy</string>
+   </property>
+   <property name="toolTip">
+    <string>Fixed accuracy</string>
+   </property>
+  </action>
+  <action name="actionHighlighter">
+   <property name="text">
+    <string>Highlighter</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help...</string>
+   </property>
+  </action>
+  <action name="actionRequirements">
+   <property name="text">
+    <string>Requirements</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

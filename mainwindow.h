@@ -40,7 +40,11 @@ class MainWindow : public QMainWindow {
 
     void on_actionHighlighter_triggered();
 
-  private:
+    void on_actionHelp_triggered();
+
+    void on_actionRequirements_triggered();
+
+private:
     Ui::MainWindow * ui;
     QString last_dir;
     QSettings * iniFile;
