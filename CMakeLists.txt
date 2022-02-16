@@ -75,3 +75,17 @@ target_link_libraries(${TARGET_NAME}
         Qt5::PrintSupport
         )
 
+
+install(TARGETS ${TARGET_NAME} RUNTIME DESTINATION bin)
+# Задать некоторые характеристики пакета:
+set(CPACK_PACKAGE_NAME "TestConvert")
+set(CPACK_PACKAGE_VENDOR "TSU")
+set(CPACK_PACKAGE_CONTACT "i-institute.tsu.tula.ru/")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "i-institute@yandex.ru")
+set(CPACK_PACKAGE_DESCRIPTION "Moodle question converter")
+
+# Задать используемый генератор пакетов:
+set(CPACK_GENERATOR DEB ZIP IFW NSIS)
+
+# Включить стандартный модуль "CPack":
+include(CPack)
