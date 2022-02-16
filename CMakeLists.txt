@@ -6,7 +6,7 @@ set(TARGET_NAME TestConvert)
 ## разрешить поиск по переменным <имя>_ROOT
 #cmake_policy(SET CMP0074 NEW)
 # название проекта
-project(${TARGET_NAME})
+project(${TARGET_NAME} VERSION "3.5.1")
 
 #******************************************************************************
 # поиск пакетов Qt
@@ -22,18 +22,18 @@ find_package(Qt5 REQUIRED
 #SET(QT_USE_QTMAIN TRUE)
 # moc от qt
 # список форм
-#qt5_wrap_ui(UIC_SOURCES
-#        dialogreplace.ui
-#        mainwindow.ui
-#        highlighterdialog.ui)
+qt5_wrap_ui(UIC_SOURCES
+        dialogreplace.ui
+        mainwindow.ui
+        highlighterdialog.ui)
 #ресурсы
-#qt5_add_resources(RCC_SOURCES
-#        images/icon.qrc)
+qt5_add_resources(RCC_SOURCES
+        images/icon.qrc)
 # автовызов moc
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 # собираемая программа - цель #2
-add_executable(${TARGET_NAME} WIN32)
+add_executable(${TARGET_NAME} WIN32 ${UIC_SOURCES} ${RCC_SOURCES})
 #-----------------------------------------------
 target_sources(${TARGET_NAME} PRIVATE
         images/icon.qrc
@@ -111,16 +111,20 @@ if (WIN32)
             DESTINATION "bin/imageformats"
             COMPONENT qtlib)
     # DEPLOY MSVC RUNTIME
+
     if (MSVC)
+        set(COMPILER_REDISTRIB "MSVC")
         include(InstallRequiredSystemLibraries)
         install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION bin
                 COMPONENT redistrib)
     else ()
         if (EXISTS ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_dw2-1.dll)
+            set(COMPILER_REDISTRIB "mingw")
             install(FILES ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_dw2-1.dll
                     DESTINATION bin
                     COMPONENT redistrib)
         else ()
+            set(COMPILER_REDISTRIB "mingw64")
             install(FILES ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_seh-1.dll
                     DESTINATION bin
                     COMPONENT redistrib)
@@ -136,12 +140,45 @@ endif ()
 # Задать некоторые характеристики пакета:
 set(CPACK_PACKAGE_NAME "TestConvert")
 set(CPACK_PACKAGE_VENDOR "TSU")
-set(CPACK_PACKAGE_CONTACT "i-institute.tsu.tula.ru/")
+set(CPACK_PACKAGE_CONTACT "https://i-institute.tsu.tula.ru/moodle")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://i-institute.tsu.tula.ru/moodle")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "i-institute@yandex.ru")
 set(CPACK_PACKAGE_DESCRIPTION "Moodle question converter")
+set(CPACK_PACKAGE_EXECUTABLES ${TARGET_NAME} "Конвертер тестов")
+set(CPACK_CREATE_DESKTOP_LINKS ${TARGET_NAME} "Конвертер тестов")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+#set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+#set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+#set(CPACK_PACKAGE_DESCRIPTION "Rjydthnth b ytvyjuj ntrcnf")
 
 # Задать используемый генератор пакетов:
-set(CPACK_GENERATOR DEB ZIP IFW NSIS)
-
+if (WIN32)
+    set(CPACK_GENERATOR IFW)
+    #    set(CPACK_GENERATOR ZIP IFW NSIS)
+else ()
+    set(CPACK_GENERATOR DEB ZIP RPM IFW)
+endif ()
 # Включить стандартный модуль "CPack":
 include(CPack)
+cpack_add_component(core
+        DISPLAY_NAME "Ядро"
+        DESCRIPTION "Основной модуль программы. Установка обязательна"
+        REQUIRED)
+cpack_add_component(doc
+        DISPLAY_NAME "Справка"
+        DESCRIPTION "Инструкция по работе с программой и требования к оформлению входных файлов."
+        )
+cpack_add_component(translate
+        DISPLAY_NAME "Локализация"
+        DESCRIPTION "Файлы для поддержки русского интерфейса"
+        )
+if (WIN32)
+    cpack_add_component(qtlib
+            DISPLAY_NAME "Библиотеки Qt"
+            DESCRIPTION "Библиотеки Qt ${Qt5Widgets_VERSION_STRING}"
+            )
+    cpack_add_component(redistrib
+            DISPLAY_NAME "Дополнительные библиотеки"
+            DESCRIPTION "Распространяемый пакет библиотек для ${COMPILER_REDISTRIB}"
+            )
+endif ()
