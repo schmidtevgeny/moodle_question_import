@@ -69,7 +69,7 @@ void MainWindow::resizeEvent(QResizeEvent *) {
 void MainWindow::on_actionAnalyse_triggered() {
     ui->tree->clear();
 
-    QTreeWidgetItem *top, *child, *quest;
+    QTreeWidgetItem *top = nullptr, *child = nullptr, *quest = nullptr;
 
     top = new QTreeWidgetItem(QStringList() << tr("section") << tr("Course"));
     ui->tree->addTopLevelItem(top);
@@ -101,6 +101,7 @@ void MainWindow::on_actionAnalyse_triggered() {
                 top->addChild(quest);
             } else
             { return; }
+
         } else if (s.at(0) == '#')
         {
             top = new QTreeWidgetItem(QStringList() << tr("section") << s.mid(1));
@@ -116,8 +117,7 @@ void MainWindow::on_actionAnalyse_triggered() {
             top = child;
             i++;
             continue;
-        } else if (s.at(0) == '$')
-        {
+        } else if (s.at(0) == '$') {
             if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
 
             child = new QTreeWidgetItem(QStringList() << tr("ticket") << s.mid(1));
@@ -127,6 +127,11 @@ void MainWindow::on_actionAnalyse_triggered() {
             continue;
         }else{
             QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i+1));
+            return;
+        }
+        else {
+            QMessageBox::warning(this, tr("Error"), tr("Incorrect string"));
+            ui->plain->setTextCursor(ui->plain->document()->find(s));
             return;
         }
     }
@@ -1131,7 +1136,8 @@ void MainWindow::on_actionReplace_triggered() {
             }
             qWarning(p.toStdString().c_str());
             p = p.remove(QRegExp("<[^>]*>"));
-            lines << p;
+            if (p != "[[br]]")
+                lines << p;
         }
         s = "\n" + lines.join("\n");
         // Удалить номер вопроса

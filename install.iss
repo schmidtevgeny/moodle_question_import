@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Конвертер тестов"
-#define MyAppVersion "1.5"
+#define MyAppVersion "3.5"
 #define MyAppPublisher "ii.tsu"
 #define MyAppURL "http://i-institute.org"
 #define MyAppExeName "TestConvert.exe"
-#define Build "C:\Qt\builds\build-TestConvert-Desktop_Qt_5_6_3_MinGW_32bit-Release"
+#define Build "C:\Qt\sources\build-TestConvert-Desktop_Qt_5_15_2_MinGW_32_bit-Release"
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -38,10 +38,10 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "{#Build}\release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "TestConvert.qm"; DestDir: "{app}"
-;Source: "C:\Qt\Qt5.10.1\5.10.1\mingw53_32\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "C:\Qt\Qt5.10.1\5.10.1\mingw53_32\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "C:\Qt\Qt5.10.1\5.10.1\mingw53_32\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "TestConvert_ru.qm"; DestDir: "{app}"
+Source: "C:\Qt\5.15.2\mingw81_32\bin\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Qt\5.15.2\mingw81_32\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Qt\5.15.2\mingw81_32\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: "{#Build}\release\{#MyAppExeName}"; DestDir: "{app}"
 [Icons]
