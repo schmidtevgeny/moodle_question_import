@@ -71,7 +71,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-        <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -128,10 +128,18 @@
     <addaction name="actionFromTickets"/>
        <addaction name="actionDuplicate_search"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionRequirements"/>
+   </widget>
    <addaction name="fileMenu"/>
    <addaction name="searchMenu"/>
    <addaction name="settingsMenu"/>
    <addaction name="viewMenu"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
@@ -165,24 +173,22 @@
    <addaction name="actionChoiceAsMultichoice"/>
    <addaction name="actionFixedAccuracy"/>
   </widget>
-     <action name="actionAnalyse">
-         <property name="icon">
-             <iconset resource="images/icon.qrc">
-                 <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
-             </iconset>
-         </property>
-         <property name="text">
-             <string>Analysis...</string>
-         </property>
-         <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of
-                 questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-             </string>
-         </property>
-         <property name="shortcut">
-             <string>Ctrl+P</string>
-         </property>
-     </action>
+  <action name="actionAnalyse">
+      <property name="icon">
+          <iconset resource="images/icon.qrc">
+              <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+          </iconset>
+      </property>
+   <property name="text">
+    <string>Analysis...</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="images/icon.qrc">
@@ -357,15 +363,41 @@
    </property>
   </action>
   <action name="action_export_as_text">
-      <property name="checkable">
-          <bool>true</bool>
-      </property>
-      <property name="text">
-          <string>Export as plaintext</string>
-      </property>
-      <property name="toolTip">
-          <string>Export as plaintext</string>
-      </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Export as plaintext</string>
+   </property>
+   <property name="toolTip">
+    <string>Export as plaintext</string>
+   </property>
+  </action>
+  <action name="actionFixedAccuracy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fixed accuracy</string>
+   </property>
+   <property name="toolTip">
+    <string>Fixed accuracy</string>
+   </property>
+  </action>
+  <action name="actionHighlighter">
+   <property name="text">
+    <string>Highlighter</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help...</string>
+   </property>
+  </action>
+  <action name="actionRequirements">
+   <property name="text">
+    <string>Requirements</string>
+   </property>
   </action>
      <action name="actionFixedAccuracy">
          <property name="checkable">

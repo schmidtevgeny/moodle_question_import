@@ -32,7 +32,7 @@ class MainWindow : public QMainWindow {
     void on_actionCollapse_triggered();
     void on_actionFind_triggered();
     void on_actionFindNext_triggered();
-    void on_tree_itemDoubleClicked(QTreeWidgetItem *item, int column);
+    void on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column);
     void on_tree_itemSelectionChanged();
     void on_actionToNumerical_triggered();
     void on_actionFromTickets_triggered();
@@ -40,16 +40,18 @@ class MainWindow : public QMainWindow {
     void on_actionDuplicate_search_triggered();
     void on_actionHighlighter_triggered();
     void on_tree_customContextMenuRequested(const QPoint &pos);
+    void on_actionHelp_triggered();
+    void on_actionRequirements_triggered();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow * ui;
     QString last_dir;
-    QSettings *iniFile;
+    QSettings * iniFile;
     QString search;
-    QLabel *treePositionLabel;
+    QLabel * treePositionLabel;
     QStringList images;
-    QLineEdit *tolerance;
-    MyHighlighter *highlighter;
+    QLineEdit * tolerance;
+    MyHighlighter * highlighter;
     bool usecase;
     QString default_question_price;
 
@@ -78,14 +80,14 @@ private:
 
     QString process_subquestion(
         QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance, bool btolerance, bool & ok);
-    QString format_info(QTreeWidgetItem *item, bool &ok);
-    QString format_matching(QTreeWidgetItem *item, bool &ok);
-    QString format_shortanswer(QTreeWidgetItem *item, bool &ok);
-    QString format_numerical(QTreeWidgetItem *item, double ktolerance, bool btolerance, bool &ok);
-    QString format_multichoice(QTreeWidgetItem *item, bool &ok);
-    QString format_choice(QTreeWidgetItem *item, bool &ok);
+    QString format_info(QTreeWidgetItem * item, bool & ok);
+    QString format_matching(QTreeWidgetItem * item, bool & ok);
+    QString format_shortanswer(QTreeWidgetItem * item, bool & ok);
+    QString format_numerical(QTreeWidgetItem * item, double ktolerance, bool btolerance, bool & ok);
+    QString format_multichoice(QTreeWidgetItem * item, bool & ok);
+    QString format_choice(QTreeWidgetItem * item, bool & ok);
 
-    void show_error(QTreeWidgetItem *item, QString message);
+    void show_error(QTreeWidgetItem * item, QString message);
     void export_error();
     bool is_map(const QStringList &answers) const;
     bool is_answer(QTreeWidgetItem *item) const;

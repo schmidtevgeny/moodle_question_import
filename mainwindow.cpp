@@ -8,6 +8,7 @@
 #include <dialogreplace.h>
 #include <ui_dialogreplace.h>
 #include <QDateTime>
+#include <QDesktopServices>
 #include "myhighlighter.h"
 #include "highlighterdialog.h"
 #include "textdialog.h"
@@ -107,7 +108,8 @@ void MainWindow::on_actionAnalyse_triggered() {
             ui->tree->addTopLevelItem(top);
             i++;
             continue;
-        } else if (s.at(0) == '@') {
+        } else if (s.at(0) == '@')
+        {
             if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
 
             child = new QTreeWidgetItem(QStringList() << tr("theme") << s.mid(1));
@@ -115,8 +117,7 @@ void MainWindow::on_actionAnalyse_triggered() {
             top = child;
             i++;
             continue;
-        }
-        else if (s.at(0) == '$') {
+        } else if (s.at(0) == '$') {
             if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
 
             child = new QTreeWidgetItem(QStringList() << tr("ticket") << s.mid(1));
@@ -124,10 +125,9 @@ void MainWindow::on_actionAnalyse_triggered() {
             top = child;
             i++;
             continue;
-        }
-        else {
-            QMessageBox::warning(this, tr("Error"), tr("Incorrect string"));
-            ui->plain->setTextCursor(ui->plain->document()->find(s));
+        }else{
+            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i+1));
+  ui->plain->setTextCursor(ui->plain->document()->find(s));
             return;
         }
     }
@@ -152,17 +152,19 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
     // get string
     QString s = data.at(index).mid(1);    // remove ?
     QString price;
-    if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5)) {
+    if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5))
+    {
         price = s.left(s.indexOf("%%"));
         s = s.mid(s.indexOf("%%") + 2);
-    }
-    else { price = default_question_price; }
+    } else
+    { price = default_question_price; }
     // Returns a string that has whitespace removed from the start and the end, and that has
     // each sequence of internal whitespace replaced with a single space.
     // And replace \t and &nbsp;
     s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
 
     QTreeWidgetItem * quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
+
 
     index++;
     //
@@ -258,6 +260,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 /// \param tolerance answer accuracy
 /// \return is number
 bool MainWindow::parse_answer(QString s, QString & price, QString & text, QString & tolerance) {
+    qWarning(s.toStdString().c_str());
     bool ok, ok2;
     if (s.leftRef(1) == "*") { s = s.mid(1); }
     if ((s.indexOf("%%") != -1) && (s.indexOf("%%") < 5))
@@ -1141,9 +1144,10 @@ void MainWindow::on_actionReplace_triggered() {
                 s2 = s2.left(s2.indexOf(span));
                 p = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;
             }
-
+            qWarning(p.toStdString().c_str());
             p = p.remove(QRegExp("<[^>]*>"));
-            if (p != "[[br]]") lines << p;
+            if (p != "[[br]]")
+                lines << p;
         }
         s = "\n" + lines.join("\n");
         // Удалить номер вопроса
@@ -1176,7 +1180,8 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r, "\n?");
             }
             // Заменить 1) на ?
-            if (dlg.ui->question_marker->currentIndex() == 2) {
+            if (dlg.ui->question_marker->currentIndex() == 2)
+            {
                 QRegExp r("\\n\\s*\\d+\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1184,9 +1189,11 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r, "\n?");
             }
         }
-        if (dlg.ui->del_marker->isChecked()) {
+        if(dlg.ui->del_marker->isChecked())
+        {
             // Удалить [а]
-            if (dlg.ui->answer_marker->currentIndex() == 4) {
+            if (dlg.ui->answer_marker->currentIndex()==4)
+            {
                 QRegExp r("\\n\\s*\\[\\w\\]\\s*");
 
                 r.setMinimal(true);
@@ -1200,7 +1207,8 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить а)
-            if (dlg.ui->answer_marker->currentIndex() == 3) {
+            if (dlg.ui->answer_marker->currentIndex()==3)
+            {
                 QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1214,7 +1222,8 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить А.
-            if (dlg.ui->answer_marker->currentIndex() == 2) {
+            if (dlg.ui->answer_marker->currentIndex()==2)
+            {
                 QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
 
                 r.setMinimal(true);
@@ -1228,7 +1237,8 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить 1.
-            if (dlg.ui->answer_marker->currentIndex() == 0) {
+            if (dlg.ui->answer_marker->currentIndex()==0)
+            {
                 QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
 
                 r.setMinimal(true);
@@ -1242,7 +1252,8 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить 1)
-            if (dlg.ui->answer_marker->currentIndex() == 1) {
+            if (dlg.ui->answer_marker->currentIndex()==1)
+            {
                 QRegExp r("\\n\\d+\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1572,11 +1583,11 @@ void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
 
     QMessageBox::warning(this, tr("Error"), message);
 }
-void MainWindow::on_actionHighlighter_triggered()
-{
+void MainWindow::on_actionHighlighter_triggered() {
     //
     HighlighterDialog dlg;
-    if (dlg.exec()) {
+    if (dlg.exec())
+    {
         dlg.highlighter->save_color();
         highlighter->load_color();
         highlighter->rehighlight();
@@ -1733,3 +1744,17 @@ void MainWindow::edit_price(QTreeWidgetItem *item)
 
     if (ok) { item->setText(3, tr("%1").arg(s)); }
 }
+
+void MainWindow::on_actionHelp_triggered()
+{
+    //help
+    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.htm"));
+}
+
+
+void MainWindow::on_actionRequirements_triggered()
+{
+    //manual
+    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.pdf"));
+}
+
