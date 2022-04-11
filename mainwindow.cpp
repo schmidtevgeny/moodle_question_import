@@ -10,7 +10,7 @@
 #include <QDateTime>
 #include "myhighlighter.h"
 #include "highlighterdialog.h"
-
+#include "textdialog.h"
 MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     //    ui->toolBar->setVisible(false);
@@ -107,8 +107,7 @@ void MainWindow::on_actionAnalyse_triggered() {
             ui->tree->addTopLevelItem(top);
             i++;
             continue;
-        } else if (s.at(0) == '@')
-        {
+        } else if (s.at(0) == '@') {
             if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
 
             child = new QTreeWidgetItem(QStringList() << tr("theme") << s.mid(1));
@@ -116,7 +115,8 @@ void MainWindow::on_actionAnalyse_triggered() {
             top = child;
             i++;
             continue;
-        } else if (s.at(0) == '$') {
+        }
+        else if (s.at(0) == '$') {
             if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
 
             child = new QTreeWidgetItem(QStringList() << tr("ticket") << s.mid(1));
@@ -134,23 +134,35 @@ void MainWindow::on_actionAnalyse_triggered() {
     ui->tree->expandAll();
     on_tree_itemSelectionChanged();
 }
-QTreeWidgetItem * MainWindow::make_question(QStringList & data, int & index) {
+bool MainWindow::is_answer(QTreeWidgetItem *item) const
+{
+    return item->text(0) == tr("option") || item->text(0) == tr("correct") || item->text(0) == tr("incorrect");
+}
+bool MainWindow::is_question(QTreeWidgetItem *item) const
+{
+    return item->text(0) == tr("info") || item->text(0) == tr("map") || item->text(0) == tr("text") ||
+        item->text(0) == tr("number") || item->text(0) == tr("choice") || item->text(0) == tr("multichoice");
+}
+bool MainWindow::is_section(QTreeWidgetItem *item) const
+{
+    return item->text(0) == tr("section") || item->text(0) == tr("ticket") || item->text(0) == tr("theme");
+}
+QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
+{
     // get string
     QString s = data.at(index).mid(1);    // remove ?
     QString price;
-    if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5))
-    {
+    if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5)) {
         price = s.left(s.indexOf("%%"));
         s = s.mid(s.indexOf("%%") + 2);
-    } else
-    { price = default_question_price; }
+    }
+    else { price = default_question_price; }
     // Returns a string that has whitespace removed from the start and the end, and that has
     // each sequence of internal whitespace replaced with a single space.
     // And replace \t and &nbsp;
     s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
 
     QTreeWidgetItem * quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
-
 
     index++;
     //
@@ -246,7 +258,6 @@ QTreeWidgetItem * MainWindow::make_question(QStringList & data, int & index) {
 /// \param tolerance answer accuracy
 /// \return is number
 bool MainWindow::parse_answer(QString s, QString & price, QString & text, QString & tolerance) {
-    qWarning(s.toStdString().c_str());
     bool ok, ok2;
     if (s.leftRef(1) == "*") { s = s.mid(1); }
     if ((s.indexOf("%%") != -1) && (s.indexOf("%%") < 5))
@@ -1130,10 +1141,9 @@ void MainWindow::on_actionReplace_triggered() {
                 s2 = s2.left(s2.indexOf(span));
                 p = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;
             }
-            qWarning(p.toStdString().c_str());
+
             p = p.remove(QRegExp("<[^>]*>"));
-            if (p != "[[br]]")
-                lines << p;
+            if (p != "[[br]]") lines << p;
         }
         s = "\n" + lines.join("\n");
         // Удалить номер вопроса
@@ -1166,8 +1176,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r, "\n?");
             }
             // Заменить 1) на ?
-            if (dlg.ui->question_marker->currentIndex() == 2)
-            {
+            if (dlg.ui->question_marker->currentIndex() == 2) {
                 QRegExp r("\\n\\s*\\d+\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1175,11 +1184,9 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r, "\n?");
             }
         }
-        if(dlg.ui->del_marker->isChecked())
-        {
+        if (dlg.ui->del_marker->isChecked()) {
             // Удалить [а]
-            if (dlg.ui->answer_marker->currentIndex()==4)
-            {
+            if (dlg.ui->answer_marker->currentIndex() == 4) {
                 QRegExp r("\\n\\s*\\[\\w\\]\\s*");
 
                 r.setMinimal(true);
@@ -1193,8 +1200,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить а)
-            if (dlg.ui->answer_marker->currentIndex()==3)
-            {
+            if (dlg.ui->answer_marker->currentIndex() == 3) {
                 QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1208,8 +1214,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить А.
-            if (dlg.ui->answer_marker->currentIndex()==2)
-            {
+            if (dlg.ui->answer_marker->currentIndex() == 2) {
                 QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
 
                 r.setMinimal(true);
@@ -1223,8 +1228,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить 1.
-            if (dlg.ui->answer_marker->currentIndex()==0)
-            {
+            if (dlg.ui->answer_marker->currentIndex() == 0) {
                 QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
 
                 r.setMinimal(true);
@@ -1238,8 +1242,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
             // Удалить 1)
-            if (dlg.ui->answer_marker->currentIndex()==1)
-            {
+            if (dlg.ui->answer_marker->currentIndex() == 1) {
                 QRegExp r("\\n\\d+\\s*\\)\\s*");
 
                 r.setMinimal(true);
@@ -1410,24 +1413,9 @@ void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column) {
     {
         if ((item->text(0) == tr("theme")) || (item->text(0) == tr("section")))
         {
-            bool ok;
-            QString s =
-                QInputDialog::getText(this, tr("Edit theme"), tr("Theme name"), QLineEdit::Normal, item->text(1), &ok);
-
-            if (ok) { item->setText(1, s); }
+            change_section_name(item);
         } else if ((item->text(0) == tr("text")) || (item->text(0) == tr("number")) ||
-                   (item->text(0) == tr("multichoice")) || (item->text(0) == tr("choice")))
-        {
-            bool ok;
-            QStringList items;
-
-            items << tr("text") << tr("number") << tr("multichoice") << tr("choice");
-
-            QString s = QInputDialog::getItem(
-                this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0)), false, &ok);
-
-            if (ok) { item->setText(0, s); }
-        }
+                   (item->text(0) == tr("multichoice")) || (item->text(0) == tr("choice"))) { change_question_type(item); }
     }
 }    // MainWindow::on_tree_itemDoubleClicked
 /// Print of a position in a tree
@@ -1584,13 +1572,164 @@ void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
 
     QMessageBox::warning(this, tr("Error"), message);
 }
-void MainWindow::on_actionHighlighter_triggered() {
+void MainWindow::on_actionHighlighter_triggered()
+{
     //
     HighlighterDialog dlg;
-    if (dlg.exec())
-    {
+    if (dlg.exec()) {
         dlg.highlighter->save_color();
         highlighter->load_color();
         highlighter->rehighlight();
     }
+}
+struct DSearch
+{
+    QString hash;
+    QVector<QTreeWidgetItem *> question;
+};
+void MainWindow::on_actionDuplicate_search_triggered()
+{
+    QMap<QString, DSearch> cache;
+    QList<QTreeWidgetItem *> themes;
+    QTreeWidgetItem *top, *item;
+    QString hash;
+    QStringList strings;
+
+    for (int i = 0; i < ui->tree->topLevelItemCount(); i++) {
+        top = ui->tree->topLevelItem(i);
+        themes << top;
+
+        for (int j = 0; j < top->childCount(); j++) {
+            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+        }
+    }
+
+    for (int i = 0; i < themes.size(); i++) {
+        for (int j = 0; j < themes.at(i)->childCount(); j++) {
+            // TODO:
+            item = themes.at(i)->child(j);
+            if ((item->text(0) == tr("theme")) || (item->text(0) == tr("section"))) {
+                continue;    // skip
+            }
+            else if (is_question(item)) {
+                strings.clear();
+                strings << item->text(1).replace(" ", "").toLower();
+                for (int k = 0; k < item->childCount(); k++) {
+                    if (item->child(k)->text(0) == tr("correct")) {
+                        strings << item->child(k)->text(1).replace(" ", "").toLower();
+                    }
+                }
+                strings.sort();
+                hash = strings.join("$");
+                if (!cache.contains(hash)) { cache[hash] = {hash}; }
+                cache[hash].question << item;
+            }
+            else {
+                continue;
+                // TODO: other markers
+            }
+        }
+    }
+    ui->tree->collapseAll();
+    for (DSearch &it: cache) {
+        if (it.question.count() > 1) {
+            for (auto item: it.question) {
+                ui->tree->expandItem(item);
+                while (item->parent()) {
+                    item = item->parent();
+                    ui->tree->expandItem(item);
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::on_tree_customContextMenuRequested(const QPoint &pos)
+{
+    auto item = ui->tree->itemAt(pos);
+    if (item) {
+        QMenu *cnt = new QMenu();
+        if (is_section(item)) {
+            cnt->addAction(tr("Rename"), [item, this]()
+            { change_section_name(item); });
+        }
+        if (is_question(item)) {
+            cnt->addAction(tr("Change type"), [item, this]()
+            { change_question_type(item); });
+            cnt->addAction(tr("Edit"), [item, this]()
+            { edit_question(item); });
+            cnt->addAction(tr("Edit price"), [item, this]()
+            { edit_price(item); });
+            cnt->addAction(tr("Delete"), [item]()
+            {
+                item->parent()->removeChild(item);
+                delete item;
+            });
+        }
+        if (is_answer(item)) {
+            cnt->addAction(tr("Edit"), [item, this]()
+            { edit_question(item); });
+            cnt->addAction(tr("Edit price"), [item, this]()
+            { edit_price(item); });
+            cnt->addAction(tr("Delete"), [item]()
+            {
+                item->parent()->removeChild(item);
+                delete item;
+            });
+        }
+        cnt->exec(ui->tree->mapToGlobal(pos));
+        delete cnt;
+    }
+}
+void MainWindow::change_section_name(QTreeWidgetItem *item)
+{
+    bool ok;
+    QString s =
+        QInputDialog::getText(this, tr("Edit section"), tr("Section name"), QLineEdit::Normal, item->text(1), &ok);
+
+    if (ok) { item->setText(1, s); }
+}
+void MainWindow::change_question_type(QTreeWidgetItem *item)
+{
+    bool ok;
+    QStringList items;
+    if (item->text(0) == tr("info") || item->text(0) == tr("map")) {
+        QMessageBox::warning(this, tr("Error"), tr("Changing the type is not supported for this question"));
+        return;
+    }
+
+    items << tr("text") << tr("number") << tr("multichoice") << tr("choice");
+
+    QString s = QInputDialog::getItem(
+        this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0)), false, &ok);
+
+    if (ok) { item->setText(0, s); }
+}
+void MainWindow::edit_question(QTreeWidgetItem *item)
+{
+    if (is_question(item)) {
+        TextDialog dlg;
+        dlg.setText(item->text(1));
+        if (dlg.exec()) item->setText(1, dlg.text());
+    }
+    else if (is_answer(item)) {
+        if (item->parent()->text(0) == tr("map") || item->parent()->text(0) == tr("number")) {
+            //TODO:
+            QMessageBox::warning(this, tr("Error"), tr("In development"));
+        }
+        else {
+            TextDialog dlg;
+            dlg.setText(item->text(1));
+            if (dlg.exec()) item->setText(1, dlg.text());
+        }
+    }
+}
+void MainWindow::edit_price(QTreeWidgetItem *item)
+{
+    bool ok;
+    int s =
+        QInputDialog::getInt(this, tr("Edit price"), tr("Price"),
+                             item->text(3).toInt(), -100, 100, 1, &ok);
+
+    if (ok) { item->setText(3, tr("%1").arg(s)); }
 }

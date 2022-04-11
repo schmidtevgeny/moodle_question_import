@@ -43,6 +43,7 @@ target_sources(${TARGET_NAME} PRIVATE
         myhighlighter.h
         highlighterdialog.cpp
         highlighterdialog.h
+        textdialog.h textdialog.cpp
         )
 # Включаем C++ 2014
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_14)

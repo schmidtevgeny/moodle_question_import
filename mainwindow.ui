@@ -22,18 +22,21 @@
       </property>
       <widget class="QTextEdit" name="plain"/>
       <widget class="QTreeWidget" name="tree">
-       <property name="editTriggers">
-        <set>QAbstractItemView::EditKeyPressed</set>
-       </property>
-       <property name="itemsExpandable">
-        <bool>true</bool>
-       </property>
-       <property name="expandsOnDoubleClick">
-        <bool>false</bool>
-       </property>
-       <attribute name="headerMinimumSectionSize">
-           <number>50</number>
-       </attribute>
+          <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="editTriggers">
+              <set>QAbstractItemView::EditKeyPressed</set>
+          </property>
+          <property name="itemsExpandable">
+              <bool>true</bool>
+          </property>
+          <property name="expandsOnDoubleClick">
+              <bool>false</bool>
+          </property>
+          <attribute name="headerMinimumSectionSize">
+              <number>50</number>
+          </attribute>
           <attribute name="headerDefaultSectionSize">
               <number>100</number>
           </attribute>
@@ -68,7 +71,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>21</height>
+        <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -123,6 +126,7 @@
     <addaction name="actionReplace"/>
     <addaction name="actionToNumerical"/>
     <addaction name="actionFromTickets"/>
+       <addaction name="actionDuplicate_search"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="searchMenu"/>
@@ -161,22 +165,24 @@
    <addaction name="actionChoiceAsMultichoice"/>
    <addaction name="actionFixedAccuracy"/>
   </widget>
-  <action name="actionAnalyse">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
-          </iconset>
-      </property>
-   <property name="text">
-    <string>Analysis...</string>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-  </action>
+     <action name="actionAnalyse">
+         <property name="icon">
+             <iconset resource="images/icon.qrc">
+                 <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png
+             </iconset>
+         </property>
+         <property name="text">
+             <string>Analysis...</string>
+         </property>
+         <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of
+                 questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+             </string>
+         </property>
+         <property name="shortcut">
+             <string>Ctrl+P</string>
+         </property>
+     </action>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="images/icon.qrc">
@@ -204,19 +210,19 @@
     <string>Ctrl+E</string>
    </property>
   </action>
-  <action name="actionReplace">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
-          </iconset>
-      </property>
-   <property name="text">
-    <string>Replace...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+R</string>
-   </property>
-  </action>
+     <action name="actionReplace">
+         <property name="icon">
+             <iconset resource="images/icon.qrc">
+                 <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png
+             </iconset>
+         </property>
+         <property name="text">
+             <string>Replace...</string>
+         </property>
+         <property name="shortcut">
+             <string>Ctrl+R</string>
+         </property>
+     </action>
   <action name="actionChoiceAsMultichoice">
    <property name="checkable">
     <bool>true</bool>
@@ -277,38 +283,38 @@
     <string>Expand</string>
    </property>
   </action>
-  <action name="actionFind">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
-          </iconset>
-      </property>
-   <property name="text">
-    <string>Find...</string>
-   </property>
-   <property name="toolTip">
-    <string>Find...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
-   </property>
-  </action>
-  <action name="actionFindNext">
-      <property name="icon">
-          <iconset resource="images/icon.qrc">
-              <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
-          </iconset>
-      </property>
-   <property name="text">
-    <string>Find next</string>
-   </property>
-   <property name="toolTip">
-    <string>Find next</string>
-   </property>
-   <property name="shortcut">
-    <string>F3</string>
-   </property>
-  </action>
+     <action name="actionFind">
+         <property name="icon">
+             <iconset resource="images/icon.qrc">
+                 <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png
+             </iconset>
+         </property>
+         <property name="text">
+             <string>Find...</string>
+         </property>
+         <property name="toolTip">
+             <string>Find...</string>
+         </property>
+         <property name="shortcut">
+             <string>Ctrl+F</string>
+         </property>
+     </action>
+     <action name="actionFindNext">
+         <property name="icon">
+             <iconset resource="images/icon.qrc">
+                 <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png
+             </iconset>
+         </property>
+         <property name="text">
+             <string>Find next</string>
+         </property>
+         <property name="toolTip">
+             <string>Find next</string>
+         </property>
+         <property name="shortcut">
+             <string>F3</string>
+         </property>
+     </action>
   <action name="actionToNumerical">
    <property name="text">
     <string>Change to numerical</string>
@@ -351,15 +357,15 @@
    </property>
   </action>
   <action name="action_export_as_text">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Export as plaintext</string>
-   </property>
-   <property name="toolTip">
-    <string>Export as plaintext</string>
-   </property>
+      <property name="checkable">
+          <bool>true</bool>
+      </property>
+      <property name="text">
+          <string>Export as plaintext</string>
+      </property>
+      <property name="toolTip">
+          <string>Export as plaintext</string>
+      </property>
   </action>
      <action name="actionFixedAccuracy">
          <property name="checkable">
@@ -375,6 +381,11 @@
      <action name="actionHighlighter">
          <property name="text">
              <string>Highlighter</string>
+         </property>
+     </action>
+     <action name="actionDuplicate_search">
+         <property name="text">
+             <string>Duplicate search</string>
          </property>
      </action>
  </widget>
