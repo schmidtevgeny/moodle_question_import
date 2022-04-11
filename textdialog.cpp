@@ -1,11 +1,11 @@
 #include "textdialog.h"
-#include <QTextEdit>
 #include <QDialogButtonBox>
+#include <QTextEdit>
 #include <QVBoxLayout>
 
 TextDialog::TextDialog()
 {
-    lt = new QVBoxLayout(this);
+    lt   = new QVBoxLayout(this);
     edit = new QTextEdit();
     lt->addWidget(edit);
 
@@ -17,10 +17,13 @@ TextDialog::TextDialog()
     setWindowTitle(tr("Edit"));
 }
 
+
 QString TextDialog::text()
 {
-    return edit->toPlainText();
+    return(edit->toPlainText());
 }
+
+
 void TextDialog::setText(const QString &s)
 {
     edit->setPlainText(s);

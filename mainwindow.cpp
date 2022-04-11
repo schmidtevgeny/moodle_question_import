@@ -1,30 +1,33 @@
+#include "highlighterdialog.h"
 #include "mainwindow.h"
+#include "myhighlighter.h"
+#include "textdialog.h"
 #include "ui_mainwindow.h"
+#include <dialogreplace.h>
+#include <QDateTime>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QTextStream>
-#include <dialogreplace.h>
 #include <ui_dialogreplace.h>
-#include <QDateTime>
-#include <QDesktopServices>
-#include "myhighlighter.h"
-#include "highlighterdialog.h"
-#include "textdialog.h"
-MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
     //    ui->toolBar->setVisible(false);
-    iniFile = new QSettings("TSU", "TestConvert");
-    last_dir = iniFile->value("dirs/last", QDir::currentPath()).toString();
-    search = "";
+    iniFile           = new QSettings("TSU", "TestConvert");
+    last_dir          = iniFile->value("dirs/last", QDir::currentPath()).toString();
+    search            = "";
     treePositionLabel = new QLabel();
     ui->statusBar->addPermanentWidget(treePositionLabel);
     tolerance = new QLineEdit("200");
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document());
     // settings
-    usecase = false;
+    usecase                = false;
     default_question_price = "10";
     // TODO: load colors
 #ifdef _DEBUG
@@ -53,20 +56,27 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
         "* option2->value2\n");
 #endif
 }
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     iniFile->setValue("dirs/last", last_dir);
     delete treePositionLabel;
     delete iniFile;
     delete ui;
 }
 
-void MainWindow::resizeEvent(QResizeEvent *) {
+
+void MainWindow::resizeEvent(QResizeEvent *)
+{
     int w = ui->tree->width();
+
     ui->tree->setColumnWidth(0, w / 4);
     ui->tree->setColumnWidth(1, w / 2);
 }
+
+
 /// Analyse text from ui->plain and make ui->tree
-void MainWindow::on_actionAnalyse_triggered() {
+void MainWindow::on_actionAnalyse_triggered()
+{
     ui->tree->clear();
 
     QTreeWidgetItem *top = nullptr, *child = nullptr, *quest = nullptr;
@@ -74,8 +84,8 @@ void MainWindow::on_actionAnalyse_triggered() {
     top = new QTreeWidgetItem(QStringList() << tr("section") << tr("Course"));
     ui->tree->addTopLevelItem(top);
 
-    int i = 0;
-    QString s;
+    int         i = 0;
+    QString     s;
     QStringList data = ui->plain->document()->toPlainText().split("\n");
 
     while (i < data.size())
@@ -86,6 +96,7 @@ void MainWindow::on_actionAnalyse_triggered() {
         // each sequence of internal whitespace replaced with a single space.
         // And replace \t and &nbsp;
         s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
+
         // test 1
         if ((s == "") || (s == "[[br]]"))
         {
@@ -93,90 +104,119 @@ void MainWindow::on_actionAnalyse_triggered() {
             i++;
             continue;
         }
+
         if (s.at(0) == '?')
         {
             quest = make_question(data, i);
+
             if (quest)
             {
                 top->addChild(quest);
-            } else
-            { return; }
-
-        } else if (s.at(0) == '#')
+            }
+            else
+            {
+                return;
+            }
+        }
+        else if (s.at(0) == '#')
         {
             top = new QTreeWidgetItem(QStringList() << tr("section") << s.mid(1));
             ui->tree->addTopLevelItem(top);
             i++;
             continue;
-        } else if (s.at(0) == '@')
+        }
+        else if (s.at(0) == '@')
         {
-            if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
-
+            if (ui->tree->indexOfTopLevelItem(top) == -1)
+            {
+                top = top->parent();
+            }
             child = new QTreeWidgetItem(QStringList() << tr("theme") << s.mid(1));
             top->addChild(child);
             top = child;
             i++;
             continue;
-        } else if (s.at(0) == '$') {
-            if (ui->tree->indexOfTopLevelItem(top) == -1) { top = top->parent(); }
-
+        }
+        else if (s.at(0) == '$')
+        {
+            if (ui->tree->indexOfTopLevelItem(top) == -1)
+            {
+                top = top->parent();
+            }
             child = new QTreeWidgetItem(QStringList() << tr("ticket") << s.mid(1));
             top->addChild(child);
             top = child;
             i++;
             continue;
-        }else{
-            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i+1));
-  ui->plain->setTextCursor(ui->plain->document()->find(s));
+        }
+        else
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i + 1));
+            ui->plain->setTextCursor(ui->plain->document()->find(s));
             return;
         }
     }
     ui->tree->expandAll();
     on_tree_itemSelectionChanged();
-}
+} // MainWindow::on_actionAnalyse_triggered
+
+
 bool MainWindow::is_answer(QTreeWidgetItem *item) const
 {
-    return item->text(0) == tr("option") || item->text(0) == tr("correct") || item->text(0) == tr("incorrect");
+    return(item->text(0) == tr("option") || item->text(0) == tr("correct") || item->text(0) == tr("incorrect"));
 }
+
+
 bool MainWindow::is_question(QTreeWidgetItem *item) const
 {
-    return item->text(0) == tr("info") || item->text(0) == tr("map") || item->text(0) == tr("text") ||
-        item->text(0) == tr("number") || item->text(0) == tr("choice") || item->text(0) == tr("multichoice");
+    return(  item->text(0) == tr("info") || item->text(0) == tr("map") || item->text(0) == tr("text")
+          || item->text(0) == tr("number") || item->text(0) == tr("choice") || item->text(0) == tr("multichoice"));
 }
+
+
 bool MainWindow::is_section(QTreeWidgetItem *item) const
 {
-    return item->text(0) == tr("section") || item->text(0) == tr("ticket") || item->text(0) == tr("theme");
+    return(item->text(0) == tr("section") || item->text(0) == tr("ticket") || item->text(0) == tr("theme"));
 }
+
+
 QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 {
     // get string
-    QString s = data.at(index).mid(1);    // remove ?
+    QString s = data.at(index).mid(1); // remove ?
     QString price;
+
     if ((s.indexOf("%%") > -1) && (s.indexOf("%%") < 5))
     {
         price = s.left(s.indexOf("%%"));
-        s = s.mid(s.indexOf("%%") + 2);
-    } else
-    { price = default_question_price; }
+        s     = s.mid(s.indexOf("%%") + 2);
+    }
+    else
+    {
+        price = default_question_price;
+    }
     // Returns a string that has whitespace removed from the start and the end, and that has
     // each sequence of internal whitespace replaced with a single space.
     // And replace \t and &nbsp;
     s = s.replace("&nbsp;", " ").replace("\t", "    ").simplified();
 
-    QTreeWidgetItem * quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
+    QTreeWidgetItem *quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
 
 
     index++;
     //
     QStringList answers;
-    int correctcount = 0;
+    int         correctcount = 0;
 
     while (index < data.size())
     {
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
 
-        while (s.length() > 0 && s[0] == ' ') { s = s.mid(1); }
+        while (s.length() > 0 && s[0] == ' ')
+        {
+            s = s.mid(1);
+        }
 
         if ((s == "") || (s == "[[br]]"))
         {
@@ -184,19 +224,26 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
             continue;
         }
 
-        if (s.at(0) == '*') { correctcount++; }
+        if (s.at(0) == '*')
+        {
+            correctcount++;
+        }
 
-        if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$')) { break; }
-
+        if ((s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$'))
+        {
+            break;
+        }
         answers.append(s);
         index++;
     }
+
     // test answers
     if (answers.size() == 0)
     {
         // no answers
         quest->setText(0, tr("info"));
-    } else if (is_map(answers))
+    }
+    else if (is_map(answers))
     {
         // suspicion of map
         quest->setText(0, tr("map"));
@@ -205,15 +252,18 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
         {
             s = answers.at(k);
 
-            if (s.at(0) == '*') { s = s.mid(1); }
-
+            if (s.at(0) == '*')
+            {
+                s = s.mid(1);
+            }
             quest->addChild(new QTreeWidgetItem(
-                QStringList() << tr("option") << s.mid(0, s.indexOf("->")) << s.mid(s.indexOf("->") + 2)));
+                                QStringList() << tr("option") << s.mid(0, s.indexOf("->")) << s.mid(s.indexOf("->") + 2)));
         }
-    } else
+    }
+    else
     {
         // test normal
-        bool number = false;
+        bool    number = false;
         QString p, t;
         QString s2;
 
@@ -222,56 +272,86 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
             // all right
             quest->setText(0, tr("text"));
             number = true;
+
             for (int k = 0; k < answers.size(); k++)
             {
                 s = answers.at(k);
-                if (!parse_answer(s, p, s2, t)) number = false;
+
+                if (!parse_answer(s, p, s2, t))
+                {
+                    number = false;
+                }
             }
 
-            if (number) { quest->setText(0, tr("number")); }
-        } else if (correctcount > 1)
+            if (number)
+            {
+                quest->setText(0, tr("number"));
+            }
+        }
+        else if (correctcount > 1)
         {
             quest->setText(0, tr("multichoice"));
-        } else
-        { quest->setText(0, tr("choice")); }
+        }
+        else
+        {
+            quest->setText(0, tr("choice"));
+        }
 
         for (int k = 0; k < answers.size(); k++)
         {
             s = answers.at(k);
             parse_answer(s, p, s2, t);
+
             if (s.at(0) == '*')
             {
                 if (number)
                 {
                     quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s2 << t << p));
-                } else
-                { quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s2 << "" << p)); }
-            } else
-            { quest->addChild(new QTreeWidgetItem(QStringList() << tr("incorrect") << s2 << "" << p)); }
+                }
+                else
+                {
+                    quest->addChild(new QTreeWidgetItem(QStringList() << tr("correct") << s2 << "" << p));
+                }
+            }
+            else
+            {
+                quest->addChild(new QTreeWidgetItem(QStringList() << tr("incorrect") << s2 << "" << p));
+            }
         }
     }
+    return(quest);
+} // MainWindow::make_question
 
-    return quest;
-}
+
 /// line-of-answer analysis
 /// \param s string
 /// \param price question price
 /// \param text answer text
 /// \param tolerance answer accuracy
 /// \return is number
-bool MainWindow::parse_answer(QString s, QString & price, QString & text, QString & tolerance) {
+bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString &tolerance)
+{
     qWarning(s.toStdString().c_str());
     bool ok, ok2;
-    if (s.leftRef(1) == "*") { s = s.mid(1); }
+
+    if (s.leftRef(1) == "*")
+    {
+        s = s.mid(1);
+    }
+
     if ((s.indexOf("%%") != -1) && (s.indexOf("%%") < 5))
     {
         price = s.left(s.indexOf("%%"));
         price.toDouble(&ok);
+
         if (ok)
         {
             s = s.mid(s.indexOf("%%") + 2);
-        } else
-        { price = ""; }
+        }
+        else
+        {
+            price = "";
+        }
     }
 
     if (s.count(":") == 1)
@@ -280,42 +360,55 @@ bool MainWindow::parse_answer(QString s, QString & price, QString & text, QStrin
         QString s2 = s.mid(s.indexOf(":") + 1);
         s1.toDouble(&ok);
         s2.toDouble(&ok2);
+
         if (ok && ok2)
         {
-            text = s1;
+            text      = s1;
             tolerance = s2;
-            return true;
-        } else
-        {
-            text = s;
-            tolerance = "";
-            return false;
+            return(true);
         }
-    } else
+        else
+        {
+            text      = s;
+            tolerance = "";
+            return(false);
+        }
+    }
+    else
     {
         s.toDouble(&ok);
         tolerance = "";
-        text = s;
-        return ok;
+        text      = s;
+        return(ok);
     }
-}
-bool MainWindow::is_map(const QStringList & answers) const {
+} // MainWindow::parse_answer
+
+
+bool MainWindow::is_map(const QStringList &answers) const
+{
     for (auto s : answers)
     {
-        if (s.indexOf("->") == -1) { return false; }
+        if (s.indexOf("->") == -1)
+        {
+            return(false);
+        }
     }
-    return true;
+
+    return(true);
 }
+
+
 /// Open File
 /// \note is supposed to use html, but should also work with plain text
-void MainWindow::on_actionOpen_triggered() {
+void MainWindow::on_actionOpen_triggered()
+{
     QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, tr("html (*.htm;*.html);ANY FILE (*)"));
 
     if (!fname.isEmpty())
     {
         images.clear();
 
-        QFile f(fname);
+        QFile     f(fname);
         QFileInfo fi(fname);
 
         last_dir = fi.dir().path();
@@ -336,18 +429,21 @@ void MainWindow::on_actionOpen_triggered() {
             in.seek(0);
             s = in.readAll();
         }
-
         ui->plain->setHtml(s);
     }
 }
+
+
 /// Save lino to xml-file
 /// \param stream xml-file object
 /// \param txt string
 /// \param basepath path to image files
-void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basepath) {
+void MainWindow::writeText(QXmlStreamWriter &stream, QString txt, QString basepath)
+{
     QStringList images;
     // список файлов
-    int num;
+    int         num;
+
     while (txt.indexOf("!(") > -1)
     {
         QString s1 = txt.mid(0, txt.indexOf("!("));
@@ -360,12 +456,14 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         {
             num = images.size();
             images.append(s2);
-        } else
-        { num = images.indexOf(s2); }
-        s2 = s2.mid(s2.lastIndexOf('.'));
+        }
+        else
+        {
+            num = images.indexOf(s2);
+        }
+        s2  = s2.mid(s2.lastIndexOf('.'));
         txt = s1 + "<img src=\"@@PLUGINFILE@@/" + QString("%1%2").arg(num).arg(s2) + "\">" + s3;
     }
-
     txt = txt.replace("[[br]]", "<br />")
               .replace("[[sub]]", "<sub>")
               .replace("[[/sub]]", "</sub>")
@@ -374,22 +472,28 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
 
     stream.writeTextElement("text", txt);
     num = 0;
+
     for (auto fn : images)
     {
         QFile file(fn);
+
         if (file.exists())
         {
             file.open(QIODevice::ReadOnly);
-        } else
+        }
+        else
         {
             file.setFileName(basepath + "/" + fn);
+
             if (file.exists())
             {
                 file.open(QIODevice::ReadOnly);
-            } else
-            { QMessageBox::warning(this, tr("Error"), tr("File %1 not found").arg(fn)); }
+            }
+            else
+            {
+                QMessageBox::warning(this, tr("Error"), tr("File %1 not found").arg(fn));
+            }
         }
-
         stream.writeStartElement("file");
         stream.writeAttribute("name", QString("%1%2").arg(num).arg(fn.mid(fn.lastIndexOf('.'))));
         stream.writeAttribute("path", "/");
@@ -398,11 +502,14 @@ void MainWindow::writeText(QXmlStreamWriter & stream, QString txt, QString basep
         stream.writeEndElement();
         num++;
     }
-}
+} // MainWindow::writeText
+
+
 /// Remove tags and images from document line
 /// \param s original string
 /// \return modified string
-QString to_title(QString s) {
+QString to_title(QString s)
+{
     QRegExp notags("\\<.*\\>");
 
     notags.setMinimal(true);
@@ -418,15 +525,21 @@ QString to_title(QString s) {
     nospec.setMinimal(true);
     s = s.replace(nospec, "");
 
-    return s;
+    return(s);
 }
+
+
 /// Export questions
-void MainWindow::on_actionExport_triggered() {
+void MainWindow::on_actionExport_triggered()
+{
     double ktolerance;
-    bool btolerance;
+    bool   btolerance;
+
     btolerance = ui->actionFixedAccuracy->isChecked();
     bool ok;
+
     ktolerance = tolerance->text().toDouble(&ok);
+
     if (!ok)
     {
         QMessageBox::critical(this, tr("Error"), tr("Incorrect tolerance value"));
@@ -458,14 +571,14 @@ void MainWindow::on_actionExport_triggered() {
 
         last_dir = fi.dir().path();
 
-        bool as_multi = ui->actionChoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
-        bool as_text = ui->actionNumericalAsShortanswer->isChecked();    // false; //экспорт number как text
+        bool                     as_multi = ui->actionChoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
+        bool                     as_text  = ui->actionNumericalAsShortanswer->isChecked(); // false; //экспорт number как text
 
         QList<QTreeWidgetItem *> themes;
 
-        QTreeWidgetItem * top;
+        QTreeWidgetItem          *top;
 
-        QFile f;
+        QFile                    f;
         f.setFileName(fname);
         f.open(QIODevice::WriteOnly);
         QXmlStreamWriter stream(&f);
@@ -473,55 +586,79 @@ void MainWindow::on_actionExport_triggered() {
         stream.writeStartDocument();
 
         stream.writeStartElement("quiz");
+
         for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
         {
             top = ui->tree->topLevelItem(i);
             themes << top;
+
             if (!process_tree(stream, top, as_multi, as_text, ktolerance, btolerance))
             {
                 export_error();
                 break;
             }
         }
-        stream.writeEndElement();    // bookmark
+
+        stream.writeEndElement(); // bookmark
         stream.writeEndDocument();
         f.close();
     }
-}    // MainWindow::on_actionExport_triggered
-void MainWindow::export_error() {}
-bool MainWindow::process_question(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
-    double ktolerance, bool btolerance) {
+} // MainWindow::on_actionExport_triggered
+
+
+void MainWindow::export_error()
+{
+}
+
+
+bool MainWindow::process_question(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text,
+                                  double ktolerance, bool btolerance)
+{
     if (item->text(0) == tr("info"))
     {
-        return write_info(stream, item);
-    } else if (item->text(0) == tr("map"))
-    { return write_matching(stream, item); }
+        return(write_info(stream, item));
+    }
+    else if (item->text(0) == tr("map"))
+    {
+        return(write_matching(stream, item));
+    }
+
     if ((item->text(0) == tr("text")) || ((item->text(0) == tr("number")) && as_text))
     {
-        return write_shortanswer(stream, item);
-    } else if (item->text(0) == tr("number"))
+        return(write_shortanswer(stream, item));
+    }
+    else if (item->text(0) == tr("number"))
     {
-        return write_numerical(stream, item, ktolerance, btolerance);
-    } else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
+        return(write_numerical(stream, item, ktolerance, btolerance));
+    }
+    else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
     {
-        return write_multichoice(stream, item);
-    } else if (item->text(0) == tr("choice"))
+        return(write_multichoice(stream, item));
+    }
+    else if (item->text(0) == tr("choice"))
     {
-        return write_choice(stream, item);
-    } else if (item->text(0) == tr("ticket"))
+        return(write_choice(stream, item));
+    }
+    else if (item->text(0) == tr("ticket"))
     {
-        return write_close(stream, item, as_multi, as_text, ktolerance, btolerance);
-    } else
+        return(write_close(stream, item, as_multi, as_text, ktolerance, btolerance));
+    }
+    else
     {
         show_error(item, tr("unknown type"));
-        return false;
+        return(false);
     }
 }
-bool MainWindow::write_close(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
-    double ktolerance, bool btolerance) {
+
+
+bool MainWindow::write_close(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text,
+                             double ktolerance, bool btolerance)
+{
     QStringList questions;
+
     questions << item->text(1);
     bool ok;
+
     stream.writeStartElement("question");
     stream.writeAttribute("type", "cloze");
     stream.writeStartElement("name");
@@ -529,12 +666,18 @@ bool MainWindow::write_close(QXmlStreamWriter & stream, QTreeWidgetItem * item, 
     stream.writeEndElement();
     stream.writeStartElement("questiontext");
     stream.writeAttribute("format", "moodle_auto_format");
+
     //                    stream.writeTextElement("text", item->text(1));
     for (int i = 0; i < item->childCount(); i++)
     {
         questions << process_subquestion(item->child(i), as_multi, as_text, ktolerance, btolerance, ok);
-        if (!ok) { return false; }
+
+        if (!ok)
+        {
+            return(false);
+        }
     }
+
     writeText(stream, questions.join("<br />"), last_dir);
     // add image
     stream.writeEndElement();
@@ -546,10 +689,12 @@ bool MainWindow::write_close(QXmlStreamWriter & stream, QTreeWidgetItem * item, 
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
     stream.writeEndElement();
-    return true;
+    return(true);
 }
 
-bool MainWindow::write_info(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+
+bool MainWindow::write_info(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "description");
     stream.writeStartElement("name");
@@ -569,15 +714,19 @@ bool MainWindow::write_info(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "0");
     stream.writeEndElement();
-    return true;
+    return(true);
 }
-QString MainWindow::format_info(QTreeWidgetItem * item, bool & ok) {
+
+
+QString MainWindow::format_info(QTreeWidgetItem *item, bool &ok)
+{
     ok = true;
-    return item->text(1);
+    return(item->text(1));
 }
 
 
-bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+bool MainWindow::write_choice(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "multichoice");
     stream.writeStartElement("name");
@@ -599,46 +748,60 @@ bool MainWindow::write_choice(QXmlStreamWriter & stream, QTreeWidgetItem * item)
     // answ
 
     int correct = 0;
+
     for (int k = 0; k < item->childCount(); k++)
     {
         stream.writeStartElement("answer");
+
         if (item->child(k)->text(0) == tr("correct"))
         {
             if (item->child(k)->text(3) != "")
             {
                 stream.writeAttribute("fraction", item->child(k)->text(3));
-            } else
-            { stream.writeAttribute("fraction", "100"); }
+            }
+            else
+            {
+                stream.writeAttribute("fraction", "100");
+            }
             correct++;
-        } else
+        }
+        else
         {
             if (item->child(k)->text(3) != "")
             {
                 stream.writeAttribute("fraction", item->child(k)->text(3));
-            } else
-            { stream.writeAttribute("fraction", "0"); }
+            }
+            else
+            {
+                stream.writeAttribute("fraction", "0");
+            }
         }
-
         writeText(stream, item->child(k)->text(1), last_dir);
         stream.writeStartElement("feedback");
         stream.writeTextElement("text", "");
         stream.writeEndElement();
         stream.writeEndElement();
     }
+
     if (correct == 0)
     {
         show_error(item, tr("No correct answer"));
-        return false;
+        return(false);
     }
     stream.writeEndElement();
-    return true;
-}
-QString MainWindow::format_choice(QTreeWidgetItem * item, bool & ok) {
-    QString ret = item->text(1);
+    return(true);
+} // MainWindow::write_choice
+
+
+QString MainWindow::format_choice(QTreeWidgetItem *item, bool &ok)
+{
+    QString     ret = item->text(1);
     QStringList answers;
+
     ret += "<br/>{" + item->text(3) + ":MULTICHOICE_V:";
-    int correct = 0;
+    int     correct = 0;
     QString price;
+
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
@@ -646,32 +809,45 @@ QString MainWindow::format_choice(QTreeWidgetItem * item, bool & ok) {
             if (item->child(k)->text(3) != "")
             {
                 price = item->child(k)->text(3);
-            } else
-            { price = "100"; }
+            }
+            else
+            {
+                price = "100";
+            }
             answers << "%" + price + "%" + item->child(k)->text(1);
             correct++;
-        } else
+        }
+        else
         {
             if (item->child(k)->text(3) != "")
             {
                 price = item->child(k)->text(3);
-            } else
-            { price = "0"; }
+            }
+            else
+            {
+                price = "0";
+            }
             answers << "%" + price + "%" + item->child(k)->text(1);
         }
     }
+
     ret += answers.join("~") + "}";
+
     if (correct == 0)
     {
         show_error(item, tr("No right answers."));
         ok = false;
-    } else
-    { ok = true; }
+    }
+    else
+    {
+        ok = true;
+    }
+    return(ret);
+} // MainWindow::format_choice
 
-    return ret;
-}
 
-bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+bool MainWindow::write_multichoice(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "multichoice");
     stream.writeStartElement("name");
@@ -698,28 +874,38 @@ bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * 
         if (item->child(k)->text(0) == tr("correct"))
         {
             correct++;
-        } else
-        { incorrect++; }
+        }
+        else
+        {
+            incorrect++;
+        }
     }
+
     if ((correct == 0))
     {
         show_error(item, tr("No right answers."));
-        return false;
+        return(false);
     }
+
     if ((incorrect == 0) && !ui->action_enableAll->isChecked())
     {
         show_error(item, tr("No wrong answers."));
-        return false;
+        return(false);
     }
+
     // TODO: answer price
     for (int k = 0; k < item->childCount(); k++)
     {
         stream.writeStartElement("answer");
+
         if (item->child(k)->text(0) == tr("correct"))
         {
             stream.writeAttribute("fraction", QString("%1").arg(100.0 / correct));
-        } else
-        { stream.writeAttribute("fraction", QString("%1").arg(-100.0 / incorrect)); }
+        }
+        else
+        {
+            stream.writeAttribute("fraction", QString("%1").arg(-100.0 / incorrect));
+        }
         writeText(stream, item->child(k)->text(1), last_dir);
         stream.writeStartElement("feedback");
         stream.writeTextElement("text", "");
@@ -728,13 +914,17 @@ bool MainWindow::write_multichoice(QXmlStreamWriter & stream, QTreeWidgetItem * 
     }
 
     stream.writeEndElement();
-    return true;
-}
-QString MainWindow::format_multichoice(QTreeWidgetItem * item, bool & ok) {
-    QString ret = item->text(1);
+    return(true);
+} // MainWindow::write_multichoice
+
+
+QString MainWindow::format_multichoice(QTreeWidgetItem *item, bool &ok)
+{
+    QString     ret = item->text(1);
     QStringList answers;
+
     ret += "<br/>{" + item->text(3) + ":MULTIRESPONSE:";
-    ok = true;
+    ok   = true;
 
     int correct = 0, incorrect = 0;
 
@@ -743,37 +933,47 @@ QString MainWindow::format_multichoice(QTreeWidgetItem * item, bool & ok) {
         if (item->child(k)->text(0) == tr("correct"))
         {
             correct++;
-        } else
-        { incorrect++; }
+        }
+        else
+        {
+            incorrect++;
+        }
     }
+
     if ((correct == 0))
     {
         show_error(item, tr("No right answers."));
         ok = false;
-        return "";
+        return("");
     }
+
     if ((incorrect == 0) && !ui->action_enableAll->isChecked())
     {
         show_error(item, tr("No wrong answers."));
         ok = false;
-        return "";
+        return("");
     }
+
     // TODO: answer price
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
         {
             answers << "%" + QString("%1").arg(100.0 / correct) + "%" + item->child(k)->text(1);
-        } else
-        { answers << "%" + QString("%1").arg(-100.0 / incorrect) + "%" + item->child(k)->text(1); }
+        }
+        else
+        {
+            answers << "%" + QString("%1").arg(-100.0 / incorrect) + "%" + item->child(k)->text(1);
+        }
     }
+
     ret += answers.join("~") + "}";
-    return ret;
-}
+    return(ret);
+} // MainWindow::format_multichoice
 
 
-bool MainWindow::write_numerical(
-    QXmlStreamWriter & stream, QTreeWidgetItem * item, double ktolerance, bool btolerance) {
+bool MainWindow::write_numerical(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "numerical");
     stream.writeStartElement("name");
@@ -793,24 +993,34 @@ bool MainWindow::write_numerical(
     stream.writeTextElement("shuffleanswers", "1");
     // answ
     double qtolerance;
+
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
         {
             stream.writeStartElement("answer");
+
             if (item->child(k)->text(3) != "")
             {
                 stream.writeAttribute("fraction", item->child(k)->text(3));
-            } else
-            { stream.writeAttribute("fraction", "100"); }
+            }
+            else
+            {
+                stream.writeAttribute("fraction", "100");
+            }
+
             if (item->child(k)->text(2) != "")
             {
                 qtolerance = item->child(k)->text(2).toDouble();
-            } else if (btolerance)
+            }
+            else if (btolerance)
             {
                 qtolerance = ktolerance;
-            } else
-            { qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance); }
+            }
+            else
+            {
+                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
+            }
             stream.writeAttribute("tolerance", QString("%1").arg(qtolerance));
             stream.writeTextElement("text", item->child(k)->text(1));
             stream.writeStartElement("feedback");
@@ -819,17 +1029,23 @@ bool MainWindow::write_numerical(
             stream.writeEndElement();
         }
     }
+
     stream.writeEndElement();
-    return true;
-}
-QString MainWindow::format_numerical(QTreeWidgetItem * item, double ktolerance, bool btolerance, bool & ok) {
-    QString ret = item->text(1);
+    return(true);
+} // MainWindow::write_numerical
+
+
+QString MainWindow::format_numerical(QTreeWidgetItem *item, double ktolerance, bool btolerance, bool &ok)
+{
+    QString     ret = item->text(1);
     QStringList answers;
+
     ret += "<br/>{" + item->text(3) + ":NUMERICAL:";
-    ok = true;
+    ok   = true;
     //
-    double qtolerance;
+    double  qtolerance;
     QString price;
+
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
@@ -837,25 +1053,36 @@ QString MainWindow::format_numerical(QTreeWidgetItem * item, double ktolerance, 
             if (item->child(k)->text(2) != "")
             {
                 qtolerance = item->child(k)->text(2).toDouble();
-            } else if (btolerance)
+            }
+            else if (btolerance)
             {
                 qtolerance = ktolerance;
-            } else
-            { qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance); }
+            }
+            else
+            {
+                qtolerance = abs(item->child(k)->text(1).toDouble() / ktolerance);
+            }
+
             if (item->child(k)->text(3) != "")
             {
                 price = item->child(k)->text(3);
-            } else
-            { price = "100"; }
+            }
+            else
+            {
+                price = "100";
+            }
             answers << "%" + price + "%" + item->child(k)->text(1) + ":" + QString("%1").arg(qtolerance);
         }
     }
+
     //
     ret += answers.join("~") + "}";
-    return ret;
-}
+    return(ret);
+} // MainWindow::format_numerical
 
-bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+
+bool MainWindow::write_shortanswer(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "shortanswer");
     stream.writeStartElement("name");
@@ -872,23 +1099,32 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
     stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
+
     if (usecase)
     {
         stream.writeTextElement("usecase", "1");
-    } else
-    { stream.writeTextElement("usecase", "0"); }
+    }
+    else
+    {
+        stream.writeTextElement("usecase", "0");
+    }
     stream.writeTextElement("shuffleanswers", "1");
+
     // answ
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("correct"))
         {
             stream.writeStartElement("answer");
+
             if (item->child(k)->text(3) != "")
             {
                 stream.writeAttribute("fraction", item->child(k)->text(3));
-            } else
-            { stream.writeAttribute("fraction", "100"); }
+            }
+            else
+            {
+                stream.writeAttribute("fraction", "100");
+            }
             stream.writeTextElement("text", item->child(k)->text(1));
             stream.writeStartElement("feedback");
             stream.writeTextElement("text", "");
@@ -898,18 +1134,26 @@ bool MainWindow::write_shortanswer(QXmlStreamWriter & stream, QTreeWidgetItem * 
     }
 
     stream.writeEndElement();
-    return true;
-}
-QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
-    QString ret = item->text(1);
+    return(true);
+} // MainWindow::write_shortanswer
+
+
+QString MainWindow::format_shortanswer(QTreeWidgetItem *item, bool &ok)
+{
+    QString     ret = item->text(1);
     QStringList answers;
-    QString price;
+    QString     price;
+
     if (usecase)
     {
         ret += "<br/>{" + item->text(3) + ":SHORTANSWER_C:";
-    } else
-    { ret += "<br/>{" + item->text(3) + ":SHORTANSWER:"; }
+    }
+    else
+    {
+        ret += "<br/>{" + item->text(3) + ":SHORTANSWER:";
+    }
     ok = true;
+
     // answ
     for (int k = 0; k < item->childCount(); k++)
     {
@@ -918,17 +1162,23 @@ QString MainWindow::format_shortanswer(QTreeWidgetItem * item, bool & ok) {
             if (item->child(k)->text(3) != "")
             {
                 price = item->child(k)->text(3);
-            } else
-            { price = 100; }
+            }
+            else
+            {
+                price = 100;
+            }
             answers << "%" + price + "%" + item->child(k)->text(1);
         }
     }
+
     //
     ret += answers.join("~") + "}";
-    return ret;
+    return(ret);
 }
 
-bool MainWindow::write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * item) {
+
+bool MainWindow::write_matching(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "matching");
     stream.writeStartElement("name");
@@ -946,6 +1196,7 @@ bool MainWindow::write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * ite
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "1");
+
     // answ
     for (int k = 0; k < item->childCount(); k++)
     {
@@ -959,17 +1210,23 @@ bool MainWindow::write_matching(QXmlStreamWriter & stream, QTreeWidgetItem * ite
             stream.writeEndElement();
         }
     }
+
     stream.writeEndElement();
-    return true;
+    return(true);
 }
-QString MainWindow::format_matching(QTreeWidgetItem * item, bool & ok) {
-    QString ret = item->text(1);
+
+
+QString MainWindow::format_matching(QTreeWidgetItem *item, bool &ok)
+{
+    QString     ret = item->text(1);
     QStringList answers;
+
     ret += "<br/>";
-    ok = true;
+    ok   = true;
     // answ
     QStringList left;
     QStringList right;
+
     for (int k = 0; k < item->childCount(); k++)
     {
         if (item->child(k)->text(0) == tr("option"))
@@ -978,77 +1235,111 @@ QString MainWindow::format_matching(QTreeWidgetItem * item, bool & ok) {
             right << item->child(k)->text(2);
         }
     }
+
     for (int i = 0; i < left.count(); i++)
     {
         ret += left[i];
         answers.clear();
+
         for (int j = 0; j < right.count(); j++)
         {
             if (i == j)
             {
                 answers << "%100%" + right[j];
-            } else
-            { answers << "%0%" + right[j]; }
+            }
+            else
+            {
+                answers << "%0%" + right[j];
+            }
         }
+
         ret += "{" + item->text(3) + ":MULTICHOICE:" + answers.join("~") + "}";
     }
-    //
-    return ret;
-}
 
-QString MainWindow::process_subquestion(
-    QTreeWidgetItem * item, bool as_multi, bool as_text, double ktolerance, bool btolerance, bool & ok) {
+    //
+    return(ret);
+} // MainWindow::format_matching
+
+
+QString MainWindow::process_subquestion(QTreeWidgetItem *item, bool as_multi, bool as_text, double ktolerance, bool btolerance, bool &ok)
+{
     if (item->text(0) == tr("info"))
     {
-        return format_info(item, ok);
-    } else if (item->text(0) == tr("map"))
-    { return format_matching(item, ok); }
+        return(format_info(item, ok));
+    }
+    else if (item->text(0) == tr("map"))
+    {
+        return(format_matching(item, ok));
+    }
+
     if ((item->text(0) == tr("text")) || ((item->text(0) == tr("number")) && as_text))
     {
-        return format_shortanswer(item, ok);
-    } else if (item->text(0) == tr("number"))
+        return(format_shortanswer(item, ok));
+    }
+    else if (item->text(0) == tr("number"))
     {
-        return format_numerical(item, ktolerance, btolerance, ok);
-    } else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
+        return(format_numerical(item, ktolerance, btolerance, ok));
+    }
+    else if ((item->text(0) == tr("multichoice")) || ((item->text(0) == tr("choice")) && as_multi))
     {
-        return format_multichoice(item, ok);
-    } else if (item->text(0) == tr("choice"))
+        return(format_multichoice(item, ok));
+    }
+    else if (item->text(0) == tr("choice"))
     {
-        return format_choice(item, ok);
-    } else
+        return(format_choice(item, ok));
+    }
+    else
     {
         show_error(item, tr("unknown type"));
         ok = false;
-        return "";
+        return("");
     }
 }
-bool MainWindow::process_tree(QXmlStreamWriter & stream, QTreeWidgetItem * item, bool as_multi, bool as_text,
-    double ktolerance, bool btolerance) {
+
+
+bool MainWindow::process_tree(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text,
+                              double ktolerance, bool btolerance)
+{
     //        stream.writeAttribute("href", "http://qt-project.org/");
     //        stream.writeTextElement("title", "Qt Project");
     //        stream.writeEndElement();    // bookmark
     if (item->text(0) == tr("section"))
     {
         write_section(stream, item);
+
         for (int i = 0; i < item->childCount(); i++)
         {
-            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance)) return false;
+            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance))
+            {
+                return(false);
+            }
         }
-    } else if (item->text(0) == tr("theme"))
+    }
+    else if (item->text(0) == tr("theme"))
     {
         write_theme(stream, item);
+
         for (int i = 0; i < item->childCount(); i++)
         {
-            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance)) return false;
+            if (!process_tree(stream, item->child(i), as_multi, as_text, ktolerance, btolerance))
+            {
+                return(false);
+            }
         }
-    } else
-    {
-        if (!process_question(stream, item, as_multi, as_text, ktolerance, btolerance)) return false;
     }
-
-    return true;
+    else
+    {
+        if (!process_question(stream, item, as_multi, as_text, ktolerance, btolerance))
+        {
+            return(false);
+        }
+    }
+    return(true);
 }
-void MainWindow::write_theme(QXmlStreamWriter & stream, QTreeWidgetItem * item) const {
+
+
+void MainWindow::write_theme(QXmlStreamWriter &stream, QTreeWidgetItem *item) const
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "category");
     stream.writeStartElement("category");
@@ -1056,7 +1347,10 @@ void MainWindow::write_theme(QXmlStreamWriter & stream, QTreeWidgetItem * item) 
     stream.writeEndElement();
     stream.writeEndElement();
 }
-void MainWindow::write_section(QXmlStreamWriter & stream, QTreeWidgetItem * item) const {
+
+
+void MainWindow::write_section(QXmlStreamWriter &stream, QTreeWidgetItem *item) const
+{
     stream.writeStartElement("question");
     stream.writeAttribute("type", "category");
     stream.writeStartElement("category");
@@ -1064,9 +1358,13 @@ void MainWindow::write_section(QXmlStreamWriter & stream, QTreeWidgetItem * item
     stream.writeEndElement();
     stream.writeEndElement();
 }
+
+
 /// Replace in ui->plain
-void MainWindow::on_actionReplace_triggered() {
+void MainWindow::on_actionReplace_triggered()
+{
     DialogReplace dlg;
+
     //    TODO: edit
 
     if (dlg.exec())
@@ -1078,16 +1376,20 @@ void MainWindow::on_actionReplace_triggered() {
         //        work.mkpath(path);
         //        path = work.relativeFilePath(path);
         // списки замен
-        QString s = ui->plain->document()->toHtml();
+        QString     s = ui->plain->document()->toHtml();
         QStringList lines;
-        int pos = s.indexOf("<body", 0, Qt::CaseInsensitive);
+        int         pos = s.indexOf("<body", 0, Qt::CaseInsensitive);
         s = s.mid(pos);
         s = s.mid(s.indexOf(">") + 1);
         s = s.left(s.indexOf("</body", 0, Qt::CaseInsensitive));
+
         // TODO: H tag
         while (true)
         {
-            if (s.isEmpty()) break;
+            if (s.isEmpty())
+            {
+                break;
+            }
             pos = s.indexOf("</p>", 0, Qt::CaseInsensitive);
 
             QString p = s.left(pos);
@@ -1102,27 +1404,32 @@ void MainWindow::on_actionReplace_triggered() {
                     .replace("</sup>", "[[/sup]]")
                     .replace("\n", " ");
 
-            QRegularExpression expression2("<img\\s*[^<]*src\\s*=\\s*\"(.+?)\"[^>]*>");
+            QRegularExpression              expression2("<img\\s*[^<]*src\\s*=\\s*\"(.+?)\"[^>]*>");
             QRegularExpressionMatchIterator i = expression2.globalMatch(p);
-            QStringList files;
-            QStringList replace;
+            QStringList                     files;
+            QStringList                     replace;
+
             while (i.hasNext())
             {
                 QRegularExpressionMatch match = i.next();
-                QString f = match.captured(1);
+                QString                 f     = match.captured(1);
                 replace << match.captured(0);
                 files << f.replace("file:///", "");
             }
             // TODO: копирование картинок по пути
 
-            for (int i = 0; i < replace.size(); i++) { p = p.replace(replace[i], "!(" + files[i] + ")"); }
+            for (int i = 0; i < replace.size(); i++)
+            {
+                p = p.replace(replace[i], "!(" + files[i] + ")");
+            }
 
             // replace the indexes used in MS Word as
             // <span style=" vertical-align:sub;">1</span><span style=" vertical-align:super;">2</span>
             QString s1 = "", s2 = "", s3 = "";
-            QString sub = "vertical-align:sub;";
-            QString sup = "vertical-align:super;";
+            QString sub  = "vertical-align:sub;";
+            QString sup  = "vertical-align:super;";
             QString span = "</span>";
+
             while (p.indexOf(sub) != -1)
             {
                 s1 = p.left(p.indexOf(sub));
@@ -1134,6 +1441,7 @@ void MainWindow::on_actionReplace_triggered() {
 
                 p = s1 + "[[sub]]" + s2 + "[[/sub]]" + s3;
             }
+
             while (p.indexOf(sup) != -1)
             {
                 s1 = p.left(p.indexOf(sup));
@@ -1142,14 +1450,18 @@ void MainWindow::on_actionReplace_triggered() {
                 s2 = s2.mid(s2.indexOf(">") + 1);
                 s3 = s2.mid(s2.indexOf(span) + span.length());
                 s2 = s2.left(s2.indexOf(span));
-                p = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;
+                p  = s1 + "[[sup]]" + s2 + "[[/sup]]" + s3;
             }
             qWarning(p.toStdString().c_str());
             p = p.remove(QRegExp("<[^>]*>"));
+
             if (p != "[[br]]")
+            {
                 lines << p;
+            }
         }
         s = "\n" + lines.join("\n");
+
         // Удалить номер вопроса
         if (dlg.ui->repl_questnum->isChecked())
         {
@@ -1159,6 +1471,7 @@ void MainWindow::on_actionReplace_triggered() {
             r.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r, "\n?");
         }
+
         if (dlg.ui->repl_to_question->isChecked())
         {
             // Заменить 1 на ?
@@ -1170,6 +1483,7 @@ void MainWindow::on_actionReplace_triggered() {
                 r.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r, "\n?");
             }
+
             // Заменить 1. на ?
             if (dlg.ui->question_marker->currentIndex() == 1)
             {
@@ -1179,6 +1493,7 @@ void MainWindow::on_actionReplace_triggered() {
                 r.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r, "\n?");
             }
+
             // Заменить 1) на ?
             if (dlg.ui->question_marker->currentIndex() == 2)
             {
@@ -1189,10 +1504,11 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r, "\n?");
             }
         }
-        if(dlg.ui->del_marker->isChecked())
+
+        if (dlg.ui->del_marker->isChecked())
         {
             // Удалить [а]
-            if (dlg.ui->answer_marker->currentIndex()==4)
+            if (dlg.ui->answer_marker->currentIndex() == 4)
             {
                 QRegExp r("\\n\\s*\\[\\w\\]\\s*");
 
@@ -1206,8 +1522,9 @@ void MainWindow::on_actionReplace_triggered() {
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r2, "\n*");
             }
+
             // Удалить а)
-            if (dlg.ui->answer_marker->currentIndex()==3)
+            if (dlg.ui->answer_marker->currentIndex() == 3)
             {
                 QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
 
@@ -1221,8 +1538,9 @@ void MainWindow::on_actionReplace_triggered() {
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r2, "\n*");
             }
+
             // Удалить А.
-            if (dlg.ui->answer_marker->currentIndex()==2)
+            if (dlg.ui->answer_marker->currentIndex() == 2)
             {
                 QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
 
@@ -1236,8 +1554,9 @@ void MainWindow::on_actionReplace_triggered() {
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r2, "\n*");
             }
+
             // Удалить 1.
-            if (dlg.ui->answer_marker->currentIndex()==0)
+            if (dlg.ui->answer_marker->currentIndex() == 0)
             {
                 QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
 
@@ -1251,8 +1570,9 @@ void MainWindow::on_actionReplace_triggered() {
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
                 s = s.replace(r2, "\n*");
             }
+
             // Удалить 1)
-            if (dlg.ui->answer_marker->currentIndex()==1)
+            if (dlg.ui->answer_marker->currentIndex() == 1)
             {
                 QRegExp r("\\n\\d+\\s*\\)\\s*");
 
@@ -1267,6 +1587,7 @@ void MainWindow::on_actionReplace_triggered() {
                 s = s.replace(r2, "\n*");
             }
         }
+
         // Удалить пробелы
         if (dlg.ui->del_space->isChecked())
         {
@@ -1294,12 +1615,25 @@ void MainWindow::on_actionReplace_triggered() {
             r3.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r3, "\n?");
         }
+
         // Коды вместо <>&&
-        if (dlg.ui->repl_html->isChecked()) { s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"); }
+        if (dlg.ui->repl_html->isChecked())
+        {
+            s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        }
+
         // Заменить коды для <>&& на символы
-        if (dlg.ui->make_tags->isChecked()) { s = s.replace("&lt;", "<").replace("&gt;", ">"); }
+        if (dlg.ui->make_tags->isChecked())
+        {
+            s = s.replace("&lt;", "<").replace("&gt;", ">");
+        }
+
         // Заменить
-        if (dlg.ui->replfromto->isChecked()) { s = s.replace(dlg.ui->repl_from->text(), dlg.ui->repl_to->text()); }
+        if (dlg.ui->replfromto->isChecked())
+        {
+            s = s.replace(dlg.ui->repl_from->text(), dlg.ui->repl_to->text());
+        }
+
         // разбивать строку по 1)
         if (dlg.ui->repl_split_numsk->isChecked())
         {
@@ -1309,6 +1643,7 @@ void MainWindow::on_actionReplace_triggered() {
             r.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r, "\n");
         }
+
         // разбивать строку по а)
         if (dlg.ui->repl_split_alpha->isChecked())
         {
@@ -1318,13 +1653,24 @@ void MainWindow::on_actionReplace_triggered() {
             r.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r, "\n");
         }
-        // Удалить . в конце строки
-        if (dlg.ui->del_enddot->isChecked()) { s = s.replace(".\n", "\n"); }
-        // Удалить , в конце строки
-        if (dlg.ui->del_endcomma->isChecked()) { s = s.replace(",\n", "\n"); }
-        // удалить ; в конце строки
-        if (dlg.ui->del_endsemicolon->isChecked()) { s = s.replace(";\n", "\n"); }
 
+        // Удалить . в конце строки
+        if (dlg.ui->del_enddot->isChecked())
+        {
+            s = s.replace(".\n", "\n");
+        }
+
+        // Удалить , в конце строки
+        if (dlg.ui->del_endcomma->isChecked())
+        {
+            s = s.replace(",\n", "\n");
+        }
+
+        // удалить ; в конце строки
+        if (dlg.ui->del_endsemicolon->isChecked())
+        {
+            s = s.replace(";\n", "\n");
+        }
         lines = s.split("\n");
 
         for (int i = 0; i < lines.size(); i++)
@@ -1334,23 +1680,30 @@ void MainWindow::on_actionReplace_triggered() {
             {
                 if (lines.at(i).mid(0, dlg.ui->label_quiz->text().length()) == dlg.ui->label_quiz->text())
                 {
-                    lines[i] = "";
+                    lines[i]     = "";
                     lines[i + 1] = "?" + lines[i + 1];
                 }
             }
+
             // удалить в начале ответа
             if (dlg.ui->repl_answer->isChecked())
             {
                 if (lines.at(i).mid(0, dlg.ui->label_answer->text().length()) == dlg.ui->label_answer->text())
-                { lines[i] = lines[i].mid(dlg.ui->label_answer->text().length()); }
+                {
+                    lines[i] = lines[i].mid(dlg.ui->label_answer->text().length());
+                }
             }
+
             //признак ответа в конце
             if (dlg.ui->repl_to_correct_end->isChecked())
             {
                 if (lines.at(i).rightRef(dlg.ui->label_correct_end->text().length()) ==
                     dlg.ui->label_correct_end->text())
-                { lines[i] = "*" + lines[i].leftRef(lines[i].length() - dlg.ui->label_correct_end->text().length()); }
+                {
+                    lines[i] = "*" + lines[i].leftRef(lines[i].length() - dlg.ui->label_correct_end->text().length());
+                }
             }
+
             //признак ответа в конце
             if (dlg.ui->repl_to_correct_begin->isChecked())
             {
@@ -1362,15 +1715,19 @@ void MainWindow::on_actionReplace_triggered() {
                 }
             }
         }
+
         s = "<html><body><p>" + lines.join("</p><p>") + "</p></body></html>";
         ui->plain->setHtml(s);
     }
-}    // MainWindow::on_actionReplace_triggered
+} // MainWindow::on_actionReplace_triggered
+
+
 /// Collapse tree
-void MainWindow::on_actionCollapse_triggered() {
+void MainWindow::on_actionCollapse_triggered()
+{
     QList<QTreeWidgetItem *> themes;
 
-    QTreeWidgetItem * top;
+    QTreeWidgetItem          *top;
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -1379,7 +1736,10 @@ void MainWindow::on_actionCollapse_triggered() {
 
         for (int j = 0; j < top->childCount(); j++)
         {
-            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+            if (top->child(j)->text(0) == tr("theme"))
+            {
+                themes << top->child(j);
+            }
         }
     }
 
@@ -1389,19 +1749,27 @@ void MainWindow::on_actionCollapse_triggered() {
         {
             top = themes.at(i)->child(j);
 
-            if (top->text(0) != tr("theme")) { ui->tree->collapseItem(top); }
+            if (top->text(0) != tr("theme"))
+            {
+                ui->tree->collapseItem(top);
+            }
         }
     }
-}    // MainWindow::on_actionCollapse_triggered
+} // MainWindow::on_actionCollapse_triggered
+
+
 /// Find in ui->plain
-void MainWindow::on_actionFind_triggered() {
+void MainWindow::on_actionFind_triggered()
+{
     bool ok;
 
     if (ui->tree->isActiveWindow())
     {
-        if (ui->tree->selectedItems().size() > 0) { search = ui->tree->selectedItems().at(0)->text(1); }
+        if (ui->tree->selectedItems().size() > 0)
+        {
+            search = ui->tree->selectedItems().at(0)->text(1);
+        }
     }
-
     QString s = QInputDialog::getText(this, tr("Find"), tr("Text"), QLineEdit::Normal, search, &ok);
 
     if (ok)
@@ -1409,38 +1777,57 @@ void MainWindow::on_actionFind_triggered() {
         search = s;
         ui->plain->setTextCursor(ui->plain->document()->find(search));
     }
-}    // MainWindow::on_actionFind_triggered
+} // MainWindow::on_actionFind_triggered
+
+
 /// Find next in ui->plain
-void MainWindow::on_actionFindNext_triggered() {
+void MainWindow::on_actionFindNext_triggered()
+{
     if (search.isEmpty())
     {
         on_actionFind_triggered();
-    } else
-    { ui->plain->setTextCursor(ui->plain->document()->find(search, ui->plain->textCursor())); }
+    }
+    else
+    {
+        ui->plain->setTextCursor(ui->plain->document()->find(search, ui->plain->textCursor()));
+    }
 }
+
+
 /// Edit theme or change question type
-void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem * item, int column) {
+void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
     if (item->childCount() != 0)
     {
         if ((item->text(0) == tr("theme")) || (item->text(0) == tr("section")))
         {
             change_section_name(item);
-        } else if ((item->text(0) == tr("text")) || (item->text(0) == tr("number")) ||
-                   (item->text(0) == tr("multichoice")) || (item->text(0) == tr("choice"))) { change_question_type(item); }
+        }
+        else if (  (item->text(0) == tr("text")) || (item->text(0) == tr("number"))
+                || (item->text(0) == tr("multichoice")) || (item->text(0) == tr("choice")))
+        {
+            change_question_type(item);
+        }
     }
-}    // MainWindow::on_tree_itemDoubleClicked
+} // MainWindow::on_tree_itemDoubleClicked
+
+
 /// Print of a position in a tree
-void MainWindow::on_tree_itemSelectionChanged() {
+void MainWindow::on_tree_itemSelectionChanged()
+{
     QList<QTreeWidgetItem *> themes;
 
-    QTreeWidgetItem * top;
-    QTreeWidgetItem * selected = nullptr;
+    QTreeWidgetItem          *top;
+    QTreeWidgetItem          *selected = nullptr;
 
     if (ui->tree->selectedItems().size() > 0)
     {
         selected = ui->tree->selectedItems().at(0);
 
-        if (selected->childCount() == 0) { selected = selected->parent(); }
+        if (selected->childCount() == 0)
+        {
+            selected = selected->parent();
+        }
     }
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
@@ -1450,12 +1837,15 @@ void MainWindow::on_tree_itemSelectionChanged() {
 
         for (int j = 0; j < top->childCount(); j++)
         {
-            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+            if (top->child(j)->text(0) == tr("theme"))
+            {
+                themes << top->child(j);
+            }
         }
     }
 
     int qcount = 0;
-    int qid = 0;
+    int qid    = 0;
 
     for (int i = 0; i < themes.size(); i++)
     {
@@ -1467,7 +1857,10 @@ void MainWindow::on_tree_itemSelectionChanged() {
             {
                 qcount++;
 
-                if (top == selected) { qid = qcount; }
+                if (top == selected)
+                {
+                    qid = qcount;
+                }
             }
         }
     }
@@ -1475,14 +1868,20 @@ void MainWindow::on_tree_itemSelectionChanged() {
     if (qid > 0)
     {
         treePositionLabel->setText(tr("Tree. %1 themes. %2 questions. Id %3").arg(themes.size()).arg(qcount).arg(qid));
-    } else
-    { treePositionLabel->setText(tr("Tree. %1 themes. %2 questions").arg(themes.size()).arg(qcount)); }
-}    // MainWindow::on_tree_itemSelectionChanged
+    }
+    else
+    {
+        treePositionLabel->setText(tr("Tree. %1 themes. %2 questions").arg(themes.size()).arg(qcount));
+    }
+} // MainWindow::on_tree_itemSelectionChanged
+
+
 /// Change the type of all questions from shortanswer to numerical
-void MainWindow::on_actionToNumerical_triggered() {
+void MainWindow::on_actionToNumerical_triggered()
+{
     QList<QTreeWidgetItem *> themes;
 
-    QTreeWidgetItem * top;
+    QTreeWidgetItem          *top;
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -1491,7 +1890,10 @@ void MainWindow::on_actionToNumerical_triggered() {
 
         for (int j = 0; j < top->childCount(); j++)
         {
-            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+            if (top->child(j)->text(0) == tr("theme"))
+            {
+                themes << top->child(j);
+            }
         }
     }
 
@@ -1501,15 +1903,20 @@ void MainWindow::on_actionToNumerical_triggered() {
         {
             top = themes.at(i)->child(j);
 
-            if (top->text(0) == tr("text")) { top->setText(0, tr("number")); }
+            if (top->text(0) == tr("text"))
+            {
+                top->setText(0, tr("number"));
+            }
         }
     }
-}    // MainWindow::on_actionToNumerical_triggered
+} // MainWindow::on_actionToNumerical_triggered
 
-void MainWindow::on_actionFromTickets_triggered() {
+
+void MainWindow::on_actionFromTickets_triggered()
+{
     QList<QTreeWidgetItem *> themes;
 
-    QTreeWidgetItem * top;
+    QTreeWidgetItem          *top;
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -1518,13 +1925,16 @@ void MainWindow::on_actionFromTickets_triggered() {
 
         for (int j = 0; j < top->childCount(); j++)
         {
-            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+            if (top->child(j)->text(0) == tr("theme"))
+            {
+                themes << top->child(j);
+            }
         }
     }
 
-    QTreeWidgetItem * top_themes = new QTreeWidgetItem(QStringList() << tr("section") << tr("Themes"));
+    QTreeWidgetItem                    *top_themes = new QTreeWidgetItem(QStringList() << tr("section") << tr("Themes"));
 
-    QVector<QList<QTreeWidgetItem *>> new_themes;
+    QVector<QList<QTreeWidgetItem *> > new_themes;
 
     for (int i = 0; i < themes.size(); i++)
     {
@@ -1532,10 +1942,15 @@ void MainWindow::on_actionFromTickets_triggered() {
         {
             top = themes.at(i)->child(j);
 
-            if (top->text(0) == tr("theme")) { continue; }
+            if (top->text(0) == tr("theme"))
+            {
+                continue;
+            }
 
-            if (j >= new_themes.size()) { new_themes.resize(j + 1); }
-
+            if (j >= new_themes.size())
+            {
+                new_themes.resize(j + 1);
+            }
             new_themes[j].append(top);
         }
     }
@@ -1553,21 +1968,28 @@ void MainWindow::on_actionFromTickets_triggered() {
             top->addChild(new_themes.at(i)[j]);
         }
     }
-}    // MainWindow::on_actionFromTickets_triggered
+} // MainWindow::on_actionFromTickets_triggered
+
+
 /// Change the type of error calculation for numerical
-void MainWindow::on_actionFixedAccuracy_triggered(bool checked) {
+void MainWindow::on_actionFixedAccuracy_triggered(bool checked)
+{
     // set default value of error calculation
     if (checked)
     {
         // fixed error
         tolerance->setText(tr("%1").arg(0.01));
-    } else
+    }
+    else
     {
         // denominator. error = value / demoninator
         tolerance->setText(tr("%1").arg(200));
     }
 }
-void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
+
+
+void MainWindow::show_error(QTreeWidgetItem *item, QString message)
+{
     ui->tree->collapseAll();
     ui->tree->clearSelection();
 
@@ -1575,17 +1997,21 @@ void MainWindow::show_error(QTreeWidgetItem * item, QString message) {
     item->setSelected(true);
 
     ui->tree->expandItem(item);
+
     while (item->parent())
     {
         item = item->parent();
         ui->tree->expandItem(item);
     }
-
     QMessageBox::warning(this, tr("Error"), message);
 }
-void MainWindow::on_actionHighlighter_triggered() {
+
+
+void MainWindow::on_actionHighlighter_triggered()
+{
     //
     HighlighterDialog dlg;
+
     if (dlg.exec())
     {
         dlg.highlighter->save_color();
@@ -1595,93 +2021,144 @@ void MainWindow::on_actionHighlighter_triggered() {
 }
 struct DSearch
 {
-    QString hash;
+    QString                    hash;
     QVector<QTreeWidgetItem *> question;
 };
+
+
 void MainWindow::on_actionDuplicate_search_triggered()
 {
-    QMap<QString, DSearch> cache;
+    QMap<QString, DSearch>   cache;
     QList<QTreeWidgetItem *> themes;
-    QTreeWidgetItem *top, *item;
-    QString hash;
-    QStringList strings;
+    QTreeWidgetItem          *top, *item;
+    QString                  hash;
+    QStringList              strings;
 
-    for (int i = 0; i < ui->tree->topLevelItemCount(); i++) {
+    for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
+    {
         top = ui->tree->topLevelItem(i);
         themes << top;
 
-        for (int j = 0; j < top->childCount(); j++) {
-            if (top->child(j)->text(0) == tr("theme")) { themes << top->child(j); }
+        for (int j = 0; j < top->childCount(); j++)
+        {
+            if (top->child(j)->text(0) == tr("theme"))
+            {
+                themes << top->child(j);
+            }
         }
     }
 
-    for (int i = 0; i < themes.size(); i++) {
-        for (int j = 0; j < themes.at(i)->childCount(); j++) {
+    for (int i = 0; i < themes.size(); i++)
+    {
+        for (int j = 0; j < themes.at(i)->childCount(); j++)
+        {
             // TODO:
             item = themes.at(i)->child(j);
-            if ((item->text(0) == tr("theme")) || (item->text(0) == tr("section"))) {
-                continue;    // skip
+
+            if ((item->text(0) == tr("theme")) || (item->text(0) == tr("section")))
+            {
+                continue; // skip
             }
-            else if (is_question(item)) {
+            else if (is_question(item))
+            {
                 strings.clear();
                 strings << item->text(1).replace(" ", "").toLower();
-                for (int k = 0; k < item->childCount(); k++) {
-                    if (item->child(k)->text(0) == tr("correct")) {
+
+                for (int k = 0; k < item->childCount(); k++)
+                {
+                    if (item->child(k)->text(0) == tr("correct"))
+                    {
                         strings << item->child(k)->text(1).replace(" ", "").toLower();
                     }
                 }
+
                 strings.sort();
                 hash = strings.join("$");
-                if (!cache.contains(hash)) { cache[hash] = {hash}; }
+
+                if (!cache.contains(hash))
+                {
+                    cache[hash] = {
+                        hash
+                    };
+                }
                 cache[hash].question << item;
             }
-            else {
+            else
+            {
                 continue;
                 // TODO: other markers
             }
         }
     }
+
     ui->tree->collapseAll();
-    for (DSearch &it: cache) {
-        if (it.question.count() > 1) {
-            for (auto item: it.question) {
+
+    for (DSearch &it : cache)
+    {
+        if (it.question.count() > 1)
+        {
+            for (auto item : it.question)
+            {
                 ui->tree->expandItem(item);
-                while (item->parent()) {
+
+                while (item->parent())
+                {
                     item = item->parent();
                     ui->tree->expandItem(item);
                 }
             }
         }
     }
-}
+} // MainWindow::on_actionDuplicate_search_triggered
+
 
 void MainWindow::on_tree_customContextMenuRequested(const QPoint &pos)
 {
     auto item = ui->tree->itemAt(pos);
-    if (item) {
+
+    if (item)
+    {
         QMenu *cnt = new QMenu();
-        if (is_section(item)) {
+
+        if (is_section(item))
+        {
             cnt->addAction(tr("Rename"), [item, this]()
-            { change_section_name(item); });
+            {
+                change_section_name(item);
+            });
         }
-        if (is_question(item)) {
+
+        if (is_question(item))
+        {
             cnt->addAction(tr("Change type"), [item, this]()
-            { change_question_type(item); });
+            {
+                change_question_type(item);
+            });
             cnt->addAction(tr("Edit"), [item, this]()
-            { edit_question(item); });
+            {
+                edit_question(item);
+            });
             cnt->addAction(tr("Edit price"), [item, this]()
-            { edit_price(item); });
+            {
+                edit_price(item);
+            });
             cnt->addAction(tr("Delete"), [item]()
             {
                 item->parent()->removeChild(item);
                 delete item;
             });
         }
-        if (is_answer(item)) {
+
+        if (is_answer(item))
+        {
             cnt->addAction(tr("Edit"), [item, this]()
-            { edit_question(item); });
+            {
+                edit_question(item);
+            });
             cnt->addAction(tr("Edit price"), [item, this]()
-            { edit_price(item); });
+            {
+                edit_price(item);
+            });
             cnt->addAction(tr("Delete"), [item]()
             {
                 item->parent()->removeChild(item);
@@ -1691,70 +2168,100 @@ void MainWindow::on_tree_customContextMenuRequested(const QPoint &pos)
         cnt->exec(ui->tree->mapToGlobal(pos));
         delete cnt;
     }
-}
+} // MainWindow::on_tree_customContextMenuRequested
+
+
 void MainWindow::change_section_name(QTreeWidgetItem *item)
 {
-    bool ok;
+    bool    ok;
     QString s =
         QInputDialog::getText(this, tr("Edit section"), tr("Section name"), QLineEdit::Normal, item->text(1), &ok);
 
-    if (ok) { item->setText(1, s); }
+    if (ok)
+    {
+        item->setText(1, s);
+    }
 }
+
+
 void MainWindow::change_question_type(QTreeWidgetItem *item)
 {
-    bool ok;
+    bool        ok;
     QStringList items;
-    if (item->text(0) == tr("info") || item->text(0) == tr("map")) {
+
+    if (item->text(0) == tr("info") || item->text(0) == tr("map"))
+    {
         QMessageBox::warning(this, tr("Error"), tr("Changing the type is not supported for this question"));
         return;
     }
-
     items << tr("text") << tr("number") << tr("multichoice") << tr("choice");
 
     QString s = QInputDialog::getItem(
         this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0)), false, &ok);
 
-    if (ok) { item->setText(0, s); }
+    if (ok)
+    {
+        item->setText(0, s);
+    }
 }
+
+
 void MainWindow::edit_question(QTreeWidgetItem *item)
 {
-    if (is_question(item)) {
+    if (is_question(item))
+    {
         TextDialog dlg;
         dlg.setText(item->text(1));
-        if (dlg.exec()) item->setText(1, dlg.text());
+
+        if (dlg.exec())
+        {
+            item->setText(1, dlg.text());
+        }
     }
-    else if (is_answer(item)) {
-        if (item->parent()->text(0) == tr("map") || item->parent()->text(0) == tr("number")) {
+    else if (is_answer(item))
+    {
+        if (item->parent()->text(0) == tr("map") || item->parent()->text(0) == tr("number"))
+        {
             //TODO:
             QMessageBox::warning(this, tr("Error"), tr("In development"));
         }
-        else {
+        else
+        {
             TextDialog dlg;
             dlg.setText(item->text(1));
-            if (dlg.exec()) item->setText(1, dlg.text());
+
+            if (dlg.exec())
+            {
+                item->setText(1, dlg.text());
+            }
         }
     }
 }
+
+
 void MainWindow::edit_price(QTreeWidgetItem *item)
 {
     bool ok;
-    int s =
+    int  s =
         QInputDialog::getInt(this, tr("Edit price"), tr("Price"),
                              item->text(3).toInt(), -100, 100, 1, &ok);
 
-    if (ok) { item->setText(3, tr("%1").arg(s)); }
+    if (ok)
+    {
+        item->setText(3, tr("%1").arg(s));
+    }
 }
+
 
 void MainWindow::on_actionHelp_triggered()
 {
     //help
-    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.htm"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/doc/manual.htm"));
 }
 
 
 void MainWindow::on_actionRequirements_triggered()
 {
     //manual
-    QDesktopServices::openUrl(QUrl::fromLocalFile( QApplication::applicationDirPath()+"/doc/manual.pdf"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/doc/manual.pdf"));
 }
-

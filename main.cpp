@@ -1,14 +1,19 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <QTranslator>
 #include <QTextCodec>
-int main(int argc, char * argv[]) {
+#include <QTranslator>
+
+
+int main(int argc, char *argv[])
+{
     QApplication a(argc, argv);
-    QTranslator myappTranslator;
+    QTranslator  myappTranslator;
+
     myappTranslator.load("TestConvert_" + QLocale::system().name());
 
     a.installTranslator(&myappTranslator);
     MainWindow w;
+
     w.show();
-    return a.exec();
+    return(a.exec());
 }

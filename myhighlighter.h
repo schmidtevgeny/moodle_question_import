@@ -1,12 +1,13 @@
 #ifndef MYHIGHLIGHTER_H
 #define MYHIGHLIGHTER_H
-#include <QSyntaxHighlighter>
 #include <QRegularExpression>
-class MyHighlighter : public QSyntaxHighlighter {
+#include <QSyntaxHighlighter>
+class MyHighlighter : public QSyntaxHighlighter
+{
     Q_OBJECT
 
-  public:
-    MyHighlighter(QTextDocument * parent = 0);
+public:
+    MyHighlighter(QTextDocument *parent = 0);
 
     QTextCharFormat keywordFormat;
     QTextCharFormat sectionFormat;
@@ -20,10 +21,10 @@ class MyHighlighter : public QSyntaxHighlighter {
     void load_color();
     void save_color();
 
-  protected:
-    void highlightBlock(const QString & text) override;
+protected:
+    void highlightBlock(const QString &text) override;
 
-  private:
+private:
     QRegularExpression sectionExpression;
     QRegularExpression ticketExpression;
     QRegularExpression incorrectAnswerExpression;
@@ -33,4 +34,4 @@ class MyHighlighter : public QSyntaxHighlighter {
     QRegularExpression matchExpression;
 };
 
-#endif    // MYHIGHLIGHTER_H
+#endif // MYHIGHLIGHTER_H

@@ -5,10 +5,10 @@
 class QVBoxLayout;
 class QTextEdit;
 class QDialogButtonBox;
-class TextDialog: public QDialog
+class TextDialog : public QDialog
 {
-    QVBoxLayout *lt;
-    QTextEdit *edit;
+    QVBoxLayout      *lt;
+    QTextEdit        *edit;
     QDialogButtonBox *btn;
 
 public:
@@ -17,4 +17,4 @@ public:
     void setText(const QString &);
 };
 
-#endif    // TEXTDIALOG_H
+#endif // TEXTDIALOG_H

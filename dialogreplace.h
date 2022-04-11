@@ -5,16 +5,19 @@
 
 namespace Ui
 {
+
 class DialogReplace;
+
 }
 
-class DialogReplace : public QDialog {
+class DialogReplace : public QDialog
+{
     Q_OBJECT
 
-  public:
-    explicit DialogReplace(QWidget * parent = 0);
+public:
+    explicit DialogReplace(QWidget *parent = 0);
     ~DialogReplace();
-    Ui::DialogReplace * ui;
+    Ui::DialogReplace *ui;
 };
 
-#endif    // DIALOGREPLACE_H
+#endif // DIALOGREPLACE_H

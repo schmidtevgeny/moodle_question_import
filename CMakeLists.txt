@@ -72,6 +72,13 @@ qt5_add_translation(TRANSLATION_QM ${TRANSLATION_FILES})
 add_custom_target(translations_update DEPENDS ${TRANSLATION_MESSAGES})
 # добавляем цель 4 - файлы перевода скомпилировать
 add_custom_target(translations DEPENDS ${TRANSLATION_QM})
+
+add_custom_target(uncrustifyall
+        COMMAND uncrustify -c ${CMAKE_CURRENT_SOURCE_DIR}/uncrustify.cfg --no-backup *.cpp *.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT Uncrustify
+        )
+
 # дополнительные действия после сборки
 # линковка с библиотеками
 target_link_libraries(${TARGET_NAME}
