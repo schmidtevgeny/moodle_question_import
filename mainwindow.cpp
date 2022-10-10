@@ -23,7 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     search            = "";
     treePositionLabel = new QLabel();
     ui->statusBar->addPermanentWidget(treePositionLabel);
+    tolerance_string = new QLabel(tr("Tolerance: 1/"));
     tolerance = new QLineEdit("200");
+    ui->toolBar->addWidget(tolerance_string);
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document());
     // settings
@@ -904,6 +906,9 @@ bool MainWindow::write_multichoice(QXmlStreamWriter &stream, QTreeWidgetItem *it
         }
         else
         {
+            if(ui->action_bigPenalty->isChecked())
+            stream.writeAttribute("fraction", QString("%1").arg(-1000 ));
+            else
             stream.writeAttribute("fraction", QString("%1").arg(-100.0 / incorrect));
         }
         writeText(stream, item->child(k)->text(1), last_dir);
@@ -1977,11 +1982,13 @@ void MainWindow::on_actionFixedAccuracy_triggered(bool checked)
     // set default value of error calculation
     if (checked)
     {
+        tolerance_string->setText(tr("Tolerance: "));
         // fixed error
         tolerance->setText(tr("%1").arg(0.01));
     }
     else
     {
+        tolerance_string->setText(tr("Tolerance: 1/"));
         // denominator. error = value / demoninator
         tolerance->setText(tr("%1").arg(200));
     }
@@ -2155,10 +2162,10 @@ void MainWindow::on_tree_customContextMenuRequested(const QPoint &pos)
             {
                 edit_question(item);
             });
-            cnt->addAction(tr("Edit price"), [item, this]()
-            {
-                edit_price(item);
-            });
+//            cnt->addAction(tr("Edit price"), [item, this]()
+//            {
+//                edit_price(item);
+//            });
             cnt->addAction(tr("Delete"), [item]()
             {
                 item->parent()->removeChild(item);

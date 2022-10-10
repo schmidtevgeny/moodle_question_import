@@ -7,6 +7,7 @@ class QTextEdit;
 class QDialogButtonBox;
 class TextDialog : public QDialog
 {
+    Q_OBJECT
     QVBoxLayout      *lt;
     QTextEdit        *edit;
     QDialogButtonBox *btn;

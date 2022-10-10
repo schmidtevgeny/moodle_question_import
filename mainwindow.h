@@ -54,6 +54,7 @@ private:
     QString        search;
     QLabel         *treePositionLabel;
     QStringList    images;
+    QLabel      *tolerance_string;
     QLineEdit      *tolerance;
     MyHighlighter  *highlighter;
     bool           usecase;
