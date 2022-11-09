@@ -14,13 +14,13 @@ TextDialog::TextDialog()
     connect(btn, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(btn, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-    setWindowTitle(tr("Edit"));
+    setWindowTitle(tr("Edit") );
 }
 
 
 QString TextDialog::text()
 {
-    return(edit->toPlainText());
+    return(edit->toPlainText() );
 }
 
 

@@ -15,8 +15,11 @@ class DialogReplace : public QDialog
     Q_OBJECT
 
 public:
+
     explicit DialogReplace(QWidget *parent = 0);
     ~DialogReplace();
+
+
     Ui::DialogReplace *ui;
 };
 

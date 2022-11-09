@@ -60,57 +60,72 @@ void MyHighlighter::highlightBlock(const QString &text)
 {
     QTextCharFormat myClassFormat;
 
+
     myClassFormat.setFontWeight(QFont::Bold);
     myClassFormat.setForeground(Qt::darkMagenta);
 
+
     QRegularExpressionMatchIterator i;
+
 
     i = sectionExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), sectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
     i = subsectionExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), subsectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
     i = ticketExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), ticketFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
     i = questionExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), questionFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
     i = incorrectAnswerExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), incorrectAnswerFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), priceFormat);
     }
     i = correctAnswerExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(), match.capturedLength(), correctAnswerFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
@@ -124,9 +139,11 @@ void MyHighlighter::highlightBlock(const QString &text)
 
     i = matchExpression.globalMatch(text);
 
-    while (i.hasNext())
+    while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
+
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
 } // MyHighlighter::highlightBlock
@@ -134,16 +151,17 @@ void MyHighlighter::highlightBlock(const QString &text)
 
 void load_format(QSettings &settings, QString section, QTextCharFormat &format)
 {
-    format.setFontItalic(settings.value(section + "/italic", format.fontItalic()).toBool());
-    format.setFontUnderline(settings.value(section + "/underline", format.fontUnderline()).toBool());
-    format.setFontWeight(settings.value(section + "/weight", format.fontWeight()).toInt());
-    format.setForeground(QColor(settings.value(section + "/color", format.foreground().color().name()).toString()));
+    format.setFontItalic(settings.value(section + "/italic", format.fontItalic() ).toBool() );
+    format.setFontUnderline(settings.value(section + "/underline", format.fontUnderline() ).toBool() );
+    format.setFontWeight(settings.value(section + "/weight", format.fontWeight() ).toInt() );
+    format.setForeground(QColor(settings.value(section + "/color", format.foreground().color().name() ).toString() ) );
 }
 
 
 void MyHighlighter::load_color()
 {
     QSettings settings("TSU", "TestConvert");
+
 
     load_format(settings, "keywordFormat", keywordFormat);
     load_format(settings, "sectionFormat", sectionFormat);
@@ -158,16 +176,17 @@ void MyHighlighter::load_color()
 
 void save_format(QSettings &settings, QString section, QTextCharFormat &format)
 {
-    settings.setValue(section + "/italic", format.fontItalic());
-    settings.setValue(section + "/underline", format.fontUnderline());
-    settings.setValue(section + "/weight", format.fontWeight());
-    settings.setValue(section + "/color", format.foreground().color().name());
+    settings.setValue(section + "/italic", format.fontItalic() );
+    settings.setValue(section + "/underline", format.fontUnderline() );
+    settings.setValue(section + "/weight", format.fontWeight() );
+    settings.setValue(section + "/color", format.foreground().color().name() );
 }
 
 
 void MyHighlighter::save_color()
 {
     QSettings settings("TSU", "TestConvert");
+
 
     save_format(settings, "keywordFormat", keywordFormat);
     save_format(settings, "sectionFormat", sectionFormat);

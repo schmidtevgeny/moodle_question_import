@@ -7,7 +7,9 @@ class MyHighlighter : public QSyntaxHighlighter
     Q_OBJECT
 
 public:
+
     MyHighlighter(QTextDocument *parent = 0);
+
 
     QTextCharFormat keywordFormat;
     QTextCharFormat sectionFormat;
@@ -18,13 +20,16 @@ public:
     QTextCharFormat incorrectAnswerFormat;
     QTextCharFormat priceFormat;
 
+
     void load_color();
     void save_color();
 
 protected:
+
     void highlightBlock(const QString &text) override;
 
 private:
+
     QRegularExpression sectionExpression;
     QRegularExpression ticketExpression;
     QRegularExpression incorrectAnswerExpression;

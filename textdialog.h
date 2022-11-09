@@ -8,11 +8,14 @@ class QDialogButtonBox;
 class TextDialog : public QDialog
 {
     Q_OBJECT
-    QVBoxLayout      *lt;
+    QVBoxLayout * lt;
+
+
     QTextEdit        *edit;
     QDialogButtonBox *btn;
 
 public:
+
     TextDialog();
     QString text();
     void setText(const QString &);

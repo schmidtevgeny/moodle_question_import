@@ -81,6 +81,7 @@
     <addaction name="actionOpen"/>
     <addaction name="actionAnalyse"/>
     <addaction name="actionExport"/>
+    <addaction name="actionSet_work_dir"/>
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
@@ -421,6 +422,11 @@
    </property>
    <property name="text">
     <string>Increased penalty for wrong answer</string>
+   </property>
+  </action>
+  <action name="actionSet_work_dir">
+   <property name="text">
+    <string>Set work dir...</string>
    </property>
   </action>
  </widget>
