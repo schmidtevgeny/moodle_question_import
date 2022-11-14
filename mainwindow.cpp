@@ -1571,8 +1571,6 @@ void MainWindow::on_actionReplace_triggered()
                 {
                     p = "*" + p;
                 }
-
-
             }
 
             p = p.remove(QRegExp("<[^>]*>") );
@@ -1580,8 +1578,8 @@ void MainWindow::on_actionReplace_triggered()
             if (p != "[[br]]")
             {
                 lines << p;
-            }else{
-                lines<<"";
+            } else {
+                lines << "";
             }
         }
         s = "\n" + lines.join("\n");
@@ -1635,22 +1633,266 @@ void MainWindow::on_actionReplace_triggered()
 
         if (dlg.ui->repl_to_question_2->isChecked() )
         {
-            // маркировать вопросом все кроме указанного
-            // TODO:
-            //if (dlg.ui->question_marker_2->currentIndex() == 4)
-            //{
-            //
-            //}
+            QStringList lst = s.split("\n");
 
+
+            for (auto &si : lst)
+            {
+                if (
+                    si.startsWith("@")
+                    || si.startsWith("#")
+                    || si.startsWith("*")
+                    || si.startsWith("?")
+                    || si.startsWith("$") )
+                {
+                    continue;
+                }
+
+                // Удалить [а]
+                if (dlg.ui->question_marker_2->currentIndex() == 4)
+                {
+                    QRegExp r("^\\s*\\[\\w\\]\\s*");
+
+
+                    r.setMinimal(true);
+                    r.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r) )
+                    {
+                        continue;
+                    }
+
+
+                    QRegExp r2("^\\s*\\*\\s*\\[\\w\\]\\s*");
+
+
+                    r2.setMinimal(true);
+                    r2.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r2) )
+                    {
+                        continue;
+                    }
+                }
+
+                // Удалить а)
+                if (dlg.ui->question_marker_2->currentIndex() == 3)
+                {
+                    QRegExp r("^\\s*\\w\\s*\\)\\s*");
+
+
+                    r.setMinimal(true);
+                    r.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r) )
+                    {
+                        continue;
+                    }
+
+
+                    QRegExp r2("^\\s*\\*\\s*\\w\\s*\\)\\s*");
+
+
+                    r2.setMinimal(true);
+                    r2.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r2) )
+                    {
+                        continue;
+                    }
+                }
+
+                // Удалить А.
+                if (dlg.ui->question_marker_2->currentIndex() == 2)
+                {
+                    QRegExp r("^\\s*\\w\\s*\\.\\s*");
+
+
+                    r.setMinimal(true);
+                    r.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r) )
+                    {
+                        continue;
+                    }
+
+
+                    QRegExp r2("^\\s*\\*\\s*\\w\\s*\\.\\s*");
+
+
+                    r2.setMinimal(true);
+                    r2.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r2) )
+                    {
+                        continue;
+                    }
+                }
+
+                // Удалить 1.
+                if (dlg.ui->question_marker_2->currentIndex() == 0)
+                {
+                    QRegExp r("^\\s*\\d+\\s*\\.\\s*");
+
+
+                    r.setMinimal(true);
+                    r.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r) )
+                    {
+                        continue;
+                    }
+
+
+                    QRegExp r2("^\\s*\\*\\s*\\d+\\s*\\.\\s*");
+
+
+                    r2.setMinimal(true);
+                    r2.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r2) )
+                    {
+                        continue;
+                    }
+                }
+
+                // Удалить 1)
+                if (dlg.ui->question_marker_2->currentIndex() == 1)
+                {
+                    QRegExp r("^\\d+\\s*\\)\\s*");
+
+
+                    r.setMinimal(true);
+                    r.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r) )
+                    {
+                        continue;
+                    }
+
+
+                    QRegExp r2("^\\s*\\*\\s*\\d+\\s*\\)\\s*");
+
+
+                    r2.setMinimal(true);
+                    r2.setCaseSensitivity(Qt::CaseInsensitive);
+
+                    if (si.contains(r2) )
+                    {
+                        continue;
+                    }
+                }
+
+                si = "?" + si;
+            }
+
+            s = lst.join("\n");
         }
+
         if (dlg.ui->empty_line->isChecked() )
         {
             // маркировать вопросом строку после пустой строки
-            QRegExp r("\\n\\n+");//[^\n]
+            QRegExp r("\\n\\n+"); //[^\n]
+
 
             r.setMinimal(false);
             r.setCaseSensitivity(Qt::CaseInsensitive);
             s = s.replace(r, "\n?");
+            s = "?" + s;
+
+            if (dlg.ui->answer_marker->currentIndex() == 4)
+            {
+                QRegExp r("\\n\\s*\\[\\w\\]\\s*");
+
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
+
+
+                QRegExp r2("\\n\\s*\\*\\s*\\[\\w\\]\\s*");
+
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+
+            // Удалить а)
+            if (dlg.ui->answer_marker->currentIndex() == 3)
+            {
+                QRegExp r("\\n\\s*\\w\\s*\\)\\s*");
+
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
+
+
+                QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\)\\s*");
+
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+
+            // Удалить А.
+            if (dlg.ui->answer_marker->currentIndex() == 2)
+            {
+                QRegExp r("\\n\\s*\\w\\s*\\.\\s*");
+
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
+
+
+                QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\.\\s*");
+
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+
+            // Удалить 1.
+            if (dlg.ui->answer_marker->currentIndex() == 0)
+            {
+                QRegExp r("\\n\\s*\\d+\\s*\\.\\s*");
+
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
+
+
+                QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\.\\s*");
+
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
+
+            // Удалить 1)
+            if (dlg.ui->answer_marker->currentIndex() == 1)
+            {
+                QRegExp r("\\n\\d+\\s*\\)\\s*");
+
+
+                r.setMinimal(true);
+                r.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r, "\n");
+
+
+                QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\)\\s*");
+
+
+                r2.setMinimal(true);
+                r2.setCaseSensitivity(Qt::CaseInsensitive);
+                s = s.replace(r2, "\n*");
+            }
         }
 
         if (dlg.ui->del_marker->isChecked() )
@@ -1815,7 +2057,7 @@ void MainWindow::on_actionReplace_triggered()
             s = s.replace(r, "\n");
         }
 
-        // разбивать строку по а)
+        // разбивать строку по `а)`
         if (dlg.ui->repl_split_alpha->isChecked() )
         {
             QRegExp r("\\s*\\w\\s*\\)");
@@ -1826,19 +2068,19 @@ void MainWindow::on_actionReplace_triggered()
             s = s.replace(r, "\n");
         }
 
-        // Удалить . в конце строки
+        // Удалить `.` в конце строки
         if (dlg.ui->del_enddot->isChecked() )
         {
             s = s.replace(".\n", "\n");
         }
 
-        // Удалить , в конце строки
+        // Удалить `,` в конце строки
         if (dlg.ui->del_endcomma->isChecked() )
         {
             s = s.replace(",\n", "\n");
         }
 
-        // удалить ; в конце строки
+        // удалить `;` в конце строки
         if (dlg.ui->del_endsemicolon->isChecked() )
         {
             s = s.replace(";\n", "\n");
