@@ -369,17 +369,7 @@
     <string>Export as plaintext</string>
    </property>
   </action>
-  <action name="actionFixedAccuracy">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Fixed accuracy</string>
-   </property>
-   <property name="toolTip">
-    <string>Fixed accuracy</string>
-   </property>
-  </action>
+
   <action name="actionHighlighter">
    <property name="text">
     <string>Highlighter</string>
@@ -404,11 +394,6 @@
    </property>
    <property name="toolTip">
     <string>Fixed accuracy</string>
-   </property>
-  </action>
-  <action name="actionHighlighter">
-   <property name="text">
-    <string>Highlighter</string>
    </property>
   </action>
   <action name="actionDuplicate_search">

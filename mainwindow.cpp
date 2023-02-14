@@ -275,8 +275,10 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
         QString s2;
 
 
-        if ( (correctcount == answers.size() ) && (correctcount < 3) )
+        if ( (correctcount == answers.size() ) &&
+            (!ui->action_enableAll->isChecked() || correctcount == 1) )
         {
+
             // all right
             quest->setText(0, tr("text") );
             number = true;
@@ -333,7 +335,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 /// \return is number
 bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString &tolerance)
 {
-    qWarning(s.toStdString().c_str() );
+
 
 
     bool ok, ok2;
@@ -1466,15 +1468,9 @@ void MainWindow::on_actionReplace_triggered()
             QString p = s.left(pos);
 
 
-            //            qWarning("\n\n==========================\n");
-            //            qWarning(s.toStdString().c_str());
             s = s.mid(pos);
-            //            qWarning("\n=");
             s = s.mid(s.indexOf(">") + 1);
             p = p.mid(p.indexOf(">") + 1);
-            //            qWarning(s.toStdString().c_str());
-            //            qWarning("\n=");
-            //            qWarning(p.toStdString().c_str());
             // replace tags
             p = p.replace("<br />", "[[br]]")
                     .replace("<sub>", "[[sub]]")
@@ -2522,16 +2518,24 @@ void MainWindow::on_actionDuplicate_search_triggered()
     {
         if (it.question.count() > 1)
         {
-            for (auto item : it.question)
+            for (auto i=1;i<it.question.count();i++)
             {
-                ui->tree->expandItem(item);
+                it.question[i]->parent()->removeChild(
+                    it.question[i]
+                    );
+//                ui->tree->removeItemWidget(it.question[i]);
 
-                while (item->parent() )
-                {
-                    item = item->parent();
-                    ui->tree->expandItem(item);
-                }
             }
+//            for (auto item : it.question)
+//            {
+//                ui->tree->expandItem(item);
+//
+//                while (item->parent() )
+//                {
+//                    item = item->parent();
+//                    ui->tree->expandItem(item);
+//                }
+//            }
         }
     }
 } // MainWindow::on_actionDuplicate_search_triggered
