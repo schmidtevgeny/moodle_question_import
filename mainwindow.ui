@@ -129,6 +129,7 @@
     <addaction name="actionToNumerical"/>
     <addaction name="actionFromTickets"/>
     <addaction name="actionDuplicate_search"/>
+    <addaction name="actionRemoveNoAnswer"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -369,7 +370,6 @@
     <string>Export as plaintext</string>
    </property>
   </action>
-
   <action name="actionHighlighter">
    <property name="text">
     <string>Highlighter</string>
@@ -412,6 +412,11 @@
   <action name="actionSet_work_dir">
    <property name="text">
     <string>Set work dir...</string>
+   </property>
+  </action>
+  <action name="actionRemoveNoAnswer">
+   <property name="text">
+    <string>Remove questions without a correct answer</string>
    </property>
   </action>
  </widget>

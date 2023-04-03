@@ -2445,7 +2445,65 @@ struct DSearch
     QString                    hash;
     QVector<QTreeWidgetItem *> question;
 };
+void MainWindow::on_actionRemoveNoAnswer_triggered()
+{
+    QList<QTreeWidgetItem *> themes;
 
+    QTreeWidgetItem          *top;
+    QTreeWidgetItem          *selected = nullptr;
+
+
+    if (ui->tree->selectedItems().size() > 0)
+    {
+        selected = ui->tree->selectedItems().at(0);
+
+        if (selected->childCount() == 0)
+        {
+            selected = selected->parent();
+        }
+    }
+
+    for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
+    {
+        top = ui->tree->topLevelItem(i);
+        themes << top;
+
+        for (int j = 0; j < top->childCount(); j++)
+        {
+            if (top->child(j)->text(0) == tr("theme") )
+            {
+                themes << top->child(j);
+            }
+        }
+    }
+    QVector<QTreeWidgetItem *> question;
+
+
+    for (int i = 0; i < themes.size(); i++)
+    {
+        for (int j = 0; j < themes.at(i)->childCount(); j++)
+        {
+            top = themes.at(i)->child(j);
+
+            if (top->text(0) != tr("theme") )
+            {
+                int correct=0;
+                for (int k = 0; k < top->childCount(); k++)
+                {
+                    if (top->child(k)->text(0) == tr("correct") )
+                    {
+                        correct++;
+                    }
+                }
+                if (correct==0) question<<top;
+            }
+        }
+    }
+
+    for (auto it:question){
+        it->parent()->removeChild(it);
+    }
+}
 
 void MainWindow::on_actionDuplicate_search_triggered()
 {

@@ -51,6 +51,7 @@ private slots:
     void on_tree_customContextMenuRequested(const QPoint &pos);
     void on_actionHelp_triggered();
     void on_actionRequirements_triggered();
+    void on_actionRemoveNoAnswer_triggered();
 
 
 private:
