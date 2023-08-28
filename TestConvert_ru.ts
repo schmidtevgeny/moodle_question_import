@@ -516,13 +516,13 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     </message>
     <message>
         <location filename="mainwindow.ui" line="45"/>
-        <location filename="mainwindow.cpp" line="2384"/>
+        <location filename="mainwindow.cpp" line="2695"/>
         <source>Question type</source>
         <translation>Тип вопроса</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="50"/>
-        <location filename="mainwindow.cpp" line="1943"/>
+        <location filename="mainwindow.cpp" line="2188"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
@@ -533,7 +533,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     </message>
     <message>
         <location filename="mainwindow.ui" line="60"/>
-        <location filename="mainwindow.cpp" line="2432"/>
+        <location filename="mainwindow.cpp" line="2743"/>
         <source>Price</source>
         <translation>Вес</translation>
     </message>
@@ -544,7 +544,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     </message>
     <message>
         <location filename="mainwindow.ui" line="94"/>
-        <location filename="mainwindow.ui" line="167"/>
+        <location filename="mainwindow.ui" line="168"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -564,148 +564,148 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="135"/>
+        <location filename="mainwindow.ui" line="136"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="148"/>
+        <location filename="mainwindow.ui" line="149"/>
         <source>Main</source>
         <translation>Главная</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="182"/>
+        <location filename="mainwindow.ui" line="183"/>
         <source>Analysis...</source>
         <translation>Анализ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="185"/>
+        <location filename="mainwindow.ui" line="186"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Анализирует предоставленный текст и создает дерево вопросов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="188"/>
+        <location filename="mainwindow.ui" line="189"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="197"/>
+        <location filename="mainwindow.ui" line="198"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="200"/>
+        <location filename="mainwindow.ui" line="201"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="209"/>
+        <location filename="mainwindow.ui" line="210"/>
         <source>Save...</source>
         <translation>Сохранить...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="212"/>
+        <location filename="mainwindow.ui" line="213"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves the question tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранить дерево вопросов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="215"/>
+        <location filename="mainwindow.ui" line="216"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="224"/>
+        <location filename="mainwindow.ui" line="225"/>
         <source>Replace...</source>
         <translation>Замена...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="227"/>
+        <location filename="mainwindow.ui" line="228"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="235"/>
+        <location filename="mainwindow.ui" line="236"/>
         <source>Choice as plural</source>
         <translation>Всегда множественный выбор</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.ui" line="239"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep single choice questions as multiple choice&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранять вопросы с единственным ответом как вопросы с множественным выбором&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="246"/>
+        <location filename="mainwindow.ui" line="247"/>
         <source>Numerical as shortanswer</source>
         <translation>Числа как текст</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="249"/>
+        <location filename="mainwindow.ui" line="250"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Export numerical as shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранять вопросы с числовым ответом как shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="257"/>
-        <location filename="mainwindow.ui" line="260"/>
+        <location filename="mainwindow.ui" line="258"/>
+        <location filename="mainwindow.ui" line="261"/>
         <source>Main toolbar</source>
         <translation>Главная панель</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="268"/>
-        <location filename="mainwindow.ui" line="271"/>
+        <location filename="mainwindow.ui" line="269"/>
+        <location filename="mainwindow.ui" line="272"/>
         <source>Settings toolbar</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
-        <location filename="mainwindow.ui" line="279"/>
+        <location filename="mainwindow.ui" line="277"/>
+        <location filename="mainwindow.ui" line="280"/>
         <source>Collapse</source>
         <translation>Свернуть все</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="284"/>
-        <location filename="mainwindow.ui" line="287"/>
+        <location filename="mainwindow.ui" line="285"/>
+        <location filename="mainwindow.ui" line="288"/>
         <source>Expand</source>
         <translation>Развернуть все</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="296"/>
-        <location filename="mainwindow.ui" line="299"/>
+        <location filename="mainwindow.ui" line="297"/>
+        <location filename="mainwindow.ui" line="300"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="302"/>
+        <location filename="mainwindow.ui" line="303"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="311"/>
-        <location filename="mainwindow.ui" line="314"/>
+        <location filename="mainwindow.ui" line="312"/>
+        <location filename="mainwindow.ui" line="315"/>
         <source>Find next</source>
         <translation>Искать далее</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="317"/>
+        <location filename="mainwindow.ui" line="318"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="322"/>
+        <location filename="mainwindow.ui" line="323"/>
         <source>Change to numerical</source>
         <translation>Заменить на числовой вопрос</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="325"/>
+        <location filename="mainwindow.ui" line="326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change question type from shortanswer to numerical&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Установить для всех вопросов с открытым ответом тип &quot;числовой&quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="330"/>
+        <location filename="mainwindow.ui" line="331"/>
         <source>Hit the tickets to the themes</source>
         <translation>Перебить билеты на темы</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="333"/>
+        <location filename="mainwindow.ui" line="334"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
      style=&quot; text-decoration: underline;&quot;&gt;@Ticket 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
      text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
@@ -738,29 +738,34 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="390"/>
+        <location filename="mainwindow.ui" line="380"/>
         <source>Help...</source>
         <translation>Справка...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="395"/>
+        <location filename="mainwindow.ui" line="385"/>
         <source>Requirements</source>
         <translation>Требования к тестам</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="416"/>
+        <location filename="mainwindow.ui" line="401"/>
         <source>Duplicate search</source>
         <translation>Поиск дубликатов</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="424"/>
+        <location filename="mainwindow.ui" line="409"/>
         <source>Increased penalty for wrong answer</source>
         <translation>Провал вопроса на неверный вариант</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="429"/>
+        <location filename="mainwindow.ui" line="414"/>
         <source>Set work dir...</source>
         <translation>Задать рабочий каталог...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="419"/>
+        <source>Remove questions without a correct answer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
@@ -795,32 +800,29 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="355"/>
+        <location filename="mainwindow.ui" line="356"/>
         <source>Allow all the faithful</source>
         <translation>Разрешить все верные</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="358"/>
+        <location filename="mainwindow.ui" line="359"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Зазрешить все верные варианты ответа для вопроса multichoice&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="366"/>
-        <location filename="mainwindow.ui" line="369"/>
+        <location filename="mainwindow.ui" line="367"/>
+        <location filename="mainwindow.ui" line="370"/>
         <source>Export as plaintext</source>
         <translation>Экспортировать как текст</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="377"/>
-        <location filename="mainwindow.ui" line="380"/>
-        <location filename="mainwindow.ui" line="403"/>
-        <location filename="mainwindow.ui" line="406"/>
+        <location filename="mainwindow.ui" line="393"/>
+        <location filename="mainwindow.ui" line="396"/>
         <source>Fixed accuracy</source>
         <translation>Фиксированная точность</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="385"/>
-        <location filename="mainwindow.ui" line="411"/>
+        <location filename="mainwindow.ui" line="375"/>
         <source>Highlighter</source>
         <translation>Подсветка</translation>
     </message>
@@ -828,10 +830,10 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
         <location filename="mainwindow.cpp" line="89"/>
         <location filename="mainwindow.cpp" line="127"/>
         <location filename="mainwindow.cpp" line="182"/>
-        <location filename="mainwindow.cpp" line="1361"/>
-        <location filename="mainwindow.cpp" line="1971"/>
-        <location filename="mainwindow.cpp" line="2108"/>
-        <location filename="mainwindow.cpp" line="2235"/>
+        <location filename="mainwindow.cpp" line="1363"/>
+        <location filename="mainwindow.cpp" line="2216"/>
+        <location filename="mainwindow.cpp" line="2353"/>
+        <location filename="mainwindow.cpp" line="2538"/>
         <source>section</source>
         <translation>Раздел</translation>
     </message>
@@ -843,25 +845,27 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
     <message>
         <location filename="mainwindow.cpp" line="138"/>
         <location filename="mainwindow.cpp" line="182"/>
-        <location filename="mainwindow.cpp" line="1372"/>
-        <location filename="mainwindow.cpp" line="1906"/>
-        <location filename="mainwindow.cpp" line="1919"/>
-        <location filename="mainwindow.cpp" line="1971"/>
-        <location filename="mainwindow.cpp" line="2009"/>
-        <location filename="mainwindow.cpp" line="2027"/>
-        <location filename="mainwindow.cpp" line="2063"/>
-        <location filename="mainwindow.cpp" line="2099"/>
-        <location filename="mainwindow.cpp" line="2119"/>
-        <location filename="mainwindow.cpp" line="2137"/>
-        <location filename="mainwindow.cpp" line="2221"/>
-        <location filename="mainwindow.cpp" line="2235"/>
+        <location filename="mainwindow.cpp" line="1374"/>
+        <location filename="mainwindow.cpp" line="2151"/>
+        <location filename="mainwindow.cpp" line="2164"/>
+        <location filename="mainwindow.cpp" line="2216"/>
+        <location filename="mainwindow.cpp" line="2254"/>
+        <location filename="mainwindow.cpp" line="2272"/>
+        <location filename="mainwindow.cpp" line="2308"/>
+        <location filename="mainwindow.cpp" line="2344"/>
+        <location filename="mainwindow.cpp" line="2364"/>
+        <location filename="mainwindow.cpp" line="2382"/>
+        <location filename="mainwindow.cpp" line="2473"/>
+        <location filename="mainwindow.cpp" line="2488"/>
+        <location filename="mainwindow.cpp" line="2524"/>
+        <location filename="mainwindow.cpp" line="2538"/>
         <source>theme</source>
         <translation>тема</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="150"/>
         <location filename="mainwindow.cpp" line="182"/>
-        <location filename="mainwindow.cpp" line="681"/>
+        <location filename="mainwindow.cpp" line="683"/>
         <source>ticket</source>
         <translation>билет</translation>
     </message>
@@ -873,124 +877,125 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
     <message>
         <location filename="mainwindow.cpp" line="175"/>
         <location filename="mainwindow.cpp" line="252"/>
-        <location filename="mainwindow.cpp" line="661"/>
-        <location filename="mainwindow.cpp" line="1326"/>
-        <location filename="mainwindow.cpp" line="2373"/>
+        <location filename="mainwindow.cpp" line="663"/>
+        <location filename="mainwindow.cpp" line="1328"/>
+        <location filename="mainwindow.cpp" line="2684"/>
         <source>info</source>
         <translation>пояснение</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="175"/>
         <location filename="mainwindow.cpp" line="256"/>
-        <location filename="mainwindow.cpp" line="664"/>
-        <location filename="mainwindow.cpp" line="1329"/>
-        <location filename="mainwindow.cpp" line="2373"/>
-        <location filename="mainwindow.cpp" line="2409"/>
+        <location filename="mainwindow.cpp" line="666"/>
+        <location filename="mainwindow.cpp" line="1331"/>
+        <location filename="mainwindow.cpp" line="2684"/>
+        <location filename="mainwindow.cpp" line="2720"/>
         <source>map</source>
         <translation>соответствие</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="169"/>
         <location filename="mainwindow.cpp" line="268"/>
-        <location filename="mainwindow.cpp" line="1259"/>
-        <location filename="mainwindow.cpp" line="1293"/>
+        <location filename="mainwindow.cpp" line="1261"/>
+        <location filename="mainwindow.cpp" line="1295"/>
         <source>option</source>
         <translation>вариант</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="175"/>
-        <location filename="mainwindow.cpp" line="281"/>
-        <location filename="mainwindow.cpp" line="669"/>
-        <location filename="mainwindow.cpp" line="1334"/>
-        <location filename="mainwindow.cpp" line="1974"/>
-        <location filename="mainwindow.cpp" line="2076"/>
-        <location filename="mainwindow.cpp" line="2380"/>
+        <location filename="mainwindow.cpp" line="283"/>
+        <location filename="mainwindow.cpp" line="671"/>
+        <location filename="mainwindow.cpp" line="1336"/>
+        <location filename="mainwindow.cpp" line="2219"/>
+        <location filename="mainwindow.cpp" line="2321"/>
+        <location filename="mainwindow.cpp" line="2691"/>
         <source>text</source>
         <translation>текст</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="176"/>
-        <location filename="mainwindow.cpp" line="296"/>
-        <location filename="mainwindow.cpp" line="669"/>
-        <location filename="mainwindow.cpp" line="672"/>
-        <location filename="mainwindow.cpp" line="1334"/>
-        <location filename="mainwindow.cpp" line="1337"/>
-        <location filename="mainwindow.cpp" line="1974"/>
-        <location filename="mainwindow.cpp" line="2078"/>
-        <location filename="mainwindow.cpp" line="2380"/>
-        <location filename="mainwindow.cpp" line="2409"/>
+        <location filename="mainwindow.cpp" line="298"/>
+        <location filename="mainwindow.cpp" line="671"/>
+        <location filename="mainwindow.cpp" line="674"/>
+        <location filename="mainwindow.cpp" line="1336"/>
+        <location filename="mainwindow.cpp" line="1339"/>
+        <location filename="mainwindow.cpp" line="2219"/>
+        <location filename="mainwindow.cpp" line="2323"/>
+        <location filename="mainwindow.cpp" line="2691"/>
+        <location filename="mainwindow.cpp" line="2720"/>
         <source>number</source>
         <translation>число</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="176"/>
-        <location filename="mainwindow.cpp" line="300"/>
-        <location filename="mainwindow.cpp" line="675"/>
-        <location filename="mainwindow.cpp" line="1340"/>
-        <location filename="mainwindow.cpp" line="1975"/>
-        <location filename="mainwindow.cpp" line="2380"/>
+        <location filename="mainwindow.cpp" line="302"/>
+        <location filename="mainwindow.cpp" line="677"/>
+        <location filename="mainwindow.cpp" line="1342"/>
+        <location filename="mainwindow.cpp" line="2220"/>
+        <location filename="mainwindow.cpp" line="2691"/>
         <source>multichoice</source>
         <translation>множественный выбор</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="176"/>
-        <location filename="mainwindow.cpp" line="302"/>
-        <location filename="mainwindow.cpp" line="675"/>
-        <location filename="mainwindow.cpp" line="678"/>
-        <location filename="mainwindow.cpp" line="1340"/>
-        <location filename="mainwindow.cpp" line="1343"/>
-        <location filename="mainwindow.cpp" line="1975"/>
-        <location filename="mainwindow.cpp" line="2380"/>
+        <location filename="mainwindow.cpp" line="304"/>
+        <location filename="mainwindow.cpp" line="677"/>
+        <location filename="mainwindow.cpp" line="680"/>
+        <location filename="mainwindow.cpp" line="1342"/>
+        <location filename="mainwindow.cpp" line="1345"/>
+        <location filename="mainwindow.cpp" line="2220"/>
+        <location filename="mainwindow.cpp" line="2691"/>
         <source>choice</source>
         <translation>выбор</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="169"/>
-        <location filename="mainwindow.cpp" line="314"/>
         <location filename="mainwindow.cpp" line="316"/>
-        <location filename="mainwindow.cpp" line="804"/>
-        <location filename="mainwindow.cpp" line="858"/>
-        <location filename="mainwindow.cpp" line="923"/>
-        <location filename="mainwindow.cpp" line="950"/>
-        <location filename="mainwindow.cpp" line="990"/>
-        <location filename="mainwindow.cpp" line="1017"/>
-        <location filename="mainwindow.cpp" line="1058"/>
-        <location filename="mainwindow.cpp" line="1111"/>
-        <location filename="mainwindow.cpp" line="1172"/>
-        <location filename="mainwindow.cpp" line="1216"/>
-        <location filename="mainwindow.cpp" line="2245"/>
+        <location filename="mainwindow.cpp" line="318"/>
+        <location filename="mainwindow.cpp" line="806"/>
+        <location filename="mainwindow.cpp" line="860"/>
+        <location filename="mainwindow.cpp" line="925"/>
+        <location filename="mainwindow.cpp" line="952"/>
+        <location filename="mainwindow.cpp" line="992"/>
+        <location filename="mainwindow.cpp" line="1019"/>
+        <location filename="mainwindow.cpp" line="1060"/>
+        <location filename="mainwindow.cpp" line="1113"/>
+        <location filename="mainwindow.cpp" line="1174"/>
+        <location filename="mainwindow.cpp" line="1218"/>
+        <location filename="mainwindow.cpp" line="2493"/>
+        <location filename="mainwindow.cpp" line="2548"/>
         <source>correct</source>
         <translation>верно</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="169"/>
-        <location filename="mainwindow.cpp" line="319"/>
+        <location filename="mainwindow.cpp" line="321"/>
         <source>incorrect</source>
         <translation>неверно</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="409"/>
+        <location filename="mainwindow.cpp" line="411"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="409"/>
+        <location filename="mainwindow.cpp" line="411"/>
         <source>html (*.htm;*.html);ANY FILE (*)</source>
         <translation>html (*.htm;*.html);все файлы (*)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="156"/>
-        <location filename="mainwindow.cpp" line="504"/>
-        <location filename="mainwindow.cpp" line="577"/>
-        <location filename="mainwindow.cpp" line="2181"/>
-        <location filename="mainwindow.cpp" line="2375"/>
-        <location filename="mainwindow.cpp" line="2412"/>
+        <location filename="mainwindow.cpp" line="506"/>
+        <location filename="mainwindow.cpp" line="579"/>
+        <location filename="mainwindow.cpp" line="2426"/>
+        <location filename="mainwindow.cpp" line="2686"/>
+        <location filename="mainwindow.cpp" line="2723"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="26"/>
-        <location filename="mainwindow.cpp" line="2159"/>
+        <location filename="mainwindow.cpp" line="2404"/>
         <source>Tolerance: 1/</source>
         <translation>Погрешность: 1 к </translation>
     </message>
@@ -1000,99 +1005,99 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
         <translation>Ошибка в строке #%2: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="506"/>
         <source>File %1 not found</source>
         <translation>Файл %1 не найден</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="550"/>
+        <location filename="mainwindow.cpp" line="552"/>
         <source>Select image dir</source>
         <translation>Указать каталог картинок</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="577"/>
+        <location filename="mainwindow.cpp" line="579"/>
         <source>Incorrect tolerance value</source>
         <translation>Неверное значение погрешности</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="583"/>
+        <location filename="mainwindow.cpp" line="585"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="583"/>
+        <location filename="mainwindow.cpp" line="585"/>
         <source>xml-file (*.xml)</source>
         <translation>файл xml (*.xml)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="685"/>
-        <location filename="mainwindow.cpp" line="1347"/>
+        <location filename="mainwindow.cpp" line="687"/>
+        <location filename="mainwindow.cpp" line="1349"/>
         <source>unknown type</source>
         <translation>Неизвестный тип</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="832"/>
+        <location filename="mainwindow.cpp" line="834"/>
         <source>No correct answer</source>
         <translation>Нет верных ответов</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="885"/>
-        <location filename="mainwindow.cpp" line="933"/>
-        <location filename="mainwindow.cpp" line="1000"/>
+        <location filename="mainwindow.cpp" line="887"/>
+        <location filename="mainwindow.cpp" line="935"/>
+        <location filename="mainwindow.cpp" line="1002"/>
         <source>No right answers.</source>
         <translation>Нет верных ответов.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="940"/>
-        <location filename="mainwindow.cpp" line="1008"/>
+        <location filename="mainwindow.cpp" line="942"/>
+        <location filename="mainwindow.cpp" line="1010"/>
         <source>No wrong answers.</source>
         <translation>Нет неверных ответов.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1943"/>
+        <location filename="mainwindow.cpp" line="2188"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2303"/>
+        <location filename="mainwindow.cpp" line="2614"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2315"/>
-        <location filename="mainwindow.cpp" line="2332"/>
+        <location filename="mainwindow.cpp" line="2626"/>
+        <location filename="mainwindow.cpp" line="2643"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2319"/>
-        <location filename="mainwindow.cpp" line="2432"/>
+        <location filename="mainwindow.cpp" line="2630"/>
+        <location filename="mainwindow.cpp" line="2743"/>
         <source>Edit price</source>
         <translation>Редактировать вес</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2323"/>
-        <location filename="mainwindow.cpp" line="2340"/>
+        <location filename="mainwindow.cpp" line="2634"/>
+        <location filename="mainwindow.cpp" line="2651"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2357"/>
+        <location filename="mainwindow.cpp" line="2668"/>
         <source>Edit section</source>
         <translation>Изменить секцию</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2357"/>
+        <location filename="mainwindow.cpp" line="2668"/>
         <source>Section name</source>
         <translation>Название секции</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2375"/>
+        <location filename="mainwindow.cpp" line="2686"/>
         <source>Changing the type is not supported for this question</source>
         <translation>Изменение типа не поддерживается для данного вопроса</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2412"/>
+        <location filename="mainwindow.cpp" line="2723"/>
         <source>In development</source>
         <translation>В разработке</translation>
     </message>
@@ -1105,40 +1110,40 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
         <translation type="vanished">Название темы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2311"/>
-        <location filename="mainwindow.cpp" line="2384"/>
+        <location filename="mainwindow.cpp" line="2622"/>
+        <location filename="mainwindow.cpp" line="2695"/>
         <source>Change type</source>
         <translation>Изменить тип</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2041"/>
+        <location filename="mainwindow.cpp" line="2286"/>
         <source>Tree. %1 themes. %2 questions. Id %3</source>
         <translation>Дерево. Всего тем %1. Вопросов %2. Выбран вопрос № %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2043"/>
+        <location filename="mainwindow.cpp" line="2288"/>
         <source>Tree. %1 themes. %2 questions</source>
         <translation>Дерево. Всего тем %1. Вопросов %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2108"/>
+        <location filename="mainwindow.cpp" line="2353"/>
         <source>Themes</source>
         <translation>Темы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2137"/>
+        <location filename="mainwindow.cpp" line="2382"/>
         <source>Theme %1</source>
         <translation>Тема %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2155"/>
+        <location filename="mainwindow.cpp" line="2400"/>
         <source>Tolerance: </source>
         <translation>Погрешность: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2157"/>
-        <location filename="mainwindow.cpp" line="2161"/>
-        <location filename="mainwindow.cpp" line="2438"/>
+        <location filename="mainwindow.cpp" line="2402"/>
+        <location filename="mainwindow.cpp" line="2406"/>
+        <location filename="mainwindow.cpp" line="2749"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
