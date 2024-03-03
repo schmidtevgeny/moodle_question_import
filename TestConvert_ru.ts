@@ -774,11 +774,6 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation>Включить эссе</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="419"/>
-        <source>Remove questions without a correct answer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
 style=&quot; text-decoration: underline;&quot;&gt;@Ticket 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
 text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
