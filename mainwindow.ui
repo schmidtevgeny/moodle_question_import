@@ -71,7 +71,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -102,6 +102,7 @@
     <addaction name="action_enableAll"/>
     <addaction name="action_export_as_text"/>
     <addaction name="actionFixedAccuracy"/>
+    <addaction name="actionInfo_essay"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -417,6 +418,14 @@
   <action name="actionRemoveNoAnswer">
    <property name="text">
     <string>Remove questions without a correct answer</string>
+   </property>
+  </action>
+  <action name="actionInfo_essay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>info / essay</string>
    </property>
   </action>
  </widget>

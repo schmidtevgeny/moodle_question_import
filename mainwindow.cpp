@@ -172,7 +172,7 @@ bool MainWindow::is_answer(QTreeWidgetItem *item) const
 
 bool MainWindow::is_question(QTreeWidgetItem *item) const
 {
-    return(item->text(0) == tr("info") || item->text(0) == tr("map") || item->text(0) == tr("text")
+    return(item->text(0) == tr("info") ||item->text(0) == tr("essay") || item->text(0) == tr("map") || item->text(0) == tr("text")
            || item->text(0) == tr("number") || item->text(0) == tr("choice") || item->text(0) == tr("multichoice") );
 }
 
@@ -213,7 +213,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
     //
     QStringList answers;
     int         correctcount = 0;
-
+    bool infoessay=ui->actionInfo_essay->isChecked();
 
     while (index < data.size() )
     {
@@ -249,7 +249,11 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
     if (answers.size() == 0)
     {
         // no answers
-        quest->setText(0, tr("info") );
+        if (infoessay)
+
+        quest->setText(0, tr("essay") );
+        else
+            quest->setText(0, tr("info") );
     } else if (is_map(answers) )
     {
         // suspicion of map
@@ -335,9 +339,6 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 /// \return is number
 bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString &tolerance)
 {
-
-
-
     bool ok, ok2;
 
 
@@ -543,6 +544,8 @@ QString to_title(QString s)
     nospec.setMinimal(true);
     s = s.replace(nospec, "");
 
+    if (s.length()>100) s=s.left(90)+"...";
+
     return(s);
 }
 
@@ -663,6 +666,9 @@ bool MainWindow::process_question(QXmlStreamWriter &stream, QTreeWidgetItem *ite
     if (item->text(0) == tr("info") )
     {
         return(write_info(stream, item) );
+    } else if (item->text(0) == tr("essay") )
+    {
+        return(write_essay(stream, item) );
     } else if (item->text(0) == tr("map") )
     {
         return(write_matching(stream, item) );
@@ -758,6 +764,37 @@ bool MainWindow::write_info(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("penalty", "0");
     stream.writeTextElement("hidden", "0");
     stream.writeTextElement("shuffleanswers", "0");
+    stream.writeEndElement();
+
+    return(true);
+}
+
+
+bool MainWindow::write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item)
+{
+    stream.writeStartElement("question");
+    stream.writeAttribute("type", "essay");
+    stream.writeStartElement("name");
+    stream.writeTextElement("text", to_title(item->text(1) ) );
+    stream.writeEndElement();
+    stream.writeStartElement("questiontext");
+    stream.writeAttribute("format", "moodle_auto_format");
+    //                    stream.writeTextElement("text", item->text(1));
+    writeText(stream, item->text(1), last_dir);
+    // add image
+    stream.writeEndElement();
+    stream.writeStartElement("generalfeedback");
+    stream.writeTextElement("text", "");
+    stream.writeEndElement();
+    stream.writeTextElement("defaultgrade", item->text(3));
+    stream.writeTextElement("penalty", "1");
+    stream.writeTextElement("hidden", "0");
+    stream.writeTextElement("responseformat", "editor");
+    stream.writeTextElement("responserequired", "0");
+    stream.writeTextElement("responsefieldlines", "40");
+    stream.writeTextElement("attachments", "-1");
+    stream.writeTextElement("attachmentsrequired", "0");
+    stream.writeTextElement("maxbytes", "0");
     stream.writeEndElement();
 
     return(true);
@@ -1328,6 +1365,9 @@ QString MainWindow::process_subquestion(QTreeWidgetItem *item, bool as_multi, bo
     if (item->text(0) == tr("info") )
     {
         return(format_info(item, ok) );
+    } else     if (item->text(0) == tr("essay") )
+    {
+        return(false);
     } else if (item->text(0) == tr("map") )
     {
         return(format_matching(item, ok) );
@@ -2221,6 +2261,7 @@ void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem *item, int column)
         {
             change_question_type(item);
         }
+        // TODO: tr("correct") tr("incorrect")
     }
 } // MainWindow::on_tree_itemDoubleClicked
 
@@ -2681,23 +2722,38 @@ void MainWindow::change_question_type(QTreeWidgetItem *item)
     QStringList items;
 
 
-    if (item->text(0) == tr("info") || item->text(0) == tr("map") )
+    if (item->text(0) == tr("map") )
     {
         QMessageBox::warning(this, tr("Error"), tr("Changing the type is not supported for this question") );
 
         return;
     }
 
-    items << tr("text") << tr("number") << tr("multichoice") << tr("choice");
+    if (item->text(0) == tr("info")||item->text(0) == tr("essay")){
 
 
-    QString s = QInputDialog::getItem(
-        this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0) ), false, &ok);
+        items << tr("info") << tr("essay");
 
 
-    if (ok)
-    {
-        item->setText(0, s);
+        QString s = QInputDialog::getItem(
+            this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0)), false, &ok);
+
+
+        if (ok) {
+            item->setText(0, s);
+        }
+    }else {
+
+        items << tr("text") << tr("number") << tr("multichoice") << tr("choice");
+
+
+        QString s = QInputDialog::getItem(
+            this, tr("Change type"), tr("Question type"), items, items.indexOf(item->text(0)), false, &ok);
+
+
+        if (ok) {
+            item->setText(0, s);
+        }
     }
 }
 

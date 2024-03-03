@@ -157,7 +157,7 @@ set(CPACK_CREATE_DESKTOP_LINKS ${TARGET_NAME} "Конвертер тестов")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 #set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 #set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
-#set(CPACK_PACKAGE_DESCRIPTION "Rjydthnth b ytvyjuj ntrcnf")
+#set(CPACK_PACKAGE_DESCRIPTION "Конвертер и немного текста")
 
 # Задать используемый генератор пакетов:
 if (WIN32)

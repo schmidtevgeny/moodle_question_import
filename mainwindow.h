@@ -83,6 +83,7 @@ private:
     bool process_question(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text,
                           double ktolerance, bool btolerance);
     bool write_info(QXmlStreamWriter &stream, QTreeWidgetItem *item);
+    bool write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_matching(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_shortanswer(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_numerical(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance);
