@@ -1367,7 +1367,7 @@ QString MainWindow::process_subquestion(QTreeWidgetItem *item, bool as_multi, bo
         return(format_info(item, ok) );
     } else     if (item->text(0) == tr("essay") )
     {
-        return(false);
+        return("");
     } else if (item->text(0) == tr("map") )
     {
         return(format_matching(item, ok) );
