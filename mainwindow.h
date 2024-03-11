@@ -17,16 +17,15 @@ class QLabel;
 class QLineEdit;
 class MyHighlighter;
 
-class MainWindow : public QMainWindow
+class MainWindow: public QMainWindow
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
 
     explicit MainWindow(QWidget *parent = 0);
 
     ~MainWindow();
-
 
     virtual void resizeEvent(QResizeEvent *);
 
@@ -57,31 +56,28 @@ private slots:
 private:
 
     Ui::MainWindow *ui;
-    QString        last_dir;
-    QSettings      *iniFile;
-    QString        search;
-    QLabel         *treePositionLabel;
-    QStringList    images;
-    QLabel         *tolerance_string;
-    QLineEdit      *tolerance;
-    MyHighlighter  *highlighter;
-    bool           usecase;
-    QString        default_question_price;
-
+    QString last_dir;
+    QSettings *iniFile;
+    QString search;
+    QLabel *treePositionLabel;
+    QStringList images;
+    QLabel *tolerance_string;
+    QLineEdit *tolerance;
+    MyHighlighter *highlighter;
+    bool usecase;
+    QString default_question_price;
 
     QTreeWidgetItem *make_question(QStringList &data, int &index);
-    bool parse_answer(QString s, QString &price, QString &text, QString &tolerance);
+    bool parse_answer(QString s, QString &price, QString &text, QString &tolerance, bool number=false);
 
     void writeText(QXmlStreamWriter &stream, QString txt, QString basepath);
 
-    bool process_tree(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text, double ktolerance,
-                      bool btolerance);
+    bool process_tree(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance);
 
     void write_section(QXmlStreamWriter &stream, QTreeWidgetItem *item) const;
     void write_theme(QXmlStreamWriter &stream, QTreeWidgetItem *item) const;
 
-    bool process_question(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text,
-                          double ktolerance, bool btolerance);
+    bool process_question(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance);
     bool write_info(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_matching(QXmlStreamWriter &stream, QTreeWidgetItem *item);
@@ -90,11 +86,9 @@ private:
     bool write_multichoice(QXmlStreamWriter &stream, QTreeWidgetItem *item);
     bool write_choice(QXmlStreamWriter &stream, QTreeWidgetItem *item);
 
-    bool write_close(QXmlStreamWriter &stream, QTreeWidgetItem *item, bool as_multi, bool as_text, double ktolerance,
-                     bool btolerance);
+    bool write_close(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance);
 
-    QString process_subquestion(QTreeWidgetItem *item, bool as_multi, bool as_text, double ktolerance, bool btolerance,
-                                bool &ok);
+    QString process_subquestion(QTreeWidgetItem *item, double ktolerance, bool btolerance, bool &ok);
     QString format_info(QTreeWidgetItem *item, bool &ok);
     QString format_matching(QTreeWidgetItem *item, bool &ok);
     QString format_shortanswer(QTreeWidgetItem *item, bool &ok);

@@ -96,13 +96,23 @@
     <property name="separatorsCollapsible">
      <bool>false</bool>
     </property>
-    <addaction name="actionChoiceAsMultichoice"/>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>Question type</string>
+     </property>
+     <addaction name="format_choice"/>
+     <addaction name="format_multichoice"/>
+     <addaction name="format_matching"/>
+     <addaction name="format_shortanswer"/>
+     <addaction name="format_numerical"/>
+     <addaction name="format_info"/>
+     <addaction name="format_essay"/>
+    </widget>
+    <addaction name="menu"/>
+    <addaction name="actionRemove_incorrect"/>
     <addaction name="action_bigPenalty"/>
-    <addaction name="actionNumericalAsShortanswer"/>
     <addaction name="action_enableAll"/>
-    <addaction name="action_export_as_text"/>
     <addaction name="actionFixedAccuracy"/>
-    <addaction name="actionInfo_essay"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -128,6 +138,7 @@
     <addaction name="actionFindNext"/>
     <addaction name="actionReplace"/>
     <addaction name="actionToNumerical"/>
+    <addaction name="separator"/>
     <addaction name="actionFromTickets"/>
     <addaction name="actionDuplicate_search"/>
     <addaction name="actionRemoveNoAnswer"/>
@@ -227,28 +238,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
-   </property>
-  </action>
-  <action name="actionChoiceAsMultichoice">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Choice as plural</string>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep single choice questions as multiple choice&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </action>
-  <action name="actionNumericalAsShortanswer">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Numerical as shortanswer</string>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Export numerical as shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="show_maintoolbar">
@@ -357,18 +346,7 @@
     <string>Allow all the faithful</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </action>
-  <action name="action_export_as_text">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Export as plaintext</string>
-   </property>
-   <property name="toolTip">
-    <string>Export as plaintext</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;p&gt;By default, counts all questions with all correct answers as shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionHighlighter">
@@ -420,12 +398,113 @@
     <string>Remove questions without a correct answer</string>
    </property>
   </action>
-  <action name="actionInfo_essay">
+  <action name="format_choice">
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>info / essay</string>
+    <string>choice</string>
+   </property>
+  </action>
+  <action name="format_multichoice">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>multichoice</string>
+   </property>
+  </action>
+  <action name="format_shortanswer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>shortanswer</string>
+   </property>
+  </action>
+  <action name="format_numerical">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>numerical</string>
+   </property>
+  </action>
+  <action name="format_info">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>info</string>
+   </property>
+  </action>
+  <action name="format_essay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>essay</string>
+   </property>
+  </action>
+  <action name="format_matching">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>matching</string>
+   </property>
+  </action>
+  <action name="actionRemove_incorrect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Remove incorrect qtype</string>
    </property>
   </action>
  </widget>
