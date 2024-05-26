@@ -892,7 +892,7 @@ QString MainWindow::format_choice(QTreeWidgetItem *item, bool &ok)
                 price = "100";
             }
 
-            answers << "%" + price + "%" + item->child(k)->text(1);
+            answers << "%" + price + "%" + item->child(k)->text(1).replace("}", "\\}");
             correct++;
         }
         else {
@@ -903,7 +903,7 @@ QString MainWindow::format_choice(QTreeWidgetItem *item, bool &ok)
                 price = "0";
             }
 
-            answers << "%" + price + "%" + item->child(k)->text(1);
+            answers << "%" + price + "%" + item->child(k)->text(1).replace("}", "\\}");
         }
     }
 
@@ -1044,10 +1044,10 @@ QString MainWindow::format_multichoice(QTreeWidgetItem *item, bool &ok)
     // TODO: answer price
     for (int k = 0; k < item->childCount(); k++) {
         if (item->child(k)->text(0) == tr("correct")) {
-            answers << "%" + QString("%1").arg(100.0 / correct) + "%" + item->child(k)->text(1);
+            answers << "%" + QString("%1").arg(100.0 / correct) + "%" + item->child(k)->text(1).replace("}", "\\}");
         }
         else {
-            answers << "%" + QString("%1").arg(-100.0 / incorrect) + "%" + item->child(k)->text(1);
+            answers << "%" + QString("%1").arg(-100.0 / incorrect) + "%" + item->child(k)->text(1).replace("}", "\\}");
         }
     }
 
@@ -1318,10 +1318,10 @@ QString MainWindow::format_matching(QTreeWidgetItem *item, bool &ok)
 
         for (int j = 0; j < right.count(); j++) {
             if (i == j) {
-                answers << "%100%" + right[j];
+                answers << "%100%" + right[j].replace("}", "\\}");
             }
             else {
-                answers << "%0%" + right[j];
+                answers << "%0%" + right[j].replace("}", "\\}");
             }
         }
 
