@@ -30,6 +30,15 @@ MainWindow::MainWindow(QWidget *parent)
     // settings
     usecase = false;
     default_question_price = "10";
+    QActionGroup* number_type = new QActionGroup(this);
+
+    number_type->addAction(ui->menuNumber_answersNo);
+    number_type->addAction(ui->menuNumber_answers_a);
+    number_type->addAction(ui->menuNumber_answers_A);
+    number_type->addAction(ui->menuNumber_answers_1);
+    number_type->addAction(ui->menuNumber_answers_i);
+    number_type->addAction(ui->menuNumber_answers_I);
+
     // TODO: load colors
 #ifdef _DEBUG
     ui->plain->setPlainText(
@@ -794,9 +803,27 @@ bool MainWindow::write_choice(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
-    stream.writeTextElement("shuffleanswers", "1");
+    if (ui->actionShuffle_answers->isChecked())
+        stream.writeTextElement("shuffleanswers", "1");
+    else stream.writeTextElement("shuffleanswers", "0");
+    if (ui->menuNumber_answersNo->isChecked()){stream.writeTextElement("answernumbering", "none");                         }
+    else if (ui->menuNumber_answers_1->isChecked()){stream.writeTextElement("answernumbering", "123");         }
+    else if (ui->menuNumber_answers_A->isChecked()){stream.writeTextElement("answernumbering", "ABCD");         }
+    else if (ui->menuNumber_answers_a->isChecked()){stream.writeTextElement("answernumbering", "abc");         }
+    else if (ui->menuNumber_answers_I->isChecked()){stream.writeTextElement("answernumbering", "IIII");         }
+    else if (ui->menuNumber_answers_i->isChecked()){stream.writeTextElement("answernumbering", "iii");         }
 
-
+//<answernumbering>abc</answernumbering>
+//<answernumbering>none</answernumbering>
+/*<select class="custom-select
+                       " name="answernumbering" id="id_answernumbering" data-initial-value="none">
+            <option value="abc">a., b., c., ...</option>
+            <option value="ABCD">A., B., C., ...</option>
+            <option value="123">1., 2., 3., ...</option>
+            <option value="iii">i., ii., iii., ...</option>
+            <option value="IIII">I., II., III., ...</option>
+            <option value="none" selected="">Не нумеровать</option>
+        </select>*/
     // answ
 
     int correct = 0;
@@ -913,8 +940,16 @@ bool MainWindow::write_multichoice(QXmlStreamWriter &stream, QTreeWidgetItem *it
     stream.writeTextElement("defaultgrade", item->text(3));
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
+    if (ui->actionShuffle_answers->isChecked())
     stream.writeTextElement("shuffleanswers", "1");
+    else stream.writeTextElement("shuffleanswers", "0");
 
+    if (ui->menuNumber_answersNo->isChecked()){stream.writeTextElement("answernumbering", "none");                         }
+    else if (ui->menuNumber_answers_1->isChecked()){stream.writeTextElement("answernumbering", "123");         }
+    else if (ui->menuNumber_answers_A->isChecked()){stream.writeTextElement("answernumbering", "ABCD");         }
+    else if (ui->menuNumber_answers_a->isChecked()){stream.writeTextElement("answernumbering", "abc");         }
+    else if (ui->menuNumber_answers_I->isChecked()){stream.writeTextElement("answernumbering", "IIII");         }
+    else if (ui->menuNumber_answers_i->isChecked()){stream.writeTextElement("answernumbering", "iii");         }
 
     // answ
     int correct = 0, incorrect = 0;

@@ -108,11 +108,24 @@
      <addaction name="format_info"/>
      <addaction name="format_essay"/>
     </widget>
+    <widget class="QMenu" name="menuNumber_answers">
+     <property name="title">
+      <string>Number answers</string>
+     </property>
+     <addaction name="menuNumber_answersNo"/>
+     <addaction name="menuNumber_answers_a"/>
+     <addaction name="menuNumber_answers_A"/>
+     <addaction name="menuNumber_answers_1"/>
+     <addaction name="menuNumber_answers_i"/>
+     <addaction name="menuNumber_answers_I"/>
+    </widget>
     <addaction name="menu"/>
     <addaction name="actionRemove_incorrect"/>
     <addaction name="action_bigPenalty"/>
     <addaction name="action_enableAll"/>
     <addaction name="actionFixedAccuracy"/>
+    <addaction name="actionShuffle_answers"/>
+    <addaction name="menuNumber_answers"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -505,6 +518,71 @@
    </property>
    <property name="text">
     <string>Remove incorrect qtype</string>
+   </property>
+  </action>
+  <action name="actionShuffle_answers">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Shuffle answers</string>
+   </property>
+  </action>
+  <action name="menuNumber_answersNo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>No number</string>
+   </property>
+  </action>
+  <action name="menuNumber_answers_a">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>a</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="menuNumber_answers_A">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>A</string>
+   </property>
+  </action>
+  <action name="menuNumber_answers_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </action>
+  <action name="menuNumber_answers_i">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>i</string>
+   </property>
+  </action>
+  <action name="menuNumber_answers_I">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>I</string>
    </property>
   </action>
  </widget>
