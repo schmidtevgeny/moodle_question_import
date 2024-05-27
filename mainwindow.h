@@ -17,9 +17,9 @@ class QLabel;
 class QLineEdit;
 class MyHighlighter;
 
-class MainWindow: public QMainWindow
+class MainWindow : public QMainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -28,7 +28,6 @@ public:
     ~MainWindow();
 
     virtual void resizeEvent(QResizeEvent *);
-
 
 private slots:
 
@@ -52,23 +51,23 @@ private slots:
     void on_actionRequirements_triggered();
     void on_actionRemoveNoAnswer_triggered();
 
-
 private:
 
     Ui::MainWindow *ui;
-    QString last_dir;
-    QSettings *iniFile;
-    QString search;
-    QLabel *treePositionLabel;
-    QStringList images;
-    QLabel *tolerance_string;
-    QLineEdit *tolerance;
-    MyHighlighter *highlighter;
-    bool usecase;
-    QString default_question_price;
+    QString        last_dir;
+    QSettings      *iniFile;
+    QString        search;
+    QLabel         *treePositionLabel;
+    QStringList    images;
+    QLabel         *tolerance_string;
+    QLineEdit      *tolerance;
+    MyHighlighter  *highlighter;
+    bool           usecase;
+    QString        default_question_price;
+
 
     QTreeWidgetItem *make_question(QStringList &data, int &index);
-    bool parse_answer(QString s, QString &price, QString &text, QString &tolerance, bool number=false);
+    bool parse_answer(QString s, QString &price, QString &text, QString &tolerance, bool number = false);
 
     void writeText(QXmlStreamWriter &stream, QString txt, QString basepath);
 
