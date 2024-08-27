@@ -1600,6 +1600,7 @@ void MainWindow::on_actionReplace_triggered()
         s = s.left(s.indexOf("</body", 0, Qt::CaseInsensitive) );
 
         // TODO: H tag
+        // преобразование тегов
         while (true)
         {
             if (s.isEmpty() )
@@ -2241,8 +2242,54 @@ void MainWindow::on_actionReplace_triggered()
 
         lines = s.split("\n");
 
+
+        int     qnumber = 0;
+        QString qformat;
+
+
+        switch (dlg.ui->qnumber->currentIndex() )
+        {
+        case 1:
+            {
+                qformat = "?%1%2. ";
+                break;
+            }
+
+        case 2:
+            {
+                qformat = "?%1%2) ";
+                break;
+            }
+
+        default:
+            {
+                qformat = "?%1";
+            }
+        }
+
         for (int i = 0; i < lines.size(); i++)
         {
+            // пронумеровать вопросы
+            if (dlg.ui->qnumber->currentIndex() > 0)
+            {
+                // TODO: %%
+                if (lines.at(i).leftRef(1) == "?")
+                {
+                    qnumber++;
+                    QString w;
+                    int qpos=1;
+                    lines[i] = tr("?%1").arg(w).arg(qnumber) + lines.at(i).midRef(qpos);
+                }
+
+                if (
+                    (lines.at(i).leftRef(1) == "$")
+                    || (lines.at(i).leftRef(1) == "@")
+                    || (lines.at(i).leftRef(1) == "#") )
+                {
+                    qnumber = 0;
+                }
+            }
+
             // признак вопроса
             if (dlg.ui->repl_to_quiz->isChecked() )
             {

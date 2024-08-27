@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
-    <height>321</height>
+    <width>971</width>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -316,26 +316,13 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="9" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
@@ -358,6 +345,32 @@
      <property name="text">
       <string>Empty line as question</string>
      </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Number the questions</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="4">
+    <widget class="QComboBox" name="qnumber">
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1.</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1)</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>
