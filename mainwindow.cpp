@@ -402,7 +402,7 @@ bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString 
         s = s.mid(1);
     }
 
-    if ( (s.indexOf("%%") != -1) && (s.indexOf("%%") < 5) )
+    if ( (s.indexOf("%%") != -1) && (s.indexOf("%%") < 15) )
     {
         price = s.left(s.indexOf("%%") );
         price.toDouble(&ok);
@@ -413,6 +413,8 @@ bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString 
         } else {
             price = "";
         }
+    }else {
+        price = "";
     }
 
     if (number && s.count(":") == 1)

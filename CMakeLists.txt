@@ -24,6 +24,7 @@ find_package(Qt5 REQUIRED
 # список форм
 qt5_wrap_ui(UIC_SOURCES
         dialogreplace.ui
+        dialogconfig.ui
         mainwindow.ui
         highlighterdialog.ui)
 #ресурсы
@@ -48,6 +49,8 @@ target_sources(${TARGET_NAME} PRIVATE
         highlighterdialog.h
         textdialog.h
         textdialog.cpp
+        dialogconfig.cpp
+        dialogconfig.h
         )
 # Включаем C++ 2014
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_14)
