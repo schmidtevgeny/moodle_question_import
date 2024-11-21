@@ -51,6 +51,8 @@ private slots:
     void on_actionRequirements_triggered();
     void on_actionRemoveNoAnswer_triggered();
 
+    void on_actionMarkers_triggered();
+
 private:
 
     Ui::MainWindow *ui;

@@ -18,15 +18,15 @@
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QTextEdit" name="plain"/>
       <widget class="QTreeWidget" name="tree">
        <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
+        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::EditKeyPressed</set>
+        <set>QAbstractItemView::EditTrigger::EditKeyPressed</set>
        </property>
        <property name="itemsExpandable">
         <bool>true</bool>
@@ -71,7 +71,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>21</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -85,20 +85,20 @@
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
     </property>
     <property name="tearOffEnabled">
      <bool>false</bool>
     </property>
     <property name="title">
-     <string>Settings</string>
+     <string>Se&amp;ttings</string>
     </property>
     <property name="separatorsCollapsible">
      <bool>false</bool>
     </property>
     <widget class="QMenu" name="menu">
      <property name="title">
-      <string>Question type</string>
+      <string>&amp;Question type</string>
      </property>
      <addaction name="format_choice"/>
      <addaction name="format_multichoice"/>
@@ -110,7 +110,7 @@
     </widget>
     <widget class="QMenu" name="menuNumber_answers">
      <property name="title">
-      <string>Number answers</string>
+      <string>&amp;Number answers</string>
      </property>
      <addaction name="menuNumber_answersNo"/>
      <addaction name="menuNumber_answers_a"/>
@@ -126,14 +126,15 @@
     <addaction name="actionFixedAccuracy"/>
     <addaction name="actionShuffle_answers"/>
     <addaction name="menuNumber_answers"/>
+    <addaction name="actionMarkers"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="toolbarsMenu">
      <property name="title">
-      <string>Toolbars</string>
+      <string>&amp;Toolbars</string>
      </property>
      <addaction name="show_maintoolbar"/>
      <addaction name="show_toolbar"/>
@@ -158,7 +159,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionHelp"/>
     <addaction name="actionRequirements"/>
@@ -205,7 +206,7 @@
      <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png</iconset>
    </property>
    <property name="text">
-    <string>Analysis...</string>
+    <string>&amp;Analysis...</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -220,7 +221,7 @@
      <normaloff>:/ico/standardbutton-open-128.png</normaloff>:/ico/standardbutton-open-128.png</iconset>
    </property>
    <property name="text">
-    <string>Open...</string>
+    <string>&amp;Open...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -232,7 +233,7 @@
      <normaloff>:/ico/standardbutton-save-128.png</normaloff>:/ico/standardbutton-save-128.png</iconset>
    </property>
    <property name="text">
-    <string>Save...</string>
+    <string>&amp;Save...</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves the question tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -247,7 +248,7 @@
      <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png</iconset>
    </property>
    <property name="text">
-    <string>Replace...</string>
+    <string>&amp;Replace...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -258,7 +259,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Main toolbar</string>
+    <string>&amp;Main toolbar</string>
    </property>
    <property name="toolTip">
     <string>Main toolbar</string>
@@ -269,7 +270,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Settings toolbar</string>
+    <string>&amp;Settings toolbar</string>
    </property>
    <property name="toolTip">
     <string>Settings toolbar</string>
@@ -277,7 +278,7 @@
   </action>
   <action name="actionCollapse">
    <property name="text">
-    <string>Collapse</string>
+    <string>&amp;Collapse</string>
    </property>
    <property name="toolTip">
     <string>Collapse</string>
@@ -285,7 +286,7 @@
   </action>
   <action name="expand_all">
    <property name="text">
-    <string>Expand</string>
+    <string>&amp;Expand</string>
    </property>
    <property name="toolTip">
     <string>Expand</string>
@@ -297,7 +298,7 @@
      <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png</iconset>
    </property>
    <property name="text">
-    <string>Find...</string>
+    <string>&amp;Find...</string>
    </property>
    <property name="toolTip">
     <string>Find...</string>
@@ -312,7 +313,7 @@
      <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png</iconset>
    </property>
    <property name="text">
-    <string>Find next</string>
+    <string>Find &amp;next</string>
    </property>
    <property name="toolTip">
     <string>Find next</string>
@@ -323,7 +324,7 @@
   </action>
   <action name="actionToNumerical">
    <property name="text">
-    <string>Change to numerical</string>
+    <string>&amp;Change to numerical</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change question type from shortanswer to numerical&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -331,7 +332,7 @@
   </action>
   <action name="actionFromTickets">
    <property name="text">
-    <string>Hit the tickets to the themes</string>
+    <string>&amp;Hit the tickets to the themes</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
@@ -356,7 +357,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Allow all the faithful</string>
+    <string>&amp;Allow all the faithful</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;p&gt;By default, counts all questions with all correct answers as shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -364,17 +365,17 @@
   </action>
   <action name="actionHighlighter">
    <property name="text">
-    <string>Highlighter</string>
+    <string>&amp;Highlighter</string>
    </property>
   </action>
   <action name="actionHelp">
    <property name="text">
-    <string>Help...</string>
+    <string>&amp;Help...</string>
    </property>
   </action>
   <action name="actionRequirements">
    <property name="text">
-    <string>Requirements</string>
+    <string>&amp;Requirements</string>
    </property>
   </action>
   <action name="actionFixedAccuracy">
@@ -382,7 +383,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Fixed accuracy</string>
+    <string>&amp;Fixed accuracy</string>
    </property>
    <property name="toolTip">
     <string>Fixed accuracy</string>
@@ -390,7 +391,7 @@
   </action>
   <action name="actionDuplicate_search">
    <property name="text">
-    <string>Duplicate search</string>
+    <string>&amp;Duplicate search</string>
    </property>
   </action>
   <action name="action_bigPenalty">
@@ -398,17 +399,17 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Increased penalty for wrong answer</string>
+    <string>&amp;Increased penalty for wrong answer</string>
    </property>
   </action>
   <action name="actionSet_work_dir">
    <property name="text">
-    <string>Set work dir...</string>
+    <string>Set &amp;work dir...</string>
    </property>
   </action>
   <action name="actionRemoveNoAnswer">
    <property name="text">
-    <string>Remove questions without a correct answer</string>
+    <string>Remove &amp;questions without a correct answer</string>
    </property>
   </action>
   <action name="format_choice">
@@ -422,7 +423,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>choice</string>
+    <string>&amp;choice</string>
    </property>
   </action>
   <action name="format_multichoice">
@@ -436,7 +437,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>multichoice</string>
+    <string>&amp;multichoice</string>
    </property>
   </action>
   <action name="format_shortanswer">
@@ -450,7 +451,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>shortanswer</string>
+    <string>&amp;shortanswer</string>
    </property>
   </action>
   <action name="format_numerical">
@@ -464,7 +465,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>numerical</string>
+    <string>&amp;numerical</string>
    </property>
   </action>
   <action name="format_info">
@@ -478,7 +479,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>info</string>
+    <string>&amp;info</string>
    </property>
   </action>
   <action name="format_essay">
@@ -492,7 +493,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>essay</string>
+    <string>&amp;essay</string>
    </property>
   </action>
   <action name="format_matching">
@@ -506,7 +507,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>matching</string>
+    <string>m&amp;atching</string>
    </property>
   </action>
   <action name="actionRemove_incorrect">
@@ -517,7 +518,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Remove incorrect qtype</string>
+    <string>&amp;Remove incorrect qtype</string>
    </property>
   </action>
   <action name="actionShuffle_answers">
@@ -528,7 +529,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Shuffle answers</string>
+    <string>&amp;Shuffle answers</string>
    </property>
   </action>
   <action name="menuNumber_answersNo">
@@ -536,7 +537,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>No number</string>
+    <string>&amp;No number</string>
    </property>
   </action>
   <action name="menuNumber_answers_a">
@@ -547,10 +548,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>a</string>
+    <string>&amp;a</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::TextHeuristicRole</enum>
+    <enum>QAction::MenuRole::TextHeuristicRole</enum>
    </property>
   </action>
   <action name="menuNumber_answers_A">
@@ -566,7 +567,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>1</string>
+    <string>&amp;1</string>
    </property>
   </action>
   <action name="menuNumber_answers_i">
@@ -574,7 +575,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>i</string>
+    <string>&amp;i</string>
    </property>
   </action>
   <action name="menuNumber_answers_I">
@@ -583,6 +584,11 @@
    </property>
    <property name="text">
     <string>I</string>
+   </property>
+  </action>
+  <action name="actionMarkers">
+   <property name="text">
+    <string>Markers...</string>
    </property>
   </action>
  </widget>

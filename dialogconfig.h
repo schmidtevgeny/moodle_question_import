@@ -15,6 +15,9 @@ public:
     explicit DialogConfig(QWidget *parent = nullptr);
     ~DialogConfig();
 
+private slots:
+    void on_DialogConfig_accepted();
+
 private:
     Ui::DialogConfig *ui;
 };

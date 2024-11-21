@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QTextStream>
+#include "dialogconfig.h"
 #include <ui_dialogreplace.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -3023,3 +3024,10 @@ void MainWindow::on_actionRequirements_triggered()
     //manual
     QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/doc/manual.pdf") );
 }
+
+void MainWindow::on_actionMarkers_triggered()
+{
+    DialogConfig dlg;
+    dlg.exec();
+}
+
