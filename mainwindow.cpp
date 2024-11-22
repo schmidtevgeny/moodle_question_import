@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolBar->addWidget(tolerance_string);
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document() );
+    highlighter->update_re();
     // settings
     usecase                = false;
     default_question_price = "10";
@@ -45,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     number_type->addAction(ui->menuNumber_answers_I);
 
     // TODO: load colors
-#ifdef _DEBUG
+#ifndef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
         "@ Subsection\n"
@@ -57,9 +58,17 @@ MainWindow::MainWindow(QWidget *parent)
         "?10%%2+2=\n"
         "*100%%4:0.1\n"
         "*50%%4:0.5\n"
-        "? Question matching\n"
+        "?! Question matching\n"
         "* option1->value1\n"
         "* option2->value2\n"
+        "?< Question matching\n"
+        "multiline>?\n"
+        "+ option1->value1\n"
+        "- option2->value2\n"
+        "?< Question matching\n"
+        "multiline\n"
+        "+ option1->value1\n"
+        "- option2->value2\n"
         "$ Clozed question intro\n"
         "? Subquestion choice or multichoice\n"
         "* correct\n"
@@ -68,7 +77,8 @@ MainWindow::MainWindow(QWidget *parent)
         "* answer\n"
         "? Subquestion matching\n"
         "* option1->value1\n"
-        "* option2->value2\n");
+        "* option2->value2\n"
+    );
 #endif
 }
 MainWindow::~MainWindow()
@@ -84,7 +94,6 @@ void MainWindow::resizeEvent(QResizeEvent *)
 {
     int w = ui->tree->width();
 
-
     ui->tree->setColumnWidth(0, w / 4);
     ui->tree->setColumnWidth(1, w / 2);
 }
@@ -95,18 +104,14 @@ void MainWindow::on_actionAnalyse_triggered()
 {
     ui->tree->clear();
 
-
     QTreeWidgetItem *top = nullptr, *child = nullptr, *quest = nullptr;
-
 
     top = new QTreeWidgetItem(QStringList() << tr("section") << tr("Course") );
     ui->tree->addTopLevelItem(top);
 
-
     int         i = 0;
     QString     s;
     QStringList data = ui->plain->document()->toPlainText().split("\n");
-
 
     while (i < data.size() )
     {
@@ -223,14 +228,11 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 
     QTreeWidgetItem *quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
 
-
     index++;
-
 
     //
     QStringList answers;
     int         correctcount = 0;
-
 
     while (index < data.size() )
     {
@@ -3028,6 +3030,9 @@ void MainWindow::on_actionRequirements_triggered()
 void MainWindow::on_actionMarkers_triggered()
 {
     DialogConfig dlg;
-    dlg.exec();
+    if (dlg.exec())
+    {
+        highlighter->update_re();
+    }
 }
 

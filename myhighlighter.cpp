@@ -6,13 +6,9 @@ MyHighlighter::MyHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
     , sectionExpression("^\\s*(#)[^\\n]*")
     , ticketExpression("^\\s*(\\$)[^\\n]*")
-    , //      correctAnswerExpression("^\\s*\\*[^\\n]*"),
-    correctAnswerExpression("^\\s*(\\*)(\\d*.?\\d*%%)?[^\\n]*")
-    , //      keywordExpression("^\\s*[#@$\\?\\*]"),
-      //      incorrectAnswerExpression("^\\s*[^#@\\?\\*$][^\\n]*"),
-    incorrectAnswerExpression("^\\s*(-\\d*.?\\d*%%)?[^#@\\?\\*$][^\\n]*")
-    , //      questionExpression("^\\s*\\?[^\\n]*"),
-    questionExpression("^\\s*(\\?)(\\d*.?\\d*%%)?[^\\n]*")
+    , correctAnswerExpression("^\\s*(\\*)(\\d*.?\\d*%%)?[^\\n]*")
+    , incorrectAnswerExpression("^\\s*(-\\d*.?\\d*%%)?[^#@\\?\\*$][^\\n]*")
+    , questionExpression("^\\s*(\\?)(\\d*.?\\d*%%)?[^\\n]*")
     , subsectionExpression("^\\s*(@)[^\\n]*")
     , matchExpression("^\\s*\\*[^\\n]*(->)", QRegularExpression::InvertedGreedinessOption)
 {
@@ -55,6 +51,15 @@ MyHighlighter::MyHighlighter(QTextDocument *parent)
     load_color();
 }
 
+QString MyHighlighter::espace(QString s)
+{
+    return s.replace("\\", "\\\\")
+        .replace("*", "\\*")
+        .replace("$", "\\$")
+        .replace("?", "\\?")
+        ;
+}
+
 
 void MyHighlighter::highlightBlock(const QString &text)
 {
@@ -74,7 +79,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
-
         setFormat(match.capturedStart(), match.capturedLength(), sectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
@@ -83,7 +87,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
-
 
         setFormat(match.capturedStart(), match.capturedLength(), subsectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
@@ -94,7 +97,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
-
         setFormat(match.capturedStart(), match.capturedLength(), ticketFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
@@ -103,7 +105,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
-
 
         setFormat(match.capturedStart(), match.capturedLength(), questionFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
@@ -115,7 +116,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
-
         setFormat(match.capturedStart(), match.capturedLength(), incorrectAnswerFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), priceFormat);
     }
@@ -124,7 +124,6 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
-
 
         setFormat(match.capturedStart(), match.capturedLength(), correctAnswerFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
@@ -158,6 +157,42 @@ void load_format(QSettings &settings, QString section, QTextCharFormat &format)
 }
 
 
+void MyHighlighter::update_re(){
+    // QSettings iniFile("TSU", "TestConvert");
+    // //
+    // sectionExpression.setPattern("^\\s*("+MyHighlighter::espace(iniFile.value("markers/eSection", "#").toString())+")[^\\n]*");
+    // subsectionExpression.setPattern("^\\s*("+MyHighlighter::espace(iniFile.value("markers/eSubsection", "@").toString())+")[^\\n]*");
+    // ticketExpression.setPattern("^\\s*("+MyHighlighter::espace(iniFile.value("markers/eCloze", "$").toString())+")[^\\n]*");
+
+    // bool  hasNoShuffle=iniFile.value("markers/hasNoShuffle", false).toBool();
+
+    // if (hasNoShuffle)
+    //     questionExpression.setPattern("^\\s*(\\?)(\\d*.?\\d*%%)"+MyHighlighter::espace(iniFile.value("markers/eQuestion", "?").toString())+"("+MyHighlighter::espace(iniFile.value("markers/eNoShuffle", "!").toString())+")?"+"[^\\n]*");
+    // else
+    //     questionExpression.setPattern("^\\s*(\\?)(\\d*.?\\d*%%)"+MyHighlighter::espace(iniFile.value("markers/eQuestion", "?").toString())+"[^\\n]*");
+
+    // incorrectAnswerExpression.setPattern("^\\s*(-\\d*.?\\d*%%)?[^#@\\?\\*$][^\\n]*");
+    // correctAnswerExpression.setPattern("^\\s*("+MyHighlighter::espace(iniFile.value("markers/eCorrect", "*").toString())+")(\\d*.?\\d*%%)?[^\\n]*");
+    // matchExpression.setPattern("^\\s*\\*[^\\n]*("+MyHighlighter::espace(iniFile.value("markers/eMatch", "->").toString())+")");
+
+    // "+MyHighlighter::espace(iniFile.value().toString())+"
+
+    // ui->hasAnswerCorrect->setChecked(    iniFile->value("markers/hasAnswerCorrect", false).toBool());
+    // ui->hasAnswerIncorrect->setChecked(    iniFile->value("markers/hasAnswerIncorrect", false).toBool());
+    // ui->hasNoShuffle->setChecked(    iniFile->value("markers/hasNoShuffle", false).toBool());
+    // ui->hasQuestionFinish->setChecked(    iniFile->value("markers/hasQuestionFinish", false).toBool());
+    // ui->hasQuestionStart->setChecked(    iniFile->value("markers/hasQuestionStart", false).toBool());
+
+    // ui->eAnswerCorrect->setText(iniFile->value("markers/eAnswerCorrect", "+").toString());
+    // ui->eAnswerIncorrect->setText(iniFile->value("markers/eAnswerIncorrect", "-").toString());
+    // ui->eCorrect->setText(iniFile->value("markers/eCorrect", "*").toString());
+    // ui->eMatch->setText(iniFile->value("markers/eMatch", "->").toString());
+    // ui->eNoShuffle->setText(iniFile->value("markers/eNoShuffle", "!").toString());
+    // ui->eQuestion->setText(iniFile->value("markers/eQuestion", "?").toString());
+    // ui->eQuestionFinish->setText(iniFile->value("markers/eQuestionFinish", ">?").toString());
+    // ui->eQuestionStart->setText(iniFile->value("markers/eQuestionStart", "?<").toString());
+    this->rehighlight();
+}
 void MyHighlighter::load_color()
 {
     QSettings settings("TSU", "TestConvert");
