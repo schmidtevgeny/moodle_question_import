@@ -3,8 +3,11 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
+
 class DialogConfig;
+
 }
 
 class DialogConfig : public QDialog
@@ -12,13 +15,16 @@ class DialogConfig : public QDialog
     Q_OBJECT
 
 public:
+
     explicit DialogConfig(QWidget *parent = nullptr);
     ~DialogConfig();
 
 private slots:
+
     void on_DialogConfig_accepted();
 
 private:
+
     Ui::DialogConfig *ui;
 };
 

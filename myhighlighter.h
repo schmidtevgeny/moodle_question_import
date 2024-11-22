@@ -20,6 +20,7 @@ public:
     QTextCharFormat incorrectAnswerFormat;
     QTextCharFormat priceFormat;
 
+
     static QString espace(QString s);
     void update_re();
     void load_color();

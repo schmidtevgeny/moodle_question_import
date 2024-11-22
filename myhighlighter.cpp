@@ -8,7 +8,7 @@ MyHighlighter::MyHighlighter(QTextDocument *parent)
     , ticketExpression("^\\s*(\\$)[^\\n]*")
     , correctAnswerExpression("^\\s*(\\*)(\\d*.?\\d*%%)?[^\\n]*")
     , incorrectAnswerExpression("^\\s*(-\\d*.?\\d*%%)?[^#@\\?\\*$][^\\n]*")
-    , questionExpression("^\\s*(\\?)(\\d*.?\\d*%%)?[^\\n]*")
+    , questionExpression("^\\s*(\\?(!)?)(\\d*.?\\d*%%)?[^\\n]*")
     , subsectionExpression("^\\s*(@)[^\\n]*")
     , matchExpression("^\\s*\\*[^\\n]*(->)", QRegularExpression::InvertedGreedinessOption)
 {
@@ -51,13 +51,14 @@ MyHighlighter::MyHighlighter(QTextDocument *parent)
     load_color();
 }
 
+
 QString MyHighlighter::espace(QString s)
 {
-    return s.replace("\\", "\\\\")
-        .replace("*", "\\*")
-        .replace("$", "\\$")
-        .replace("?", "\\?")
-        ;
+    return(s.replace("\\", "\\\\")
+               .replace("*", "\\*")
+               .replace("$", "\\$")
+               .replace("?", "\\?")
+           );
 }
 
 
@@ -79,6 +80,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
+
         setFormat(match.capturedStart(), match.capturedLength(), sectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
@@ -87,6 +89,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
 
         setFormat(match.capturedStart(), match.capturedLength(), subsectionFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
@@ -97,6 +100,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
+
         setFormat(match.capturedStart(), match.capturedLength(), ticketFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), keywordFormat);
     }
@@ -105,6 +109,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
 
         setFormat(match.capturedStart(), match.capturedLength(), questionFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
@@ -116,6 +121,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     {
         QRegularExpressionMatch match = i.next();
 
+
         setFormat(match.capturedStart(), match.capturedLength(), incorrectAnswerFormat);
         setFormat(match.capturedStart(1), match.capturedLength(1), priceFormat);
     }
@@ -124,6 +130,7 @@ void MyHighlighter::highlightBlock(const QString &text)
     while (i.hasNext() )
     {
         QRegularExpressionMatch match = i.next();
+
 
         setFormat(match.capturedStart(), match.capturedLength(), correctAnswerFormat);
         setFormat(match.capturedStart(2), match.capturedLength(2), priceFormat);
@@ -157,7 +164,8 @@ void load_format(QSettings &settings, QString section, QTextCharFormat &format)
 }
 
 
-void MyHighlighter::update_re(){
+void MyHighlighter::update_re()
+{
     // QSettings iniFile("TSU", "TestConvert");
     // //
     // sectionExpression.setPattern("^\\s*("+MyHighlighter::espace(iniFile.value("markers/eSection", "#").toString())+")[^\\n]*");
@@ -193,10 +201,11 @@ void MyHighlighter::update_re(){
     // ui->eQuestionStart->setText(iniFile->value("markers/eQuestionStart", "?<").toString());
     this->rehighlight();
 }
+
+
 void MyHighlighter::load_color()
 {
     QSettings settings("TSU", "TestConvert");
-
 
     load_format(settings, "keywordFormat", keywordFormat);
     load_format(settings, "sectionFormat", sectionFormat);
@@ -221,7 +230,6 @@ void save_format(QSettings &settings, QString section, QTextCharFormat &format)
 void MyHighlighter::save_color()
 {
     QSettings settings("TSU", "TestConvert");
-
 
     save_format(settings, "keywordFormat", keywordFormat);
     save_format(settings, "sectionFormat", sectionFormat);

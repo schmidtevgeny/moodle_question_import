@@ -44,9 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     number_type->addAction(ui->menuNumber_answers_1);
     number_type->addAction(ui->menuNumber_answers_i);
     number_type->addAction(ui->menuNumber_answers_I);
-
     // TODO: load colors
-#ifndef _DEBUG
+#ifdef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
         "@ Subsection\n"
@@ -58,17 +57,9 @@ MainWindow::MainWindow(QWidget *parent)
         "?10%%2+2=\n"
         "*100%%4:0.1\n"
         "*50%%4:0.5\n"
-        "?! Question matching\n"
+        "? Question matching\n"
         "* option1->value1\n"
         "* option2->value2\n"
-        "?< Question matching\n"
-        "multiline>?\n"
-        "+ option1->value1\n"
-        "- option2->value2\n"
-        "?< Question matching\n"
-        "multiline\n"
-        "+ option1->value1\n"
-        "- option2->value2\n"
         "$ Clozed question intro\n"
         "? Subquestion choice or multichoice\n"
         "* correct\n"
@@ -78,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
         "? Subquestion matching\n"
         "* option1->value1\n"
         "* option2->value2\n"
-    );
+        );
 #endif
 }
 MainWindow::~MainWindow()
@@ -104,14 +95,18 @@ void MainWindow::on_actionAnalyse_triggered()
 {
     ui->tree->clear();
 
+
     QTreeWidgetItem *top = nullptr, *child = nullptr, *quest = nullptr;
+
 
     top = new QTreeWidgetItem(QStringList() << tr("section") << tr("Course") );
     ui->tree->addTopLevelItem(top);
 
+
     int         i = 0;
     QString     s;
     QStringList data = ui->plain->document()->toPlainText().split("\n");
+
 
     while (i < data.size() )
     {
@@ -210,7 +205,15 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
     // get string
     QString s = data.at(index).mid(1); // remove ?
     QString price;
+    bool    noUnsort = false;
 
+    qWarning(s.toStdString().c_str() );
+
+    if (s.at(0) == '!')
+    {
+        noUnsort = true;
+        s        = s.mid(1);
+    }
 
     if ( (s.indexOf("%%") > -1) && (s.indexOf("%%") < 5) )
     {
@@ -228,11 +231,19 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 
     QTreeWidgetItem *quest = new QTreeWidgetItem(QStringList() << tr("unc") << s << "" << price);
 
+
+    if (noUnsort)
+    {
+        quest->setText(2, "!");
+    }
+
     index++;
+
 
     //
     QStringList answers;
     int         correctcount = 0;
+
 
     while (index < data.size() )
     {
@@ -399,7 +410,6 @@ bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString 
 {
     bool ok, ok2;
 
-
     if (s.leftRef(1) == "*")
     {
         s = s.mid(1);
@@ -416,7 +426,7 @@ bool MainWindow::parse_answer(QString s, QString &price, QString &text, QString 
         } else {
             price = "";
         }
-    }else {
+    } else {
         price = "";
     }
 
@@ -471,7 +481,6 @@ void MainWindow::on_actionOpen_triggered()
 {
     QString fname = QFileDialog::getOpenFileName(this, tr("Open"), last_dir, tr("html (*.htm;*.html);ANY FILE (*)") );
 
-
     if (!fname.isEmpty() )
     {
         images.clear();
@@ -519,7 +528,6 @@ void MainWindow::writeText(QXmlStreamWriter &stream, QString txt, QString basepa
     // список файлов
     int         num;
 
-
     while (txt.indexOf("!(") > -1)
     {
         QString s1 = txt.mid(0, txt.indexOf("!(") );
@@ -545,7 +553,6 @@ void MainWindow::writeText(QXmlStreamWriter &stream, QString txt, QString basepa
               .replace("[[/sub]]", "</sub>")
               .replace("[[sup]]", "<sup>")
               .replace("[[/sup]]", "</sup>");
-
     stream.writeTextElement("text", txt);
     num = 0;
 
@@ -586,7 +593,6 @@ QString to_title(QString s)
 {
     QRegExp notags("\\<.*\\>");
 
-
     notags.setMinimal(true);
     s = s.replace(notags, "");
 
@@ -617,7 +623,6 @@ void MainWindow::on_actionSet_work_dir_triggered()
 {
     QString fn = QFileDialog::getExistingDirectory(this, tr("Select image dir"), QString() );
 
-
     if (!fn.isEmpty() )
     {
         last_dir = fn;
@@ -630,7 +635,6 @@ void MainWindow::on_actionExport_triggered()
 {
     double ktolerance;
     bool   btolerance;
-
 
     btolerance = ui->actionFixedAccuracy->isChecked();
 
@@ -656,20 +660,19 @@ void MainWindow::on_actionExport_triggered()
         /*
          * Настройка
          */
-        QString open_xml;
-        QString close_xml;
-        QString text;
-        QString number;
-        QString multichoice;
-        QString choice;
-        QString theme;
-        QString section;
-        QString map;
-        QString info;
-        QString answer;
-        QString numanswer;
-        QString mapanswer;
-
+        QString   open_xml;
+        QString   close_xml;
+        QString   text;
+        QString   number;
+        QString   multichoice;
+        QString   choice;
+        QString   theme;
+        QString   section;
+        QString   map;
+        QString   info;
+        QString   answer;
+        QString   numanswer;
+        QString   mapanswer;
         // -------------------------------
         QFileInfo fi(fname);
 
@@ -679,11 +682,8 @@ void MainWindow::on_actionExport_triggered()
 
         //        bool                     as_multi = ui->actionChoiceAsMultichoice->isChecked();    // false; //экспорт choice как multichoice
         //        bool                     as_text  = ui->actionNumericalAsShortanswer->isChecked(); // false; //экспорт number как text
-
         QList<QTreeWidgetItem *> themes;
-
         QTreeWidgetItem          *top;
-
         QFile                    f;
 
 
@@ -696,7 +696,6 @@ void MainWindow::on_actionExport_triggered()
 
         stream.setAutoFormatting(true);
         stream.writeStartDocument();
-
         stream.writeStartElement("quiz");
 
         for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
@@ -762,7 +761,6 @@ bool MainWindow::process_question(QXmlStreamWriter &stream, QTreeWidgetItem *ite
 bool MainWindow::write_close(QXmlStreamWriter &stream, QTreeWidgetItem *item, double ktolerance, bool btolerance)
 {
     QStringList questions;
-
 
     questions << item->text(1);
 
@@ -890,7 +888,7 @@ bool MainWindow::write_choice(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
 
-    if (ui->actionShuffle_answers->isChecked() )
+    if (ui->actionShuffle_answers->isChecked() && item->text(2) != "!")
     {
         stream.writeTextElement("shuffleanswers", "1");
     } else {
@@ -930,7 +928,6 @@ bool MainWindow::write_choice(QXmlStreamWriter &stream, QTreeWidgetItem *item)
      *          <option value="none" selected="">Не нумеровать</option>
      *      </select>*/
     // answ
-
     int correct = 0;
 
 
@@ -981,7 +978,6 @@ QString MainWindow::format_choice(QTreeWidgetItem *item, bool &ok)
 {
     QString     ret = item->text(1);
     QStringList answers;
-
 
     ret += "<br/>{" + item->text(3) + ":MULTICHOICE_V:";
 
@@ -1049,7 +1045,7 @@ bool MainWindow::write_multichoice(QXmlStreamWriter &stream, QTreeWidgetItem *it
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
 
-    if (ui->actionShuffle_answers->isChecked() )
+    if (ui->actionShuffle_answers->isChecked() && item->text(2) != "!")
     {
         stream.writeTextElement("shuffleanswers", "1");
     } else {
@@ -1139,7 +1135,6 @@ QString MainWindow::format_multichoice(QTreeWidgetItem *item, bool &ok)
 {
     QString     ret = item->text(1);
     QStringList answers;
-
 
     ret += "<br/>{" + item->text(3) + ":MULTIRESPONSE:";
     ok   = true;
@@ -1259,7 +1254,6 @@ QString MainWindow::format_numerical(QTreeWidgetItem *item, double ktolerance, b
     QString     ret = item->text(1);
     QStringList answers;
 
-
     ret += "<br/>{" + item->text(3) + ":NUMERICAL:";
     ok   = true;
 
@@ -1363,7 +1357,6 @@ QString MainWindow::format_shortanswer(QTreeWidgetItem *item, bool &ok)
     QStringList answers;
     QString     price;
 
-
     if (usecase)
     {
         ret += "<br/>{" + item->text(3) + ":SHORTANSWER_C:";
@@ -1440,7 +1433,6 @@ QString MainWindow::format_matching(QTreeWidgetItem *item, bool &ok)
 {
     QString     ret = item->text(1);
     QStringList answers;
-
 
     ret += "<br/>";
     ok   = true;
@@ -1582,9 +1574,7 @@ void MainWindow::on_actionReplace_triggered()
 {
     DialogReplace dlg;
 
-
     //    TODO: edit
-
     if (dlg.exec() )
     {
         // папка для картинок
@@ -1658,8 +1648,8 @@ void MainWindow::on_actionReplace_triggered()
                 replace << match.captured(0);
                 files << f.replace("file:///", "");
             }
-            // TODO: копирование картинок по пути
 
+            // TODO: копирование картинок по пути
             for (int i = 0; i < replace.size(); i++)
             {
                 p = p.replace(replace[i], "!(" + files[i] + ")");
@@ -1682,8 +1672,7 @@ void MainWindow::on_actionReplace_triggered()
                 s2 = s2.mid(s2.indexOf(">") + 1);
                 s3 = s2.mid(s2.indexOf(span) + span.length() );
                 s2 = s2.left(s2.indexOf(span) );
-
-                p = s1 + "[[sub]]" + s2 + "[[/sub]]" + s3;
+                p  = s1 + "[[sub]]" + s2 + "[[/sub]]" + s3;
             }
 
             while (p.indexOf(sup) != -1)
@@ -2281,8 +2270,12 @@ void MainWindow::on_actionReplace_triggered()
                 if (lines.at(i).leftRef(1) == "?")
                 {
                     qnumber++;
+
+
                     QString w;
-                    int qpos=1;
+                    int     qpos = 1;
+
+
                     lines[i] = tr("?%1").arg(w).arg(qnumber) + lines.at(i).midRef(qpos);
                 }
 
@@ -2346,9 +2339,7 @@ void MainWindow::on_actionReplace_triggered()
 void MainWindow::on_actionCollapse_triggered()
 {
     QList<QTreeWidgetItem *> themes;
-
     QTreeWidgetItem          *top;
-
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -2383,7 +2374,6 @@ void MainWindow::on_actionCollapse_triggered()
 void MainWindow::on_actionFind_triggered()
 {
     bool ok;
-
 
     if (ui->tree->isActiveWindow() )
     {
@@ -2441,10 +2431,8 @@ void MainWindow::on_tree_itemDoubleClicked(QTreeWidgetItem *item, int column)
 void MainWindow::on_tree_itemSelectionChanged()
 {
     QList<QTreeWidgetItem *> themes;
-
     QTreeWidgetItem          *top;
     QTreeWidgetItem          *selected = nullptr;
-
 
     if (ui->tree->selectedItems().size() > 0)
     {
@@ -2507,9 +2495,7 @@ void MainWindow::on_tree_itemSelectionChanged()
 void MainWindow::on_actionToNumerical_triggered()
 {
     QList<QTreeWidgetItem *> themes;
-
     QTreeWidgetItem          *top;
-
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -2543,9 +2529,7 @@ void MainWindow::on_actionToNumerical_triggered()
 void MainWindow::on_actionFromTickets_triggered()
 {
     QList<QTreeWidgetItem *> themes;
-
     QTreeWidgetItem          *top;
-
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -2562,9 +2546,8 @@ void MainWindow::on_actionFromTickets_triggered()
     }
 
 
-    QTreeWidgetItem *top_themes =
+    QTreeWidgetItem                    *top_themes =
         new QTreeWidgetItem(QStringList() << tr("section") << tr("Themes") );
-
     QVector<QList<QTreeWidgetItem *> > new_themes;
 
 
@@ -2625,10 +2608,8 @@ void MainWindow::show_error(QTreeWidgetItem *item, QString message)
 {
     ui->tree->collapseAll();
     ui->tree->clearSelection();
-
     // ui->tree->setItemSelected(item, true); // deprecated
     item->setSelected(true);
-
     ui->tree->expandItem(item);
 
     while (item->parent() )
@@ -2644,7 +2625,6 @@ void MainWindow::on_actionHighlighter_triggered()
 {
     //
     HighlighterDialog dlg;
-
 
     if (dlg.exec() )
     {
@@ -2665,10 +2645,8 @@ struct DSearch
 void MainWindow::on_actionRemoveNoAnswer_triggered()
 {
     QList<QTreeWidgetItem *> themes;
-
     QTreeWidgetItem          *top;
     QTreeWidgetItem          *selected = nullptr;
-
 
     if (ui->tree->selectedItems().size() > 0)
     {
@@ -2739,7 +2717,6 @@ void MainWindow::on_actionDuplicate_search_triggered()
     QTreeWidgetItem          *top, *item;
     QString                  hash;
     QStringList              strings;
-
 
     for (int i = 0; i < ui->tree->topLevelItemCount(); i++)
     {
@@ -2830,7 +2807,6 @@ void MainWindow::on_tree_customContextMenuRequested(const QPoint &pos)
 {
     auto item = ui->tree->itemAt(pos);
 
-
     if (item)
     {
         QMenu *cnt = new QMenu();
@@ -2894,7 +2870,6 @@ void MainWindow::change_section_name(QTreeWidgetItem *item)
     QString s =
         QInputDialog::getText(this, tr("Edit section"), tr("Section name"), QLineEdit::Normal, item->text(1), &ok);
 
-
     if (ok)
     {
         item->setText(1, s);
@@ -2906,7 +2881,6 @@ void MainWindow::change_question_type(QTreeWidgetItem *item)
 {
     bool        ok;
     QStringList items;
-
 
     if (item->text(0) == tr("map") )
     {
@@ -3006,7 +2980,6 @@ void MainWindow::edit_price(QTreeWidgetItem *item)
         QInputDialog::getInt(this, tr("Edit price"), tr("Price"),
                              item->text(3).toInt(), -100, 100, 1, &ok);
 
-
     if (ok)
     {
         item->setText(3, tr("%1").arg(s) );
@@ -3027,12 +3000,13 @@ void MainWindow::on_actionRequirements_triggered()
     QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/doc/manual.pdf") );
 }
 
+
 void MainWindow::on_actionMarkers_triggered()
 {
     DialogConfig dlg;
-    if (dlg.exec())
+
+    if (dlg.exec() )
     {
         highlighter->update_re();
     }
 }
-
