@@ -820,17 +820,17 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     <message>
         <location filename="mainwindow.ui" line="551"/>
         <source>&amp;a</source>
-        <translation>a</translation>
+        <translation>латинские маленькие</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="570"/>
         <source>&amp;1</source>
-        <translation>1</translation>
+        <translation>арабские числа</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="578"/>
         <source>&amp;i</source>
-        <translation>i</translation>
+        <translation>маленькие римские числа</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="591"/>
