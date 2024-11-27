@@ -127,6 +127,8 @@
     <addaction name="actionShuffle_answers"/>
     <addaction name="menuNumber_answers"/>
     <addaction name="actionMarkers"/>
+    <addaction name="actionAllow_multiline"/>
+    <addaction name="actionAnswer_marker"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -614,6 +616,9 @@
    <property name="text">
     <string>&amp;Markers...</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="show_questiontype">
    <property name="checkable">
@@ -623,7 +628,26 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Question type</string>
+    <string>&amp;Question type</string>
+   </property>
+  </action>
+  <action name="actionAllow_multiline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>A&amp;llow multiline</string>
+   </property>
+  </action>
+  <action name="actionAnswer_marker">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ans&amp;wer marker</string>
    </property>
   </action>
  </widget>
@@ -744,5 +768,40 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAllow_multiline</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>update_format()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>281</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAnswer_marker</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>update_format()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>281</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>update_format()</slot>
+ </slots>
 </ui>

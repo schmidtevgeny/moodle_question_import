@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolBar->addWidget(tolerance_string);
     ui->toolBar->addWidget(tolerance);
     highlighter = new MyHighlighter(ui->plain->document() );
-    highlighter->update_re();
+
     // settings
     usecase                = false;
     default_question_price = "10";
@@ -45,13 +45,14 @@ MainWindow::MainWindow(QWidget *parent)
     number_type->addAction(ui->menuNumber_answers_i);
     number_type->addAction(ui->menuNumber_answers_I);
     // TODO: load colors
-#ifdef _DEBUG
+#ifndef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
         "@ Subsection\n"
-        "? Question choice or multichoice\n"
-        "*100%%correct\n"
-        "-100%%incorrect\n"
+        "? Question choice\n"
+        "or multichoice\n"
+        "*correct\n"
+        "-incorrect\n"
         "?10%%Question numerical or shortanswer\n"
         "* answer\n"
         "?10%%2+2=\n"
@@ -81,6 +82,20 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::update_format()
+{
+    if (ui->actionAnswer_marker->isChecked() )
+    {
+        ui->actionAllow_multiline->setEnabled(true);
+    } else {
+        ui->actionAllow_multiline->setChecked(false);
+        ui->actionAllow_multiline->setEnabled(false);
+    }
+
+    highlighter->update_re(ui->actionAllow_multiline->isChecked(), ui->actionAnswer_marker->isChecked() );
+}
+
+
 void MainWindow::resizeEvent(QResizeEvent *)
 {
     int w = ui->tree->width();
@@ -96,6 +111,7 @@ void MainWindow::on_actionAnalyse_triggered()
     ui->tree->clear();
 
 
+    bool            markers = ui->actionAnswer_marker->isChecked(), multiline = ui->actionAllow_multiline->isChecked();
     QTreeWidgetItem *top = nullptr, *child = nullptr, *quest = nullptr;
 
 
@@ -127,7 +143,7 @@ void MainWindow::on_actionAnalyse_triggered()
 
         if (s.at(0) == '?')
         {
-            quest = make_question(data, i);
+            quest = make_question(data, i, markers, multiline);
 
             if (quest)
             {
@@ -200,7 +216,7 @@ bool MainWindow::is_section(QTreeWidgetItem *item) const
 }
 
 
-QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
+QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool markers, bool multiline)
 {
     // get string
     QString s = data.at(index).mid(1); // remove ?
@@ -239,6 +255,23 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
 
     index++;
 
+    if (multiline)
+    {
+        while (index < data.size() )
+        {
+            s = data.at(index);
+            s = s.replace("&nbsp;", " ").trimmed();
+
+            if (s != "" && (s[0] == '*' || s[0] == '-' || s[0] == '+') )
+            {
+                break;
+            }
+
+            quest->setText(1, quest->text(1) + "\n" + s);
+            index++;
+        }
+    }
+
 
     //
     QStringList answers;
@@ -250,28 +283,85 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index)
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
 
-        while (s.length() > 0 && s[0] == ' ')
+        // NOTE: Возможны варианты
+        // ----------|---|---|---|
+        // multiline | f | f | t |
+        // markers   | f | t | t |
+        // ----------|---|---|---|
+        if (markers && answers.empty() )
         {
-            s = s.mid(1);
+            // это первый ответ
+            // проверить наличие маркера
+            if (s.isEmpty() )
+            {
+                index++;
+                continue;
+            }
+
+            if (s[0] != '*' && s[0] != '+' && s[0] != '-')
+            {
+                QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(index + 1) );
+                ui->plain->setTextCursor(ui->plain->document()->find(s) );
+
+                return(nullptr);
+            }
         }
 
+        // в ответах не может быть пустой строки
         if ( (s == "") || (s == "[[br]]") )
         {
             index++;
             continue;
         }
 
-        if (s.at(0) == '*')
-        {
-            correctcount++;
-        }
-
+        // ответы кончились?
         if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
         {
             break;
         }
 
-        answers.append(s);
+        // проверка на правильность
+        if (markers)
+        {
+            if (s.at(0) == '*')
+            {
+                correctcount++;
+                answers.append(s);
+            } else if (s.at(0) == '+')
+            {
+                correctcount++;
+                s = s.mid(1);
+                answers.append(s);
+            } else if (s.at(0) == '-')
+            {
+                s = s.mid(1);
+
+                if (s.at(0) == '*')
+                {
+                    correctcount++;
+                }
+
+                answers.append(s);
+            } else {
+                if (multiline)
+                {
+                    answers.back() += "\n" + s;
+                } else {
+                    QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(index + 1) );
+                    ui->plain->setTextCursor(ui->plain->document()->find(s) );
+
+                    return(nullptr);
+                }
+            }
+        } else {
+            if (s.at(0) == '*')
+            {
+                correctcount++;
+            }
+
+            answers.append(s);
+        }
+
         index++;
     }
 
@@ -1574,7 +1664,7 @@ void MainWindow::on_actionReplace_triggered()
 {
     DialogReplace dlg;
 
-    //    TODO: edit
+    // TODO: edit
     if (dlg.exec() )
     {
         // папка для картинок
@@ -2045,6 +2135,16 @@ void MainWindow::on_actionReplace_triggered()
 
         if (dlg.ui->del_marker->isChecked() )
         {
+            QString sCorrect   = "\n*";
+            QString sInCorrect = "\n";
+
+
+            if (dlg.ui->add_marker->isChecked() )
+            {
+                sCorrect   = "\n-*";
+                sInCorrect = "\n-";
+            }
+
             // Удалить [а]
             if (dlg.ui->answer_marker->currentIndex() == 4)
             {
@@ -2053,7 +2153,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r.setMinimal(true);
                 r.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r, "\n");
+                s = s.replace(r, sInCorrect);
 
 
                 QRegExp r2("\\n\\s*\\*\\s*\\[\\w\\]\\s*");
@@ -2061,7 +2161,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r2.setMinimal(true);
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r2, "\n*");
+                s = s.replace(r2, sCorrect);
             }
 
             // Удалить а)
@@ -2072,7 +2172,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r.setMinimal(true);
                 r.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r, "\n");
+                s = s.replace(r, sInCorrect);
 
 
                 QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\)\\s*");
@@ -2080,7 +2180,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r2.setMinimal(true);
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r2, "\n*");
+                s = s.replace(r2, sCorrect);
             }
 
             // Удалить А.
@@ -2091,7 +2191,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r.setMinimal(true);
                 r.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r, "\n");
+                s = s.replace(r, sInCorrect);
 
 
                 QRegExp r2("\\n\\s*\\*\\s*\\w\\s*\\.\\s*");
@@ -2099,7 +2199,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r2.setMinimal(true);
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r2, "\n*");
+                s = s.replace(r2, sCorrect);
             }
 
             // Удалить 1.
@@ -2110,7 +2210,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r.setMinimal(true);
                 r.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r, "\n");
+                s = s.replace(r, sInCorrect);
 
 
                 QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\.\\s*");
@@ -2118,7 +2218,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r2.setMinimal(true);
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r2, "\n*");
+                s = s.replace(r2, sCorrect);
             }
 
             // Удалить 1)
@@ -2129,7 +2229,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r.setMinimal(true);
                 r.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r, "\n");
+                s = s.replace(r, sInCorrect);
 
 
                 QRegExp r2("\\n\\s*\\*\\s*\\d+\\s*\\)\\s*");
@@ -2137,7 +2237,7 @@ void MainWindow::on_actionReplace_triggered()
 
                 r2.setMinimal(true);
                 r2.setCaseSensitivity(Qt::CaseInsensitive);
-                s = s.replace(r2, "\n*");
+                s = s.replace(r2, sCorrect);
             }
         }
 
@@ -3007,6 +3107,6 @@ void MainWindow::on_actionMarkers_triggered()
 
     if (dlg.exec() )
     {
-        highlighter->update_re();
+        //        highlighter->update_re();
     }
 }

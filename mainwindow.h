@@ -50,8 +50,8 @@ private slots:
     void on_actionHelp_triggered();
     void on_actionRequirements_triggered();
     void on_actionRemoveNoAnswer_triggered();
-
     void on_actionMarkers_triggered();
+    void update_format();
 
 private:
 
@@ -68,7 +68,7 @@ private:
     QString        default_question_price;
 
 
-    QTreeWidgetItem *make_question(QStringList &data, int &index);
+    QTreeWidgetItem *make_question(QStringList &data, int &index, bool markers = false, bool multiline = false);
     bool parse_answer(QString s, QString &price, QString &text, QString &tolerance, bool number = false);
 
     void writeText(QXmlStreamWriter &stream, QString txt, QString basepath);

@@ -22,7 +22,7 @@ public:
 
 
     static QString espace(QString s);
-    void update_re();
+    void update_re(bool multiline, bool markers);
     void load_color();
     void save_color();
 
