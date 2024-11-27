@@ -203,6 +203,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionFixedAccuracy"/>
   </widget>
   <widget class="QToolBar" name="questionTypeToolBar">
    <property name="windowTitle">
@@ -223,10 +224,43 @@
    <addaction name="format_multichoice"/>
    <addaction name="format_shortanswer"/>
   </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>RightToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="menuNumber_answersNo"/>
+   <addaction name="menuNumber_answers_a"/>
+   <addaction name="menuNumber_answers_A"/>
+   <addaction name="menuNumber_answers_1"/>
+   <addaction name="menuNumber_answers_i"/>
+   <addaction name="menuNumber_answers_I"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_3">
+   <property name="windowTitle">
+    <string>toolBar_3</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionDuplicate_search"/>
+   <addaction name="action_bigPenalty"/>
+   <addaction name="actionRemoveNoAnswer"/>
+   <addaction name="actionRemove_incorrect"/>
+   <addaction name="actionShuffle_answers"/>
+  </widget>
   <action name="actionAnalyse">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/wrapindicator.png</normaloff>:/ico/wrapindicator.png</iconset>
+     <normaloff>:/ico/icons8-обработать-64.png</normaloff>:/ico/icons8-обработать-64.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Analysis...</string>
@@ -241,7 +275,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/standardbutton-open-128.png</normaloff>:/ico/standardbutton-open-128.png</iconset>
+     <normaloff>:/ico/icons8-папка-128.png</normaloff>:/ico/icons8-папка-128.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -253,7 +287,7 @@
   <action name="actionExport">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/standardbutton-save-128.png</normaloff>:/ico/standardbutton-save-128.png</iconset>
+     <normaloff>:/ico/icons8-сохранить-64.png</normaloff>:/ico/icons8-сохранить-64.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save...</string>
@@ -268,7 +302,7 @@
   <action name="actionReplace">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/edit-find.png</normaloff>:/ico/edit-find.png</iconset>
+     <normaloff>:/ico/icons8-редактирование-грамматики-64.png</normaloff>:/ico/icons8-редактирование-грамматики-64.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Replace...</string>
@@ -300,6 +334,10 @@
    </property>
   </action>
   <action name="actionCollapse">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-свернуть-64.png</normaloff>:/ico/icons8-свернуть-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Collapse</string>
    </property>
@@ -308,6 +346,10 @@
    </property>
   </action>
   <action name="expand_all">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-развернуть-64.png</normaloff>:/ico/icons8-развернуть-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Expand</string>
    </property>
@@ -318,7 +360,7 @@
   <action name="actionFind">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_3.png</normaloff>:/ico/find_3.png</iconset>
+     <normaloff>:/ico/icons8-поиск-128.png</normaloff>:/ico/icons8-поиск-128.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Find...</string>
@@ -333,7 +375,7 @@
   <action name="actionFindNext">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/find_next.png</normaloff>:/ico/find_next.png</iconset>
+     <normaloff>:/ico/icons8-шеврон-вниз-в-круге-64.png</normaloff>:/ico/icons8-шеврон-вниз-в-круге-64.png</iconset>
    </property>
    <property name="text">
     <string>Find &amp;next</string>
@@ -392,6 +434,10 @@
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-информация-64.png</normaloff>:/ico/icons8-информация-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Help...</string>
    </property>
@@ -405,6 +451,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-точность-64.png</normaloff>:/ico/icons8-точность-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Fixed accuracy</string>
    </property>
@@ -413,6 +463,10 @@
    </property>
   </action>
   <action name="actionDuplicate_search">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-скопировать-64.png</normaloff>:/ico/icons8-скопировать-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Duplicate search</string>
    </property>
@@ -421,16 +475,28 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-минус-64.png</normaloff>:/ico/icons8-минус-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Increased penalty for wrong answer</string>
    </property>
   </action>
   <action name="actionSet_work_dir">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-папка-с-инвойсами-128.png</normaloff>:/ico/icons8-папка-с-инвойсами-128.png</iconset>
+   </property>
    <property name="text">
     <string>Set &amp;work dir...</string>
    </property>
   </action>
   <action name="actionRemoveNoAnswer">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-удалить-свойство-64.png</normaloff>:/ico/icons8-удалить-свойство-64.png</iconset>
+   </property>
    <property name="text">
     <string>Remove &amp;questions without a correct answer</string>
    </property>
@@ -540,6 +606,10 @@
    <property name="checked">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-удалить-блокировку-64.png</normaloff>:/ico/icons8-удалить-блокировку-64.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Remove incorrect qtype</string>
    </property>
@@ -550,6 +620,10 @@
    </property>
    <property name="checked">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/ico/icons8-стрелки-сортировки-64.png</normaloff>:/ico/icons8-стрелки-сортировки-64.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Shuffle answers</string>

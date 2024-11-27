@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     number_type->addAction(ui->menuNumber_answers_i);
     number_type->addAction(ui->menuNumber_answers_I);
     // TODO: load colors
-#ifndef _DEBUG
+#ifdef _DEBUG
     ui->plain->setPlainText(
         "# Section\n"
         "@ Subsection\n"
