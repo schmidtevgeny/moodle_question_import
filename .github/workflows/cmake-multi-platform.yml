@@ -78,4 +78,4 @@ jobs:
 
     - name: make installer
       if: runner.os == 'Windows'
-      run: cpack -G INNOSETUP --config ${{ steps.strings.outputs.build-output-dir }} --trace
+      run: cpack -G IFW --config ${{ steps.strings.outputs.build-output-dir }} --trace
