@@ -49,9 +49,9 @@ jobs:
 
     - name: date
       if: runner.os == 'Windows'
-      uses: ajilraju/actions-date@v0.1
-      with:
-        args: date +%Y%m%d
+      uses: benzine-framework/action-get-datetime@v1
+      id: get-datetime
+      run: echo "The current datetime is ${{ steps.get-datetime.outputs.datetime  }}"
 
 
     - name: Set reusable strings
