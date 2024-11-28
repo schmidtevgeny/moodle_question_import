@@ -74,3 +74,14 @@ jobs:
     - name: make installs
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
+
+
+  read_artifact:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: zip
+          path: ${{ steps.strings.outputs.build-output-dir }}/install
