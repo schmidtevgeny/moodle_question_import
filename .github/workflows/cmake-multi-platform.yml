@@ -75,8 +75,7 @@ jobs:
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
-    - name: inno-setup-cli
-      uses: @pwall2222/inno-setup-download
+    - uses: @pwall2222/inno-setup-download
 
 
     - name: make installer
