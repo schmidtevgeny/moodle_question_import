@@ -75,8 +75,9 @@ jobs:
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
-    - name: install IS
-      uses: @callebstrom/inno-setup-cli
+    - name: @callebstrom/inno-setup-cli
+      uses: callebstrom/inno-setup-cli-action@6.2.1
+
 
     - name: make installer
       if: runner.os == 'Windows'
