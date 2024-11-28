@@ -76,8 +76,8 @@ jobs:
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
     - name: date
-      if: runner.os == 'Windows'
-      run: date
+      if: runner.os != 'Windows'
+      run: date +%Y%m%d
 
     - name: Archive
       if: runner.os == 'Windows'
