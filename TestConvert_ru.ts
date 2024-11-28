@@ -433,10 +433,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;?! Question matching&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;* option1-&amp;gt;value1&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;* option2-&amp;gt;value2&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;?&amp;lt; Question matching&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;multiline&amp;gt;?&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;+ option1-&amp;gt;value1&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;- option2-&amp;gt;value2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;$ Clozed question intro&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;? Subquestion choice or multichoice&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;* correct&lt;/span&gt;&lt;/p&gt;
@@ -447,7 +443,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;* option1-&amp;gt;value1&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;* option2-&amp;gt;value2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -726,7 +722,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
     </message>
     <message>
         <location filename="mainwindow.ui" line="101"/>
-        <location filename="mainwindow.ui" line="631"/>
+        <location filename="mainwindow.ui" line="781"/>
         <source>&amp;Question type</source>
         <translation>Типы вопросов</translation>
     </message>
@@ -751,147 +747,153 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="209"/>
+        <location filename="mainwindow.ui" line="210"/>
+        <location filename="mainwindow.ui" line="229"/>
         <source>toolBar_2</source>
         <translation>Панель вопросов</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="232"/>
+        <location filename="mainwindow.ui" line="246"/>
+        <source>toolBar_3</source>
+        <translation type="unfinished">Панель вопросов {3?}</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="266"/>
         <source>&amp;Analysis...</source>
         <translation>Анализировать</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="247"/>
+        <location filename="mainwindow.ui" line="281"/>
         <source>&amp;Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="259"/>
+        <location filename="mainwindow.ui" line="293"/>
         <source>&amp;Save...</source>
         <translation>Сохранить...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="274"/>
+        <location filename="mainwindow.ui" line="308"/>
         <source>&amp;Replace...</source>
         <translation>Заменить...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="391"/>
+        <location filename="mainwindow.ui" line="449"/>
         <source>&amp;Highlighter</source>
         <translation>Подсветка</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="396"/>
+        <location filename="mainwindow.ui" line="458"/>
         <source>&amp;Help...</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="401"/>
+        <location filename="mainwindow.ui" line="467"/>
         <source>&amp;Requirements</source>
         <translation>Требования к тестам</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="409"/>
+        <location filename="mainwindow.ui" line="479"/>
         <source>&amp;Fixed accuracy</source>
         <translation>Фиксированная погрешность</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="417"/>
+        <location filename="mainwindow.ui" line="491"/>
         <source>&amp;Duplicate search</source>
         <translation>Поиск дубликатов</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="425"/>
+        <location filename="mainwindow.ui" line="503"/>
         <source>&amp;Increased penalty for wrong answer</source>
         <translation>Повышенный штраф за неправильный ответ</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="430"/>
+        <location filename="mainwindow.ui" line="512"/>
         <source>Set &amp;work dir...</source>
         <translation>Задать рабочий каталог</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="435"/>
+        <location filename="mainwindow.ui" line="521"/>
         <source>Remove &amp;questions without a correct answer</source>
         <translation>Удалить вопросы без правильного ответа</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="449"/>
+        <location filename="mainwindow.ui" line="539"/>
         <source>&amp;choice</source>
         <translation>выбор</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="463"/>
+        <location filename="mainwindow.ui" line="557"/>
         <source>&amp;multichoice</source>
         <translation>множественный выбор</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="477"/>
+        <location filename="mainwindow.ui" line="575"/>
         <source>&amp;shortanswer</source>
         <translation>короткий ответ</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="491"/>
+        <location filename="mainwindow.ui" line="593"/>
         <source>&amp;numerical</source>
         <translation>числовой</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="505"/>
+        <location filename="mainwindow.ui" line="611"/>
         <source>&amp;info</source>
         <translation>информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="519"/>
+        <location filename="mainwindow.ui" line="629"/>
         <source>&amp;essay</source>
         <translation>эссе</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="533"/>
+        <location filename="mainwindow.ui" line="647"/>
         <source>m&amp;atching</source>
         <translation>соответствие</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="544"/>
+        <location filename="mainwindow.ui" line="662"/>
         <source>&amp;Remove incorrect qtype</source>
         <translation>Удалить некорректные типы вопроса</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="555"/>
+        <location filename="mainwindow.ui" line="677"/>
         <source>&amp;Shuffle answers</source>
         <translation>Перемещивать ответы</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="563"/>
+        <location filename="mainwindow.ui" line="689"/>
         <source>&amp;No number</source>
         <translation>Без номера</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="574"/>
+        <location filename="mainwindow.ui" line="704"/>
         <source>&amp;a</source>
         <translation>латинские маленькие</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="593"/>
+        <location filename="mainwindow.ui" line="731"/>
         <source>&amp;1</source>
         <translation>арабские числа</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="601"/>
+        <location filename="mainwindow.ui" line="743"/>
         <source>&amp;i</source>
         <translation>маленькие римские числа</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="617"/>
+        <location filename="mainwindow.ui" line="767"/>
         <source>&amp;Markers...</source>
         <translation>Маркеры...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="642"/>
+        <location filename="mainwindow.ui" line="796"/>
         <source>A&amp;llow multiline</source>
         <translation>Разрешить многострочность</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="650"/>
+        <location filename="mainwindow.ui" line="808"/>
         <source>Ans&amp;wer marker</source>
         <translation>Использовать маркеры ответов</translation>
     </message>
@@ -932,12 +934,12 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Анализ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="235"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Analyzes the provided text and creates a tree of questions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Анализирует предоставленный текст и создает дерево вопросов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.ui" line="272"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -946,7 +948,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Открыть...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="250"/>
+        <location filename="mainwindow.ui" line="284"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
@@ -955,12 +957,12 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Сохранить...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves the question tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранить дерево вопросов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="265"/>
+        <location filename="mainwindow.ui" line="299"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -969,32 +971,32 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Замена...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="277"/>
+        <location filename="mainwindow.ui" line="311"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="285"/>
+        <location filename="mainwindow.ui" line="319"/>
         <source>&amp;Main toolbar</source>
         <translation>Главная панель</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="350"/>
+        <location filename="mainwindow.ui" line="396"/>
         <source>&amp;Change to numerical</source>
         <translation>Изменить на числовой</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="358"/>
+        <location filename="mainwindow.ui" line="408"/>
         <source>&amp;Hit the tickets to the themes</source>
         <translation>Переделать билеты в темы</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="383"/>
+        <location filename="mainwindow.ui" line="437"/>
         <source>&amp;Allow all the faithful</source>
         <translation>Разрешить все верные</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="386"/>
+        <location filename="mainwindow.ui" line="440"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve multichoice with all correct answers&lt;/p&gt;&lt;p&gt;By default, counts all questions with all correct answers as shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Разрешить многовариантные вопросы со всеми правильными ответами&lt;/p&gt;&lt;p&gt;По умолчанию вопросы со всеми правильными ответами считаются вопросами с открытым ответом&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;.</translation>
     </message>
@@ -1015,7 +1017,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">латинские маленькие</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="585"/>
+        <location filename="mainwindow.ui" line="719"/>
         <source>A</source>
         <translation>латинские большие</translation>
     </message>
@@ -1028,7 +1030,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">маленькие римские числа</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="609"/>
+        <location filename="mainwindow.ui" line="755"/>
         <source>I</source>
         <translation>большие римские числа</translation>
     </message>
@@ -1049,67 +1051,67 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Сохранять вопросы с числовым ответом как shortanswer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="288"/>
+        <location filename="mainwindow.ui" line="322"/>
         <source>Main toolbar</source>
         <translation>Главная панель</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="296"/>
+        <location filename="mainwindow.ui" line="330"/>
         <source>&amp;Settings toolbar</source>
         <translation>Панель настроек</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="299"/>
+        <location filename="mainwindow.ui" line="333"/>
         <source>Settings toolbar</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="304"/>
+        <location filename="mainwindow.ui" line="342"/>
         <source>&amp;Collapse</source>
         <translation>Свернуть</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="307"/>
+        <location filename="mainwindow.ui" line="345"/>
         <source>Collapse</source>
         <translation>Свернуть все</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="312"/>
+        <location filename="mainwindow.ui" line="354"/>
         <source>&amp;Expand</source>
         <translation>Развернуть</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="315"/>
+        <location filename="mainwindow.ui" line="357"/>
         <source>Expand</source>
         <translation>Развернуть все</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="324"/>
+        <location filename="mainwindow.ui" line="366"/>
         <source>&amp;Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="327"/>
+        <location filename="mainwindow.ui" line="369"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="330"/>
+        <location filename="mainwindow.ui" line="372"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="339"/>
+        <location filename="mainwindow.ui" line="381"/>
         <source>Find &amp;next</source>
         <translation>Найти далее</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="342"/>
+        <location filename="mainwindow.ui" line="384"/>
         <source>Find next</source>
         <translation>Искать далее</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="345"/>
+        <location filename="mainwindow.ui" line="387"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
@@ -1118,7 +1120,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Заменить на числовой вопрос</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="353"/>
+        <location filename="mainwindow.ui" line="399"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change question type from shortanswer to numerical&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Установить для всех вопросов с открытым ответом тип &quot;числовой&quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1127,7 +1129,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <translation type="vanished">Перебить билеты на темы</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="361"/>
+        <location filename="mainwindow.ui" line="411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replace &lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span
      style=&quot; text-decoration: underline;&quot;&gt;@Ticket 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;
      text-decoration: underline;&quot;&gt;?q1-1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration:
@@ -1244,7 +1246,7 @@ underline;&quot;&gt;?q1-3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; t
         <translation type="vanished">Экспортировать как текст</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="412"/>
+        <location filename="mainwindow.ui" line="482"/>
         <source>Fixed accuracy</source>
         <translation>Фиксированная точность</translation>
     </message>
