@@ -46,6 +46,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: @pwall2222/inno-setup-download
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -74,9 +75,6 @@ jobs:
     - name: make installs
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
-
-    - uses: @pwall2222/inno-setup-download
-
 
     - name: make installer
       if: runner.os == 'Windows'
