@@ -83,6 +83,6 @@ jobs:
       if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.date.outputs.date }}
+        name: "${{ steps.date.outputs.date }}"
         path: |
           ${{ steps.strings.outputs.build-output-dir }}/install
