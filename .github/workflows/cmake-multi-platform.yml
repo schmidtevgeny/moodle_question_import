@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: benzine-framework/action-get-datetime@v1
+    - uses: benzine-framework/action-get-datetime@latest
     - name: date
       if: runner.os == 'Windows'
 
