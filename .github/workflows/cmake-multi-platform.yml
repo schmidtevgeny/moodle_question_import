@@ -75,15 +75,10 @@ jobs:
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
-
-  read_artifact:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      - name: Display structure of downloaded files
-        run: ls -R
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: zip
-#          path: ${{ steps.strings.outputs.build-output-dir }}/install
+    - name: Archive
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: |
+          ${{ steps.strings.outputs.build-output-dir }}/install
