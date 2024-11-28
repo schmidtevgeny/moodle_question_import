@@ -74,3 +74,7 @@ jobs:
     - name: make installs
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
+
+    - name: make installer
+      if: runner.os == 'Windows'
+      run: cpack -G INNOSETUP --config ${{ steps.strings.outputs.build-output-dir }} --trace
