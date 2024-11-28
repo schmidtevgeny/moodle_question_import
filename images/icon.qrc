@@ -1,5 +1,4 @@
 <RCC>
-    <qresource prefix="/ico"/>
     <qresource prefix="/">
         <file>action_bigPenalty.png</file>
         <file>action_enableAll.png</file>
@@ -37,5 +36,6 @@
         <file>actionFindNext.png</file>
         <file>actionToNumerical.png</file>
         <file>actionAllow_multiline.png</file>
+        <file>actionFromTickets.png</file>
     </qresource>
 </RCC>

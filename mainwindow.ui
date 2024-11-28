@@ -17,13 +17,16 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
       <widget class="QTextEdit" name="plain"/>
       <widget class="QTreeWidget" name="tree">
        <property name="contextMenuPolicy">
-        <enum>Qt::NoContextMenu</enum>
+        <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
        </property>
        <property name="itemsExpandable">
         <bool>true</bool>
@@ -68,7 +71,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>22</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -82,7 +85,7 @@
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
     </property>
     <property name="tearOffEnabled">
      <bool>false</bool>
@@ -397,6 +400,10 @@
    </property>
   </action>
   <action name="actionFromTickets">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionFromTickets.png</normaloff>:/actionFromTickets.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Hit the tickets to the themes</string>
    </property>
@@ -697,7 +704,7 @@
     <string>&amp;a</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::NoRole</enum>
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
   <action name="menuNumber_answers_A">
