@@ -85,3 +85,5 @@ jobs:
         with:
           name: zip
 #          path: ${{ steps.strings.outputs.build-output-dir }}/install
+      - name: Display structure of downloaded files
+        run: ls -R
