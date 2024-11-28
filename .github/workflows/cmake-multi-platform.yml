@@ -46,12 +46,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    - uses: benzine-framework/action-get-datetime@v1
     - name: date
       if: runner.os == 'Windows'
-      uses: benzine-framework/action-get-datetime@v1
-      id: get-datetime
-      run: echo "The current datetime is ${{ steps.get-datetime.outputs.datetime  }}"
+
+      run: echo "The current datetime is ${{ env.DATETIME }}"
 
 
     - name: Set reusable strings
