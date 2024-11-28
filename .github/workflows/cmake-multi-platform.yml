@@ -72,7 +72,7 @@ jobs:
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
     - name: install ubuntu
-      if: runner.os <> 'Windows'
+      if: runner.os != 'Windows'
       run: cmake -G DEB --config ${{ steps.strings.outputs.build-output-dir }} --trace
 
     - name: install windows
