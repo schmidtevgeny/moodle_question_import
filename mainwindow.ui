@@ -17,16 +17,13 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
       <widget class="QTextEdit" name="plain"/>
       <widget class="QTreeWidget" name="tree">
        <property name="contextMenuPolicy">
-        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+        <enum>Qt::NoContextMenu</enum>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::EditTrigger::EditKeyPressed</set>
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="itemsExpandable">
         <bool>true</bool>
@@ -71,7 +68,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>30</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -85,7 +82,7 @@
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
-     <enum>Qt::LayoutDirection::LeftToRight</enum>
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="tearOffEnabled">
      <bool>false</bool>
@@ -218,11 +215,11 @@
    <addaction name="action_enableAll"/>
    <addaction name="format_info"/>
    <addaction name="format_essay"/>
+   <addaction name="format_multichoice"/>
    <addaction name="format_choice"/>
+   <addaction name="format_shortanswer"/>
    <addaction name="format_numerical"/>
    <addaction name="format_matching"/>
-   <addaction name="format_multichoice"/>
-   <addaction name="format_shortanswer"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
@@ -252,15 +249,15 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionDuplicate_search"/>
-   <addaction name="action_bigPenalty"/>
    <addaction name="actionRemoveNoAnswer"/>
+   <addaction name="action_bigPenalty"/>
    <addaction name="actionRemove_incorrect"/>
    <addaction name="actionShuffle_answers"/>
   </widget>
   <action name="actionAnalyse">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-обработать-64.png</normaloff>:/ico/icons8-обработать-64.png</iconset>
+     <normaloff>:/actionAnalyse.png</normaloff>:/actionAnalyse.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Analysis...</string>
@@ -275,7 +272,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-папка-128.png</normaloff>:/ico/icons8-папка-128.png</iconset>
+     <normaloff>:/actionOpen.png</normaloff>:/actionOpen.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -287,7 +284,7 @@
   <action name="actionExport">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-сохранить-64.png</normaloff>:/ico/icons8-сохранить-64.png</iconset>
+     <normaloff>:/actionExport.png</normaloff>:/actionExport.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save...</string>
@@ -302,7 +299,7 @@
   <action name="actionReplace">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-редактирование-грамматики-64.png</normaloff>:/ico/icons8-редактирование-грамматики-64.png</iconset>
+     <normaloff>:/actionReplace.png</normaloff>:/actionReplace.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Replace...</string>
@@ -336,7 +333,7 @@
   <action name="actionCollapse">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-свернуть-64.png</normaloff>:/ico/icons8-свернуть-64.png</iconset>
+     <normaloff>:/actionCollapse.png</normaloff>:/actionCollapse.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Collapse</string>
@@ -348,7 +345,7 @@
   <action name="expand_all">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-развернуть-64.png</normaloff>:/ico/icons8-развернуть-64.png</iconset>
+     <normaloff>:/expand_all.png</normaloff>:/expand_all.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Expand</string>
@@ -360,7 +357,7 @@
   <action name="actionFind">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-поиск-128.png</normaloff>:/ico/icons8-поиск-128.png</iconset>
+     <normaloff>:/actionFind.png</normaloff>:/actionFind.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Find...</string>
@@ -375,7 +372,7 @@
   <action name="actionFindNext">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-шеврон-вниз-в-круге-64.png</normaloff>:/ico/icons8-шеврон-вниз-в-круге-64.png</iconset>
+     <normaloff>:/actionFindNext.png</normaloff>:/actionFindNext.png</iconset>
    </property>
    <property name="text">
     <string>Find &amp;next</string>
@@ -388,6 +385,10 @@
    </property>
   </action>
   <action name="actionToNumerical">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionToNumerical.png</normaloff>:/actionToNumerical.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Change to numerical</string>
    </property>
@@ -421,6 +422,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/action_enableAll.png</normaloff>:/action_enableAll.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Allow all the faithful</string>
    </property>
@@ -429,6 +434,10 @@
    </property>
   </action>
   <action name="actionHighlighter">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionHighlighter.png</normaloff>:/actionHighlighter.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Highlighter</string>
    </property>
@@ -436,13 +445,17 @@
   <action name="actionHelp">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-информация-64.png</normaloff>:/ico/icons8-информация-64.png</iconset>
+     <normaloff>:/actionHelp.png</normaloff>:/actionHelp.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Help...</string>
    </property>
   </action>
   <action name="actionRequirements">
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionRequirements.png</normaloff>:/actionRequirements.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Requirements</string>
    </property>
@@ -453,7 +466,7 @@
    </property>
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-точность-64.png</normaloff>:/ico/icons8-точность-64.png</iconset>
+     <normaloff>:/actionFixedAccuracy.png</normaloff>:/actionFixedAccuracy.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Fixed accuracy</string>
@@ -465,7 +478,7 @@
   <action name="actionDuplicate_search">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-скопировать-64.png</normaloff>:/ico/icons8-скопировать-64.png</iconset>
+     <normaloff>:/actionDuplicate_search.png</normaloff>:/actionDuplicate_search.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Duplicate search</string>
@@ -477,7 +490,7 @@
    </property>
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-минус-64.png</normaloff>:/ico/icons8-минус-64.png</iconset>
+     <normaloff>:/action_bigPenalty.png</normaloff>:/action_bigPenalty.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Increased penalty for wrong answer</string>
@@ -486,7 +499,7 @@
   <action name="actionSet_work_dir">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-папка-с-инвойсами-128.png</normaloff>:/ico/icons8-папка-с-инвойсами-128.png</iconset>
+     <normaloff>:/actionSet_work_dir.png</normaloff>:/actionSet_work_dir.png</iconset>
    </property>
    <property name="text">
     <string>Set &amp;work dir...</string>
@@ -495,7 +508,7 @@
   <action name="actionRemoveNoAnswer">
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-удалить-свойство-64.png</normaloff>:/ico/icons8-удалить-свойство-64.png</iconset>
+     <normaloff>:/actionRemoveNoAnswer.png</normaloff>:/actionRemoveNoAnswer.png</iconset>
    </property>
    <property name="text">
     <string>Remove &amp;questions without a correct answer</string>
@@ -511,6 +524,10 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_choice.png</normaloff>:/format_choice.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;choice</string>
    </property>
@@ -524,6 +541,10 @@
    </property>
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_multichoice.png</normaloff>:/format_multichoice.png</iconset>
    </property>
    <property name="text">
     <string>&amp;multichoice</string>
@@ -539,6 +560,10 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_shortanswer.png</normaloff>:/format_shortanswer.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;shortanswer</string>
    </property>
@@ -552,6 +577,10 @@
    </property>
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_numerical.png</normaloff>:/format_numerical.png</iconset>
    </property>
    <property name="text">
     <string>&amp;numerical</string>
@@ -567,6 +596,10 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_info.png</normaloff>:/format_info.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;info</string>
    </property>
@@ -580,6 +613,10 @@
    </property>
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_essay.png</normaloff>:/format_essay.png</iconset>
    </property>
    <property name="text">
     <string>&amp;essay</string>
@@ -595,6 +632,10 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/format_matching.png</normaloff>:/format_matching.png</iconset>
+   </property>
    <property name="text">
     <string>m&amp;atching</string>
    </property>
@@ -608,7 +649,7 @@
    </property>
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-удалить-блокировку-64.png</normaloff>:/ico/icons8-удалить-блокировку-64.png</iconset>
+     <normaloff>:/actionRemove_incorrect.png</normaloff>:/actionRemove_incorrect.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Remove incorrect qtype</string>
@@ -623,7 +664,7 @@
    </property>
    <property name="icon">
     <iconset resource="images/icon.qrc">
-     <normaloff>:/ico/icons8-стрелки-сортировки-64.png</normaloff>:/ico/icons8-стрелки-сортировки-64.png</iconset>
+     <normaloff>:/actionShuffle_answers.png</normaloff>:/actionShuffle_answers.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Shuffle answers</string>
@@ -632,6 +673,10 @@
   <action name="menuNumber_answersNo">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answersNo.png</normaloff>:/menuNumber_answersNo.png</iconset>
    </property>
    <property name="text">
     <string>&amp;No number</string>
@@ -644,16 +689,24 @@
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answers_a.png</normaloff>:/menuNumber_answers_a.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;a</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::TextHeuristicRole</enum>
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="menuNumber_answers_A">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answers_A2.png</normaloff>:/menuNumber_answers_A2.png</iconset>
    </property>
    <property name="text">
     <string>A</string>
@@ -663,6 +716,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answers_1.png</normaloff>:/menuNumber_answers_1.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;1</string>
    </property>
@@ -670,6 +727,10 @@
   <action name="menuNumber_answers_i">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answers_i.png</normaloff>:/menuNumber_answers_i.png</iconset>
    </property>
    <property name="text">
     <string>&amp;i</string>
@@ -679,6 +740,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/menuNumber_answers_I2.png</normaloff>:/menuNumber_answers_I2.png</iconset>
+   </property>
    <property name="text">
     <string>I</string>
    </property>
@@ -686,6 +751,10 @@
   <action name="actionMarkers">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/config.png</normaloff>:/config.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Markers...</string>
@@ -712,6 +781,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionAllow_multiline.png</normaloff>:/actionAllow_multiline.png</iconset>
+   </property>
    <property name="text">
     <string>A&amp;llow multiline</string>
    </property>
@@ -719,6 +792,10 @@
   <action name="actionAnswer_marker">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/icon.qrc">
+     <normaloff>:/actionAnswer_marker.png</normaloff>:/actionAnswer_marker.png</iconset>
    </property>
    <property name="text">
     <string>Ans&amp;wer marker</string>

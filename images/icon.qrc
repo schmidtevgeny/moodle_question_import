@@ -1,3 +1,41 @@
 <RCC>
     <qresource prefix="/ico"/>
+    <qresource prefix="/">
+        <file>action_bigPenalty.png</file>
+        <file>action_enableAll.png</file>
+        <file>actionAnalyse.png</file>
+        <file>actionAnswer_marker.png</file>
+        <file>actionCollapse.png</file>
+        <file>actionDuplicate_search.png</file>
+        <file>actionExport.png</file>
+        <file>actionFind.png</file>
+        <file>actionFixedAccuracy.png</file>
+        <file>actionHighlighter.png</file>
+        <file>actionOpen.png</file>
+        <file>actionRemove_incorrect.png</file>
+        <file>actionReplace.png</file>
+        <file>actionSet_work_dir.png</file>
+        <file>actionShuffle_answers.png</file>
+        <file>expand_all.png</file>
+        <file>format_choice.png</file>
+        <file>format_essay.png</file>
+        <file>format_info.png</file>
+        <file>format_matching.png</file>
+        <file>format_multichoice.png</file>
+        <file>format_numerical.png</file>
+        <file>format_shortanswer.png</file>
+        <file>menuNumber_answers_1.png</file>
+        <file>menuNumber_answers_a.png</file>
+        <file>menuNumber_answers_A2.png</file>
+        <file>menuNumber_answers_i.png</file>
+        <file>menuNumber_answers_I2.png</file>
+        <file>menuNumber_answersNo.png</file>
+        <file>actionHelp.png</file>
+        <file>actionRemoveNoAnswer.png</file>
+        <file>actionRequirements.png</file>
+        <file>config.png</file>
+        <file>actionFindNext.png</file>
+        <file>actionToNumerical.png</file>
+        <file>actionAllow_multiline.png</file>
+    </qresource>
 </RCC>
