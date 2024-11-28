@@ -47,6 +47,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+
+    - id: my-step # Call the action with an ID to retrieve the outputs
+      uses: ithaque-renovation/latest-commit-date-action@v1
+
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
@@ -75,14 +79,10 @@ jobs:
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
-    - name: date
-      if: runner.os != 'Windows'
-      run: date +%Y%m%d
-
     - name: Archive
       if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
       with:
-        name: "${{ steps.date.outputs.date }}"
+        name: ${{ steps.my-step.outputs.latest-commit-date }}
         path: |
           ${{ steps.strings.outputs.build-output-dir }}/install
