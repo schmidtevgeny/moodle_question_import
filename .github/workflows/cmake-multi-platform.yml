@@ -34,6 +34,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - uses: repolevedavaj/install-nsis@v1.0.1
+      with:
+        nsis-version: '3.10'
 
     - id: my-step # Call the action with an ID to retrieve the outputs
       uses: ithaque-renovation/latest-commit-date-action@v1
@@ -53,7 +56,7 @@ jobs:
 #        host: 'windows'
 #        target: 'desktop'
         arch: 'win32_msvc2019'
-        tools: 'tools_ifw'
+#        tools: 'tools_ifw'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using
@@ -71,16 +74,28 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --target translations --target TestConvert
 
-    - name: ls
-      run: ls -R
-
     - name: make installs
       if: runner.os == 'Windows'
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
-    - name: ifw
-      run: cpack -V -C ${{ matrix.build_type }} -G IFW --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using
+      # a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}    
+        -DCMAKE_GENERATOR_PLATFORM=Win32
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -S ${{ github.workspace }}
+
+    - name: NSIS
+      run: cpack -V -C ${{ matrix.build_type }} -G NSIS --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 #    CPackSourceConfig.cmake
+
+    - name: ls
+      run: ls -R
 
     - name: Archive
       if: runner.os == 'Windows'

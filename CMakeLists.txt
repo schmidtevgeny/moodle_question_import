@@ -62,7 +62,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 
 # пихаем в переменную файлы по шаблону поиска
 file(GLOB TRANSLATION_FILES ${CMAKE_CURRENT_LIST_DIR}/*.ts)
-file(GLOB TRANSLATION_QM_FILES ${CMAKE_CURRENT_LIST_DIR}/*.qm)
+file(GLOB TRANSLATION_QM ${CMAKE_CURRENT_BINARY_DIR}/*.qm)
 file(GLOB FILES_TO_TRANSLATE
         ${CMAKE_CURRENT_LIST_DIR}/*.ui
         ${CMAKE_CURRENT_LIST_DIR}/*.cpp
@@ -99,7 +99,7 @@ install(DIRECTORY doc/
         DESTINATION "bin/doc"
         COMPONENT doc)
 
-install(FILES ${TRANSLATION_QM_FILES}
+install(FILES ${TRANSLATION_QM}
         DESTINATION bin
         COMPONENT translate)
 
@@ -164,7 +164,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 
 # Задать используемый генератор пакетов:
 if (WIN32)
-    set(CPACK_GENERATOR IFW)
+    set(CPACK_GENERATOR IFW NSIS)
     #    set(CPACK_GENERATOR ZIP IFW NSIS)
 else ()
     set(CPACK_GENERATOR DEB ZIP RPM IFW)
