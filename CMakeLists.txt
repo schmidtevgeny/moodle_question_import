@@ -109,7 +109,7 @@ if (WIN32)
             Qt5::Core
             Qt5::Gui
             Qt5::PrintSupport
-            RUNTIME DESTINATION bin
+            RUNTIME DESTINATION .
             COMPONENT qtlib)
     set(QT_WINDOWS_QT_ROOT ${Qt5_DIR}/../../..)
     install(DIRECTORY ${QT_WINDOWS_QT_ROOT}/plugins/platforms/
