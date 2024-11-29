@@ -92,15 +92,15 @@ target_link_libraries(${TARGET_NAME}
         )
 
 install(TARGETS ${TARGET_NAME}
-        RUNTIME DESTINATION .
+        RUNTIME DESTINATION bin
         COMPONENT core)
 
 install(DIRECTORY doc/
-        DESTINATION "doc"
+        DESTINATION "bin/doc"
         COMPONENT doc)
 
 install(FILES ${TRANSLATION_QM}
-        DESTINATION .
+        DESTINATION bin
         COMPONENT translate)
 
 if (WIN32)
@@ -109,41 +109,41 @@ if (WIN32)
             Qt5::Core
             Qt5::Gui
             Qt5::PrintSupport
-            RUNTIME DESTINATION .
+            RUNTIME DESTINATION bin
             COMPONENT qtlib)
     set(QT_WINDOWS_QT_ROOT ${Qt5_DIR}/../../..)
     install(DIRECTORY ${QT_WINDOWS_QT_ROOT}/plugins/platforms/
-            DESTINATION "platforms"
+            DESTINATION "bin/platforms"
             COMPONENT qtlib)
     install(DIRECTORY ${QT_WINDOWS_QT_ROOT}/plugins/styles/
-            DESTINATION "styles"
+            DESTINATION "bin/styles"
             COMPONENT qtlib)
     install(DIRECTORY ${QT_WINDOWS_QT_ROOT}/plugins/imageformats/
-            DESTINATION "imageformats"
+            DESTINATION "bin/imageformats"
             COMPONENT qtlib)
     # DEPLOY MSVC RUNTIME
 
     if (MSVC)
         set(COMPILER_REDISTRIB "MSVC")
         include(InstallRequiredSystemLibraries)
-        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .
+        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION bin
                 COMPONENT redistrib)
     else ()
         if (EXISTS ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_dw2-1.dll)
             set(COMPILER_REDISTRIB "mingw")
             install(FILES ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_dw2-1.dll
-                    DESTINATION .
+                    DESTINATION bin
                     COMPONENT redistrib)
         else ()
             set(COMPILER_REDISTRIB "mingw64")
             install(FILES ${QT_WINDOWS_QT_ROOT}/bin/libgcc_s_seh-1.dll
-                    DESTINATION .
+                    DESTINATION bin
                     COMPONENT redistrib)
         endif ()
         install(FILES
                 ${QT_WINDOWS_QT_ROOT}/bin/libstdc++-6.dll
                 ${QT_WINDOWS_QT_ROOT}/bin/libwinpthread-1.dll
-                DESTINATION .
+                DESTINATION bin
                 COMPONENT redistrib)
     endif ()
 endif ()
@@ -155,8 +155,8 @@ set(CPACK_PACKAGE_CONTACT "https://i-institute.tsu.tula.ru/moodle")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://i-institute.tsu.tula.ru/moodle")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "i-institute@yandex.ru")
 set(CPACK_PACKAGE_DESCRIPTION "Moodle question converter")
-set(CPACK_PACKAGE_EXECUTABLES ${TARGET_NAME} "Конвертер тестов")
-set(CPACK_CREATE_DESKTOP_LINKS ${TARGET_NAME} "Конвертер тестов")
+set(CPACK_PACKAGE_EXECUTABLES ${TARGET_NAME} "Конвертер тестов" bin)
+set(CPACK_CREATE_DESKTOP_LINKS ${TARGET_NAME} "Конвертер тестов" bin)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 #set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 #set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
@@ -165,6 +165,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 # Задать используемый генератор пакетов:
 if (WIN32)
     set(CPACK_GENERATOR IFW NSIS)
+    #    set(CPACK_GENERATOR ZIP IFW NSIS)
 else ()
     set(CPACK_GENERATOR DEB ZIP RPM IFW)
 endif ()
