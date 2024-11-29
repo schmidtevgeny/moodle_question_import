@@ -79,7 +79,7 @@ jobs:
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
     - name: ifw
-      run: cpack -V -C ${{ matrix.build_type }} -G IFW      --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+      run: cpack -V -C ${{ matrix.build_type }} -G IFW --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 #    CPackSourceConfig.cmake
 
     - name: Archive
@@ -89,3 +89,10 @@ jobs:
         name: ${{ steps.my-step.outputs.latest-commit-date }}
         path: |
           ${{ steps.strings.outputs.build-output-dir }}/install
+    - name: exe
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v4
+      with:
+        name: setup.exe
+        path: |
+          ${{ steps.strings.outputs.build-output-dir }}/*.exe
