@@ -95,4 +95,4 @@ jobs:
       with:
         name: setup.exe
         path: |
-          ${{ steps.strings.outputs.build-output-dir }}/*.exe
+          ${{ github.workspace }}/*.exe
