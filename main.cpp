@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     QTranslator  myappTranslator;
 
 
-    myappTranslator.load("TestConvert_" + QLocale::system().name() );
+    myappTranslator.load(a.applicationFilePath()+"/TestConvert_" + QLocale::system().name() );
 
     a.installTranslator(&myappTranslator);
 
