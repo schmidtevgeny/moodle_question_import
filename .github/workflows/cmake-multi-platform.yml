@@ -79,8 +79,8 @@ jobs:
       run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --prefix ${{ steps.strings.outputs.build-output-dir }}/install
 
     - name: ifw
-      run: cpack -V -C ${{ matrix.build_type }} -G IFW
-#      --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+      run: cpack -V -C ${{ matrix.build_type }} -G IFW      --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+#    CPackSourceConfig.cmake
 
     - name: Archive
       if: runner.os == 'Windows'
