@@ -46,14 +46,14 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-#      with:
+      uses: jurplel/install-qt-action@v4.1.1
+      with:
 #        aqtversion: '==3.1.*'
 #        version: '5.15.2'
 #        host: 'windows'
 #        target: 'desktop'
-#        arch: 'win32_msvc2019'
-#        tools: 'tools_ifw'
+        arch: 'win32_msvc2019'
+        tools: 'tools_ifw'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
