@@ -99,7 +99,7 @@ install(DIRECTORY doc/
         DESTINATION "bin/doc"
         COMPONENT doc)
 
-install(FILES ${TRANSLATION_QM_FILES}
+install(FILES ${TRANSLATION_QM}
         DESTINATION bin
         COMPONENT translate)
 
