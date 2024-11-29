@@ -9,14 +9,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QTranslator  myappTranslator;
 
-
-    myappTranslator.load(a.applicationFilePath()+"/TestConvert_" + QLocale::system().name() );
+    QString tr1 = a.applicationDirPath();
+    myappTranslator.load("TestConvert_" + QLocale::system().name(), tr1);
 
     a.installTranslator(&myappTranslator);
 
-
     MainWindow w;
-
 
     w.show();
 
