@@ -52,7 +52,7 @@ jobs:
 #        version: '5.15.2'
 #        host: 'windows'
 #        target: 'desktop'
-#        arch: 'win32_msvc2019'
+        arch: 'win32_msvc2019'
         tools: 'tools_ifw'
 
     - name: Configure CMake
@@ -61,6 +61,7 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_SHARED_LINKER_FLAGS=-m32 
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
