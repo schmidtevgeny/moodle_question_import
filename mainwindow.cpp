@@ -330,7 +330,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
             } else if (s.at(0) == '+')
             {
                 correctcount++;
-                s = s.mid(1);
+                s = "*"+s.mid(1).trimmed();
                 answers.append(s);
             } else if (s.at(0) == '-')
             {
@@ -341,7 +341,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
                     correctcount++;
                 }
 
-                answers.append(s);
+                answers.append(s.trimmed());
             } else {
                 if (multiline)
                 {
