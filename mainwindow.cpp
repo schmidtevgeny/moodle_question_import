@@ -262,7 +262,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
             s = data.at(index);
             s = s.replace("&nbsp;", " ").trimmed();
 
-            if (s != "" && (s[0] == '*' || s[0] == '-' || s[0] == '+') )
+            if (s != "" && (s[0] == '*' || s[0] == '-' || s[0] == '+' || s[0] == '?') )
             {
                 break;
             }
@@ -298,7 +298,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
                 continue;
             }
 
-            if (s[0] != '*' && s[0] != '+' && s[0] != '-')
+            if (s[0] != '*' && s[0] != '+' && s[0] != '-'&& s[0] != '?')
             {
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(index + 1) );
                 ui->plain->setTextCursor(ui->plain->document()->find(s) );
