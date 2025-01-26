@@ -262,7 +262,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
             s = data.at(index);
             s = s.replace("&nbsp;", " ").trimmed();
 
-            if (s != "" && (s[0] == '*' || s[0] == '-' || s[0] == '+' || s[0] == '?') )
+            if (s != "" && (s[0] == '*' || s[0] == '-' || s[0] == '+' || s[0] == '?'|| s[0] == '@'|| s[0] == '#') )
             {
                 break;
             }
@@ -282,6 +282,12 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
     {
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
+
+        // ответы кончились?
+        if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
+        {
+            break;
+        }
 
         // NOTE: Возможны варианты
         // ----------|---|---|---|
@@ -314,11 +320,6 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
             continue;
         }
 
-        // ответы кончились?
-        if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
-        {
-            break;
-        }
 
         // проверка на правильность
         if (markers)
