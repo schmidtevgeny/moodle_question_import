@@ -99,3 +99,8 @@ price%%incorrect
 -----
 
 Иногда перестает работать ввод в окне документа. Лечится поиском
+
+TODO
+----
+
+https://github.com/iamantony/qtcsv/tree/master
