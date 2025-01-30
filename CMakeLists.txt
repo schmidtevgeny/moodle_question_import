@@ -26,15 +26,19 @@ qt5_wrap_ui(UIC_SOURCES
         dialogreplace.ui
         dialogconfig.ui
         mainwindow.ui
-        highlighterdialog.ui)
+        highlighterdialog.ui
+        csvdialog.ui)
 #ресурсы
 qt5_add_resources(RCC_SOURCES
         images/icon.qrc)
 # автовызов moc
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+
+add_subdirectory(qtcsv)
 # собираемая программа - цель #2
-add_executable(${TARGET_NAME} WIN32 ${UIC_SOURCES} ${RCC_SOURCES})
+add_executable(${TARGET_NAME} WIN32 ${UIC_SOURCES} ${RCC_SOURCES}
+    )
 #-----------------------------------------------
 target_sources(${TARGET_NAME} PRIVATE
         images/icon.qrc
@@ -51,6 +55,8 @@ target_sources(${TARGET_NAME} PRIVATE
         textdialog.cpp
         dialogconfig.cpp
         dialogconfig.h
+        csvdialog.h
+        csvdialog.cpp
         )
 # Включаем C++ 2014
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_14)
@@ -89,7 +95,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Core
         Qt5::Gui
         Qt5::PrintSupport
-        )
+        qtcsv)
 
 install(TARGETS ${TARGET_NAME}
         RUNTIME DESTINATION bin
