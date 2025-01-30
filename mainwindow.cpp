@@ -13,6 +13,7 @@
 #include <QTextStream>
 #include "dialogconfig.h"
 #include <ui_dialogreplace.h>
+#include "csvdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -612,61 +613,10 @@ void MainWindow::on_actionOpen_triggered()
             ui->plain->setHtml(s);
         } else if (fname.rightRef(4) == ".csv")
         {
-
-//
-//            QFile f(fname);
-//
-//
-//            f.open(QIODevice::ReadOnly);
-//
-//
-//            QTextStream in(&f);
-//
-//
-//            in.setCodec("utf-8");
-//
-//
-//            QString     s;
-//            QStringList line;
-//
-//            QString     s_all = in.readAll();
-//
-//
-//            for (auto s_line : s_all.split("\n") )
-//            {
-//                line = s_line.split(";");
-//
-//                if (line.count() < 15)
-//                {
-//                    continue;
-//                }
-//
-//                s += "\n@" + line[13];
-//                s += "\n?" + line[1];
-//
-//
-//                int correct = line[14].toInt();
-//
-//
-//                for (int i = 1; i < 11; i++)
-//                {
-//                    if (line[1 + i].isEmpty() )
-//                    {
-//                        continue;
-//                    }
-//
-//                    if (i == correct)
-//                    {
-//                        s += "\n+";
-//                    } else {
-//                        s += "\n-";
-//                    }
-//
-//                    s += line[i + 1];
-//                }
-//            }
-
-//            ui->plain->setPlainText(s);
+            CSVDialog *dlg = new CSVDialog(this);
+            dlg->path=fname;
+            if (dlg->exec()) { ui->plain->setPlainText(dlg->result()); }
+            dlg->deleteLater();
         } else {
             QFile f(fname);
 

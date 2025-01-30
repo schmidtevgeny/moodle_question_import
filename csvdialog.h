@@ -14,7 +14,8 @@ class CSVDialog : public QDialog
 public:
     explicit CSVDialog(QWidget *parent = nullptr);
     ~CSVDialog();
-
+    QString result();
+    QString path;
 private:
     Ui::CSVDialog *ui;
 };
