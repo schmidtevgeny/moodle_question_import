@@ -2,12 +2,27 @@
 #include "ui_csvdialog.h"
 #include "qtcsv/reader.h"
 #include <QDebug>
+#include <QTextCodec>
 
 CSVDialog::CSVDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::CSVDialog)
 {
     ui->setupUi(this);
+    connect(ui->cbEncoding, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbCSVSeparator, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbQuestionCol, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbAnswerFirst, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbAnswerLast, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbCategory, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
+    connect(ui->cbCorrect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &CSVDialog::update_table);
     /*qDebug() << "=== Read csv-file and print it content to terminal ==";
 
     QList<QStringList> readData = QtCSV::Reader::readToList(fname);
@@ -24,6 +39,42 @@ CSVDialog::~CSVDialog()
 
 QString CSVDialog::result() {
     return QString();
+}
+
+void CSVDialog::update_table() {
+    const QString separator = QString(ui->cbCSVSeparator->currentText());
+    const QString textDelimiter = QString("\"");
+    QTextCodec* codec = QTextCodec::codecForName(ui->cbEncoding->currentText().toLocal8Bit());
+
+    QList<QStringList> readData = QtCSV::Reader::readToList(path, separator, textDelimiter, codec);
+    if (readData.isEmpty()){
+        ui->table->setRowCount(1);
+        ui->table->setColumnCount(1);
+        QTableWidgetItem *newItem = new QTableWidgetItem(tr("empty"));
+        ui->table->setItem(0, 0, newItem);
+        return;
+    }
+    ui->table->setRowCount(4);
+    ui->table->setColumnCount(readData.at(0).count());
+    for (int i=0; i<4; i++){
+        if (i>readData.count()){
+            ui->table->setRowCount(i);
+            break;
+        }
+        for (int j=0; j<readData.at(i).count(); j++){
+            QTableWidgetItem *newItem = new QTableWidgetItem(readData.at(i).at(j));
+            ui->table->setItem(i, j, newItem);
+
+        }
+    }
+
+//    const QString& separator,
+//    const QString& textDelimiter,
+//    QTextCodec* codec
+//    for ( int i = 0; i < readData.size(); ++i )
+//    {
+//        qDebug() << readData.at(i).join("|");
+//    }
 }
 
 //

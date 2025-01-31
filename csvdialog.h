@@ -16,6 +16,10 @@ public:
     ~CSVDialog();
     QString result();
     QString path;
+
+private slots:
+    void update_table();
+
 private:
     Ui::CSVDialog *ui;
 };
