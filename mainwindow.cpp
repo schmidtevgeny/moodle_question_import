@@ -614,8 +614,15 @@ void MainWindow::on_actionOpen_triggered()
         } else if (fname.rightRef(4) == ".csv")
         {
             CSVDialog *dlg = new CSVDialog(this);
-            dlg->path=fname;
-            if (dlg->exec()) { ui->plain->setPlainText(dlg->result()); }
+
+
+            dlg->path = fname;
+
+            if (dlg->exec() )
+            {
+                ui->plain->setPlainText(dlg->result() );
+            }
+
             dlg->deleteLater();
         } else {
             QFile f(fname);
