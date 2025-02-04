@@ -67,10 +67,19 @@ QString CSVDialog::result() {
                 && (ui->cbAnswerFirst->currentIndex() < ui->cbAnswerLast->currentIndex())
                 && (ui->cbAnswerLast->currentIndex() <= readData.at(i).count())
                 && (ui->cbCorrect->currentIndex() > 0) && (ui->cbCorrect->currentIndex() <= readData.at(i).count())) {
+            int correct = readData.at(i).at(ui->cbCorrect->currentIndex()-1).toInt()-1;
+            for (int j=0; j<=ui->cbAnswerLast->currentIndex()-ui->cbAnswerFirst->currentIndex();j++){
+                if (j==correct)
+                    text+=tr("\n+%1").arg(readData.at(i).at(ui->cbAnswerFirst->currentIndex()+j-1));
+                else
+                    text+=tr("\n-%1").arg(readData.at(i).at(ui->cbAnswerFirst->currentIndex()+j-1));
+            }
 
         } else if ((ui->cbCorrect->currentIndex() > 0) && (ui->cbCorrect->currentIndex() <= readData.at(i).count())) {
+            text+=tr("\n+%1").arg(readData.at(i).at(ui->cbCorrect->currentIndex()-1));
         }
     }
+    return text;
 } // CSVDialog::result
 
 
