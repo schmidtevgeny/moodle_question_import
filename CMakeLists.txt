@@ -6,7 +6,7 @@ set(TARGET_NAME TestConvert)
 ## разрешить поиск по переменным <имя>_ROOT
 #cmake_policy(SET CMP0074 NEW)
 # название проекта
-project(${TARGET_NAME} VERSION "3.5.1")
+project(${TARGET_NAME} VERSION "3.5.2")
 
 #******************************************************************************
 # поиск пакетов Qt

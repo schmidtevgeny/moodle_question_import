@@ -98,10 +98,6 @@ jobs:
 
     - name: NSIS
       run: cpack -V -C ${{ matrix.build_type }} -G NSIS --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
-#    CPackSourceConfig.cmake
-
-    - name: ls
-      run: ls -R
 
     - name: Archive
       if: runner.os == 'Windows'
@@ -110,6 +106,7 @@ jobs:
         name: ${{ steps.my-step.outputs.latest-commit-date }}
         path: |
           ${{ steps.strings.outputs.build-output-dir }}/install
+
     - name: exe
       if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
