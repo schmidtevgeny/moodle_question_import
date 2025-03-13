@@ -976,7 +976,7 @@ bool MainWindow::write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("defaultgrade", item->text(3) );
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
-    stream.writeTextElement("responseformat", "editor");
+    stream.writeTextElement("responseformat", "editorfilepicker");
     stream.writeTextElement("responserequired", "0");
     stream.writeTextElement("responsefieldlines", "40");
     stream.writeTextElement("attachments", "-1");
