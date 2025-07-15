@@ -227,7 +227,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
 
     qWarning(s.toStdString().c_str() );
 
-    if (s.at(0) == '!' and s.at(1) != '(')
+    if (s.at(0) == '!' && s.at(1) != '(')
     {
         noUnsort = true;
         s        = s.mid(1);
