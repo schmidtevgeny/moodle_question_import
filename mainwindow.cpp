@@ -227,7 +227,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
 
     qWarning(s.toStdString().c_str() );
 
-    if (s.at(0) == '!')
+    if (s.at(0) == '!' and s.at(1) != '(')
     {
         noUnsort = true;
         s        = s.mid(1);
@@ -785,6 +785,7 @@ void MainWindow::on_actionExport_triggered()
 
     if (!fname.isEmpty() )
     {
+        if (!fname.endsWith(".xml")) fname+=".xml";
         /*
          * Настройка
          */
