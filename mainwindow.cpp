@@ -784,7 +784,12 @@ void MainWindow::on_actionExport_triggered()
 
     if (!fname.isEmpty() )
     {
-        if (!fname.endsWith(".xml")) fname+=".xml";
+        if (!fname.endsWith(".xml") )
+        {
+            fname += ".xml";
+        }
+
+
         /*
          * Настройка
          */
