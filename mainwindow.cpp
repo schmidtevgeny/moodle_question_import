@@ -225,7 +225,6 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
     QString price;
     bool    noUnsort = false;
 
-    qWarning(s.toStdString().c_str() );
 
     if (s.at(0) == '!' && s.at(1) != '(')
     {
