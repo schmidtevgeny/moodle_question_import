@@ -119,12 +119,21 @@
      <addaction name="menuNumber_answers_i"/>
      <addaction name="menuNumber_answers_I"/>
     </widget>
+    <widget class="QMenu" name="menuNo_shuffle_if">
+     <property name="title">
+      <string>No shuffle if</string>
+     </property>
+     <addaction name="actionanswer"/>
+     <addaction name="actionvariant"/>
+     <addaction name="actionabove"/>
+    </widget>
     <addaction name="menu"/>
     <addaction name="actionRemove_incorrect"/>
     <addaction name="action_bigPenalty"/>
     <addaction name="action_enableAll"/>
     <addaction name="actionFixedAccuracy"/>
     <addaction name="actionShuffle_answers"/>
+    <addaction name="menuNo_shuffle_if"/>
     <addaction name="menuNumber_answers"/>
     <addaction name="actionMarkers"/>
     <addaction name="actionAllow_multiline"/>
@@ -806,6 +815,39 @@
    </property>
    <property name="text">
     <string>Ans&amp;wer marker</string>
+   </property>
+  </action>
+  <action name="actionanswer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>answer</string>
+   </property>
+  </action>
+  <action name="actionvariant">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>variant</string>
+   </property>
+  </action>
+  <action name="actionabove">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>above</string>
    </property>
   </action>
  </widget>
