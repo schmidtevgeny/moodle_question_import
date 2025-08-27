@@ -279,10 +279,22 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
     QStringList answers;
     int         correctcount = 0;
     QStringList no_shufle;
-    if (ui->actionabove->isChecked()) no_shufle<< tr("answer");
-    if (ui->actionvariant->isChecked()) no_shufle<< tr("variant");
-    if (ui->actionanswer->isChecked()) no_shufle<< tr("above");
 
+
+    if (ui->actionabove->isChecked() )
+    {
+        no_shufle << tr("answer");
+    }
+
+    if (ui->actionvariant->isChecked() )
+    {
+        no_shufle << tr("variant");
+    }
+
+    if (ui->actionanswer->isChecked() )
+    {
+        no_shufle << tr("above");
+    }
 
     while (index < data.size() )
     {
@@ -472,15 +484,24 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
         }
 
         number = (format == tr("number") );
-        bool fixed_order=false;
+
+
+        bool fixed_order = false;
+
+
         for (int k = 0; k < answers.size(); k++)
         {
             s = answers.at(k);
-            if (
-                    s.contains("ответ", Qt::CaseInsensitive)
-                    ){
-                fixed_order=true;
+
+            for (auto st : no_shufle)
+            {
+                if (s.contains(st, Qt::CaseInsensitive) )
+                {
+                    fixed_order = true;
+                    break;
+                }
             }
+
             parse_answer(s, p, s2, t, number);
 
             if (s.at(0) == '*')
@@ -495,7 +516,9 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
                 quest->addChild(new QTreeWidgetItem(QStringList() << tr("incorrect") << s2 << "" << p) );
             }
         }
-        if (fixed_order){
+
+        if (fixed_order)
+        {
             quest->setText(2, "!");
         }
     }
