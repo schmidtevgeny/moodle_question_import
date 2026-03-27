@@ -168,6 +168,7 @@
     <addaction name="actionFromTickets"/>
     <addaction name="actionDuplicate_search"/>
     <addaction name="actionRemoveNoAnswer"/>
+    <addaction name="actionIncorrectDupl"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -848,6 +849,14 @@
    </property>
    <property name="text">
     <string>above</string>
+   </property>
+  </action>
+  <action name="actionIncorrectDupl">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Consider incorrect options when searching for duplicates</string>
    </property>
   </action>
  </widget>

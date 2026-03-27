@@ -1021,7 +1021,7 @@ margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-siz
         <location filename="mainwindow.ui" line="850"/>
         <location filename="mainwindow.cpp" line="284"/>
         <source>above</source>
-        <translation>вешеперечисленн</translation>
+        <translation type="unfinished">перечисленн</translation>
     </message>
     <message>
         <source>Markers...</source>

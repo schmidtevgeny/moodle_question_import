@@ -2927,7 +2927,10 @@ void MainWindow::on_actionDuplicate_search_triggered()
 
                 for (int k = 0; k < item->childCount(); k++)
                 {
-                    if (item->child(k)->text(0) == tr("correct") )
+                    if (item->child(k)->text(0) == tr("correct")
+                    || item->child(k)->text(0) == tr("variant")
+                    || ui->actionIncorrectDupl->isChecked() && item->child(k)->text(0) == tr("incorrect")
+                    )
                     {
                         strings << item->child(k)->text(1).replace(" ", "").toLower();
                     }
@@ -2935,7 +2938,7 @@ void MainWindow::on_actionDuplicate_search_triggered()
 
                 strings.sort();
                 hash = strings.join("$");
-
+                qWarning(hash.toStdString().c_str());
                 if (!cache.contains(hash) )
                 {
                     cache[hash] =
