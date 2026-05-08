@@ -1,8 +1,10 @@
 #include "csvdialog.h"
 #include "ui_csvdialog.h"
-#include "qtcsv/reader.h"
+//#include "qtcsv/reader.h"
 #include <QDebug>
 #include <QTextCodec>
+#include <QTextStream>
+#include <QFile>
 
 CSVDialog::CSVDialog(QWidget *parent)
     : QDialog(parent)
@@ -25,7 +27,7 @@ CSVDialog::CSVDialog(QWidget *parent)
             this, &CSVDialog::update_table);
     /*qDebug() << "=== Read csv-file and print it content to terminal ==";
      *
-     * QList<QStringList> readData = QtCSV::Reader::readToList(fname);
+     * QList<QStringList> readData = csv_readToList(fname);
      * for ( int i = 0; i < readData.size(); ++i )
      * {
      *  qDebug() << readData.at(i).join("|");
@@ -37,6 +39,21 @@ CSVDialog::~CSVDialog()
     delete ui;
 }
 
+QList<QStringList> csv_readToList(QString path, QString sep, QString delim, QTextCodec* codec)
+{
+    QList<QStringList> result;
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        // Установка кодировки (например, UTF-8 или System)
+        in.setCodec(codec);
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            result.append(line.split(sep));
+        }
+    }
+    return result;
+}
 
 QString CSVDialog::result()
 {
@@ -44,7 +61,7 @@ QString CSVDialog::result()
     const QString      textDelimiter = QString("\"");
     QTextCodec         *codec        = QTextCodec::codecForName(ui->cbEncoding->currentText().toLocal8Bit() );
 
-    QList<QStringList> readData = QtCSV::Reader::readToList(path, separator, textDelimiter, codec);
+    QList<QStringList> readData = csv_readToList(path, separator, textDelimiter, codec);
 
     if (readData.isEmpty() )
     {
@@ -97,14 +114,13 @@ QString CSVDialog::result()
     return(text);
 } // CSVDialog::result
 
-
 void CSVDialog::update_table()
 {
     const QString      separator     = QString(ui->cbCSVSeparator->currentText() );
     const QString      textDelimiter = QString("\"");
     QTextCodec         *codec        = QTextCodec::codecForName(ui->cbEncoding->currentText().toLocal8Bit() );
 
-    QList<QStringList> readData = QtCSV::Reader::readToList(path, separator, textDelimiter, codec);
+    QList<QStringList> readData = csv_readToList(path, separator, textDelimiter, codec);
 
     if (readData.isEmpty() )
     {

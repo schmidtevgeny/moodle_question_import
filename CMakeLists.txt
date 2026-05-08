@@ -8,6 +8,7 @@ set(TARGET_NAME TestConvert)
 # название проекта
 project(${TARGET_NAME} VERSION "3.5.2")
 
+
 #******************************************************************************
 # поиск пакетов Qt
 find_package(Qt5 REQUIRED
@@ -35,7 +36,6 @@ qt5_add_resources(RCC_SOURCES
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_subdirectory(qtcsv)
 # собираемая программа - цель #2
 add_executable(${TARGET_NAME} WIN32 ${UIC_SOURCES} ${RCC_SOURCES}
     )
@@ -95,8 +95,11 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Core
         Qt5::Gui
         Qt5::PrintSupport
-        qtcsv)
+        )
 
+# *****************************
+
+# *****************************
 install(TARGETS ${TARGET_NAME}
         RUNTIME DESTINATION bin
         COMPONENT core)
