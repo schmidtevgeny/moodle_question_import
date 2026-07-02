@@ -17,16 +17,13 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
       <widget class="QTextEdit" name="plain"/>
       <widget class="QTreeWidget" name="tree">
        <property name="contextMenuPolicy">
-        <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+        <enum>Qt::NoContextMenu</enum>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="itemsExpandable">
         <bool>true</bool>
@@ -71,7 +68,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -85,7 +82,7 @@
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
-     <enum>Qt::LayoutDirection::LeftToRight</enum>
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="tearOffEnabled">
      <bool>false</bool>
@@ -127,6 +124,13 @@
      <addaction name="actionvariant"/>
      <addaction name="actionabove"/>
     </widget>
+    <widget class="QMenu" name="menuEssay_type">
+     <property name="title">
+      <string>Essay type</string>
+     </property>
+     <addaction name="actionEssayFile"/>
+     <addaction name="actionEssayText"/>
+    </widget>
     <addaction name="menu"/>
     <addaction name="actionRemove_incorrect"/>
     <addaction name="action_bigPenalty"/>
@@ -138,6 +142,7 @@
     <addaction name="actionMarkers"/>
     <addaction name="actionAllow_multiline"/>
     <addaction name="actionAnswer_marker"/>
+    <addaction name="menuEssay_type"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -714,7 +719,7 @@
     <string>&amp;a</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::NoRole</enum>
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="menuNumber_answers_A">
@@ -857,6 +862,28 @@
    </property>
    <property name="text">
     <string>Consider incorrect options when searching for duplicates</string>
+   </property>
+  </action>
+  <action name="actionEssayFile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="actionEssayText">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Text</string>
    </property>
   </action>
  </widget>

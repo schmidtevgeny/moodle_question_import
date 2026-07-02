@@ -1016,11 +1016,23 @@ bool MainWindow::write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("defaultgrade", item->text(3) );
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
-    stream.writeTextElement("responseformat", "editorfilepicker");
-    stream.writeTextElement("responserequired", "0");
-    stream.writeTextElement("responsefieldlines", "40");
-    stream.writeTextElement("attachments", "-1");
-    stream.writeTextElement("attachmentsrequired", "0");
+    if (ui->actionEssayText->isChecked()||!ui->actionEssayFile->isChecked()){
+        stream.writeTextElement("responseformat", "editorfilepicker");
+        stream.writeTextElement("responserequired", "0");
+        stream.writeTextElement("responsefieldlines", "40");
+    }else{
+        stream.writeTextElement("responseformat", "noinline");
+    }
+    if (ui->actionEssayFile->isChecked()){
+        stream.writeTextElement("attachments", "-1");
+        if (ui->actionEssayText->isChecked()) {
+            stream.writeTextElement("attachmentsrequired", "0");
+        }else{
+            stream.writeTextElement("attachmentsrequired", "1");
+        }
+    }else{
+        stream.writeTextElement("attachments", "0");
+    }
     stream.writeTextElement("maxbytes", "0");
     stream.writeEndElement();
 
