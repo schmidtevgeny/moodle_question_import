@@ -301,6 +301,13 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
 
+        // в ответах не может быть пустой строки
+        if ( (s == "") || (s == "[[br]]") )
+        {
+            index++;
+            continue;
+        }
+
         // ответы кончились?
         if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
         {
@@ -331,12 +338,6 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
             }
         }
 
-        // в ответах не может быть пустой строки
-        if ( (s == "") || (s == "[[br]]") )
-        {
-            index++;
-            continue;
-        }
 
         // проверка на правильность
         if (markers)
@@ -2940,7 +2941,8 @@ void MainWindow::on_actionDuplicate_search_triggered()
                 for (int k = 0; k < item->childCount(); k++)
                 {
                     if (item->child(k)->text(0) == tr("correct")
-                    || item->child(k)->text(0) == tr("variant")
+                       // || item->child(k)->text(0) == tr("variant")
+                        || item->child(k)->text(0) == tr("option")
                     || ui->actionIncorrectDupl->isChecked() && item->child(k)->text(0) == tr("incorrect")
                     )
                     {
@@ -2950,7 +2952,7 @@ void MainWindow::on_actionDuplicate_search_triggered()
 
                 strings.sort();
                 hash = strings.join("$");
-                qWarning(hash.toStdString().c_str());
+                //qWarning(hash.toStdString().c_str());
                 if (!cache.contains(hash) )
                 {
                     cache[hash] =
