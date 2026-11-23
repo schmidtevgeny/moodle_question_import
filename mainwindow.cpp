@@ -301,10 +301,14 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
     {
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
-        if (s.isEmpty()) {
+
+        // в ответах не может быть пустой строки
+        if ( (s == "") || (s == "[[br]]") )
+        {
             index++;
             continue;
         }
+
         // ответы кончились?
         if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
         {
@@ -1020,11 +1024,23 @@ bool MainWindow::write_essay(QXmlStreamWriter &stream, QTreeWidgetItem *item)
     stream.writeTextElement("defaultgrade", item->text(3) );
     stream.writeTextElement("penalty", "1");
     stream.writeTextElement("hidden", "0");
-    stream.writeTextElement("responseformat", "editorfilepicker");
-    stream.writeTextElement("responserequired", "0");
-    stream.writeTextElement("responsefieldlines", "40");
-    stream.writeTextElement("attachments", "-1");
-    stream.writeTextElement("attachmentsrequired", "0");
+    if (ui->actionEssayText->isChecked()||!ui->actionEssayFile->isChecked()){
+        stream.writeTextElement("responseformat", "editorfilepicker");
+        stream.writeTextElement("responserequired", "0");
+        stream.writeTextElement("responsefieldlines", "40");
+    }else{
+        stream.writeTextElement("responseformat", "noinline");
+    }
+    if (ui->actionEssayFile->isChecked()){
+        stream.writeTextElement("attachments", "-1");
+        if (ui->actionEssayText->isChecked()) {
+            stream.writeTextElement("attachmentsrequired", "0");
+        }else{
+            stream.writeTextElement("attachmentsrequired", "1");
+        }
+    }else{
+        stream.writeTextElement("attachments", "0");
+    }
     stream.writeTextElement("maxbytes", "0");
     stream.writeEndElement();
 
@@ -2932,7 +2948,8 @@ void MainWindow::on_actionDuplicate_search_triggered()
                 for (int k = 0; k < item->childCount(); k++)
                 {
                     if (item->child(k)->text(0) == tr("correct")
-                    || item->child(k)->text(0) == tr("variant")
+                       // || item->child(k)->text(0) == tr("variant")
+                        || item->child(k)->text(0) == tr("option")
                     || ui->actionIncorrectDupl->isChecked() && item->child(k)->text(0) == tr("incorrect")
                     )
                     {
@@ -2942,7 +2959,7 @@ void MainWindow::on_actionDuplicate_search_triggered()
 
                 strings.sort();
                 hash = strings.join("$");
-                qWarning(hash.toStdString().c_str());
+                //qWarning(hash.toStdString().c_str());
                 if (!cache.contains(hash) )
                 {
                     cache[hash] =

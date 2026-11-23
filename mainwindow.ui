@@ -146,6 +146,13 @@
      <addaction name="actionvariant"/>
      <addaction name="actionabove"/>
     </widget>
+    <widget class="QMenu" name="menuEssay_type">
+     <property name="title">
+      <string>Essay type</string>
+     </property>
+     <addaction name="actionEssayFile"/>
+     <addaction name="actionEssayText"/>
+    </widget>
     <addaction name="menu"/>
     <addaction name="actionRemove_incorrect"/>
     <addaction name="action_bigPenalty"/>
@@ -157,6 +164,7 @@
     <addaction name="actionMarkers"/>
     <addaction name="actionAllow_multiline"/>
     <addaction name="actionAnswer_marker"/>
+    <addaction name="menuEssay_type"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
@@ -257,7 +265,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
-    <string>toolBar_2</string>
+    <string>Numbering</string>
    </property>
    <attribute name="toolBarArea">
     <enum>RightToolBarArea</enum>
@@ -274,7 +282,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar_3">
    <property name="windowTitle">
-    <string>toolBar_3</string>
+    <string>Service</string>
    </property>
    <attribute name="toolBarArea">
     <enum>LeftToolBarArea</enum>
@@ -888,6 +896,28 @@
   <action name="actionFont">
    <property name="text">
     <string>Font...</string>
+   </property>
+  </action>
+  <action name="actionEssayFile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="actionEssayText">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Text</string>
    </property>
   </action>
  </widget>
