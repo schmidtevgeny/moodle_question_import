@@ -35,6 +35,8 @@ jobs:
     - uses: actions/checkout@v7
 
     - uses: repolevedavaj/install-nsis@v1.3.0
+      with:
+        nsis-version: '3.12'
 
     - id: my-step # Call the action with an ID to retrieve the outputs
       uses: ithaque-renovation/latest-commit-date-action@v1.0.1
