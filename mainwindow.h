@@ -53,6 +53,10 @@ private slots:
     void on_actionMarkers_triggered();
     void update_format();
 
+    void on_actionHTML_codes_triggered();
+
+    void on_actionFont_triggered();
+
 private:
 
     Ui::MainWindow *ui;

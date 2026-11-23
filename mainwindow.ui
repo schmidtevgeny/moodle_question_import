@@ -10,6 +10,12 @@
     <height>563</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Test Converter</string>
   </property>
@@ -18,15 +24,28 @@
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
+       <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTextEdit" name="plain"/>
+      <widget class="QTextEdit" name="plain">
+       <property name="font">
+        <font>
+         <family>Hack Nerd Font</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+      </widget>
       <widget class="QTreeWidget" name="tree">
+       <property name="font">
+        <font>
+         <family>Hack Nerd Font</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="contextMenuPolicy">
-        <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+        <enum>Qt::NoContextMenu</enum>
        </property>
        <property name="editTriggers">
-        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="itemsExpandable">
         <bool>true</bool>
@@ -71,7 +90,7 @@
      <x>0</x>
      <y>0</y>
      <width>928</width>
-     <height>30</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -85,7 +104,7 @@
    </widget>
    <widget class="QMenu" name="settingsMenu">
     <property name="layoutDirection">
-     <enum>Qt::LayoutDirection::LeftToRight</enum>
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="tearOffEnabled">
      <bool>false</bool>
@@ -155,6 +174,7 @@
     <addaction name="actionCollapse"/>
     <addaction name="expand_all"/>
     <addaction name="actionHighlighter"/>
+    <addaction name="actionFont"/>
    </widget>
    <widget class="QMenu" name="searchMenu">
     <property name="title">
@@ -176,6 +196,7 @@
     </property>
     <addaction name="actionHelp"/>
     <addaction name="actionRequirements"/>
+    <addaction name="actionHTML_codes"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="searchMenu"/>
@@ -456,7 +477,7 @@
      <normaloff>:/actionHighlighter.png</normaloff>:/actionHighlighter.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Highlighter</string>
+    <string>&amp;Highlighter...</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -714,7 +735,7 @@
     <string>&amp;a</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::NoRole</enum>
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="menuNumber_answers_A">
@@ -857,6 +878,16 @@
    </property>
    <property name="text">
     <string>Consider incorrect options when searching for duplicates</string>
+   </property>
+  </action>
+  <action name="actionHTML_codes">
+   <property name="text">
+    <string>HTML-codes...</string>
+   </property>
+  </action>
+  <action name="actionFont">
+   <property name="text">
+    <string>Font...</string>
    </property>
   </action>
  </widget>

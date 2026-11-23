@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QFontDialog>
 #include "dialogconfig.h"
 #include <ui_dialogreplace.h>
 #include "csvdialog.h"
@@ -184,7 +185,7 @@ void MainWindow::on_actionAnalyse_triggered()
             i++;
             continue;
         } else {
-            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(i + 1) );
+            QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1\nuncnown section prefix").arg(s).arg(i + 1) );
             ui->plain->setTextCursor(ui->plain->document()->find(s) );
 
             return;
@@ -300,7 +301,10 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
     {
         s = data.at(index);
         s = s.replace("&nbsp;", " ").trimmed();
-
+        if (s.isEmpty()) {
+            index++;
+            continue;
+        }
         // ответы кончились?
         if ( (s.at(0) == '#') || (s.at(0) == '@') || (s.at(0) == '?') || (s.at(0) == '$') )
         {
@@ -324,7 +328,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
 
             if (s[0] != '*' && s[0] != '+' && s[0] != '-' && s[0] != '?')
             {
-                QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(index + 1) );
+                QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1\nuncnown answer marker").arg(s).arg(index + 1) );
                 ui->plain->setTextCursor(ui->plain->document()->find(s) );
 
                 return(nullptr);
@@ -365,7 +369,7 @@ QTreeWidgetItem *MainWindow::make_question(QStringList &data, int &index, bool m
                 {
                     answers.back() += "\n" + s;
                 } else {
-                    QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1").arg(s).arg(index + 1) );
+                    QMessageBox::warning(this, tr("Error"), tr("Incorrect string #%2: %1\nincorrect answer").arg(s).arg(index + 1) );
                     ui->plain->setTextCursor(ui->plain->document()->find(s) );
 
                     return(nullptr);
@@ -3191,3 +3195,33 @@ void MainWindow::on_actionMarkers_triggered()
         //        highlighter->update_re();
     }
 }
+
+void MainWindow::on_actionHTML_codes_triggered()
+{
+    QMessageBox::information(this,tr("HTML-codes"),
+                             "#   &#35;     &num;\n"
+                             "@ &#64;     &commat;\n"
+                             "?   &#63;     &quest;\n"
+                             "*   &#42;     &ast;\n"
+                             "&  &#38;     &amp;\n"
+                             "%  &#37;     &percnt;\n"
+                             ":    &#58;     &colon;\n"
+                             "-    &#8208; &hyphen;\n"
+                             ">   &#62;     &gt;\n"
+                             "$   &#36;     &dollar;");
+}
+
+
+void MainWindow::on_actionFont_triggered()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, ui->plain->font(), this, "Выберите шрифт");
+    if (ok) {
+        // Шрифт выбран, можно применять
+        ui->plain->setFont(font);
+        ui->tree->setFont(font);
+    } else {
+        // Пользователь отменил диалог, шрифт остаётся прежним
+    }
+}
+
