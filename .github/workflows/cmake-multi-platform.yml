@@ -51,12 +51,12 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4.5.0
       with:
-#        aqtversion: '==3.1.*'
-#        version: '5.15.2'
-#        host: 'windows'
-#        target: 'desktop'
-        arch: 'win32_msvc2019'
-#        tools: 'tools_ifw'
+       aqtversion: '==3.1.*'
+       version: '5.15.2'
+       host: 'windows'
+       target: 'desktop'
+       arch: 'win32_msvc2019'
+       tools: 'tools_ifw'
 
     - name: git submodule init
       run: git submodule init
